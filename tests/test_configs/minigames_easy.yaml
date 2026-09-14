@@ -1,5 +1,0 @@
-seed: HeadmasterFairyFruitHarbour
-World 1:
-  minigame_difficulty: easy
-  excluded_locations:
-  - Knight Academy - Fledge's Gift # just to make sure the minigames are actually included as checks
