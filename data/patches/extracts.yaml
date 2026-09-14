@@ -1,0 +1,417 @@
+- stage: B100
+  layers:
+    - layerid: 1
+      oarcs:
+        - GetHeartUtuwa
+        - PutHeartUtuwa
+
+- stage: B100_1
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetSekibanMapB
+        - LittleBird
+    - layerid: 3
+      oarcs:
+        - GetBottleHoly
+
+- stage: B210
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetSekibanMapC
+
+- stage: D003_0
+  layers:
+    - layerid: 0
+      oarcs:
+        - PutTriForceSingle
+        - GetTriForceSingle
+
+- stage: D100
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetKeyBossA
+    - layerid: 1
+      oarcs:
+        - GetBeetleA
+        - SwitchEye
+
+- stage: D101
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetKeyBoss2A
+
+- stage: D200
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetKeyBossB
+
+- stage: D201
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetKeyBoss2B
+
+- stage: D300
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetKeyBossC
+
+- stage: D301
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetBowA
+    - layerid: 9
+      oarcs:
+        - GoddessSymbolSc
+        - SwordCandle
+    - layerid: 11
+      oarcs:
+        - GetKeyBoss2C
+
+- stage: F000
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetGaragara
+        - PutGaragara
+        - GetSeedLife
+        - GetSozaiP
+        - GossipStone
+    - layerid: 1
+      oarcs:
+        # - PLRemly
+        - ShinkanB
+    - layerid: 3
+      oarcs:
+        - RivalCmnAnm
+        - RivalNpcAnm
+    - layerid: 4
+      oarcs:
+        - GetShieldWood
+        - GetShieldHylia
+        - GetSozaiN
+        - GetSozaiO
+        - ShinkanA
+        - Shinkan_motion
+      # - GetSozaiP
+    - layerid: 17
+      oarcs:
+        - Demo11_01
+
+- stage: F001r
+  layers:
+    - layerid: 3
+      oarcs:
+        - GetKobunALetter
+        - GetPouchA
+
+- stage: F002r
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetSparePurse
+    - layerid: 1
+      oarcs:
+        - GetPouchB
+        - GetMedal
+        - GetNetA
+
+- stage: F004r
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetPachinkoB
+        - GetBowB
+        - GetBowC
+        - GetBeetleC
+        - GetBeetleD
+        - GetNetB
+        - GetSpareSeedA
+        - GetBottleMuteki
+        - GetBottleKusuri
+        - GetBottleKusuriS
+        - GetBottleGuts
+        - GetBottleAir
+        - GetBottleRepair
+        - GetBottleRepairS
+        - GetSeedSet
+        - GetSpareQuiverA
+        - GetSpareBombBagA
+        - DesertRobot
+
+- stage: F008r
+  layers:
+    - layerid: 1
+      oarcs:
+        - GetSekibanMapA
+
+- stage: F009r
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetSwordA
+
+- stage: F011r
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetBottlePumpkin
+
+- stage: F012r
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetPurseB
+        - GetPurseC
+        - GetPurseD
+        - GetPurseE
+
+- stage: F020
+  layers:
+    - layerid: 1
+      oarcs:
+        - GetBirdStatue
+    - layerid: 2
+      oarcs:
+        - BirdAnm
+        - BirdLinkAnm
+        - PLBird
+
+- stage: F023
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetTerryCage
+    - layerid: 2
+      oarcs:
+        - KobunB
+
+- stage: F100
+  layers:
+    - layerid: 3
+      oarcs:
+        - PLHarpPlay
+        - SirenEntrance
+        - PLSwordStick
+    - layerid: 4
+      oarcs:
+        - ForestManWiz
+        - GetSozaiL
+        - SwrdPrj
+
+- stage: F102_2
+  layers:
+    - layerid: 4
+      oarcs:
+        - Waterdragon
+
+# F103
+- stage: F103
+  layers:
+    - layerid: 2
+      oarcs:
+        - Onp
+
+- stage: F200
+  layers:
+    - layerid: 1
+      oarcs:
+        - GetKeyKakera
+    - layerid: 4
+      oarcs:
+        - FWRockB
+        - Ph
+        - PRing
+        - MoldWorm
+        - MoleBlock
+        - MoleGroundLn
+        - MoleGroundMl
+        - MoleGroundMn
+        - MoleGroundS
+        - MoleShutter
+        - PLMoleGlove
+        - MoundShovelB
+
+- stage: F202
+  layers:
+    - layerid: 1
+      oarcs:
+        - GetPachinkoA
+        - GetHookShot
+        - GetMoleGloveB
+        - GetVacuum
+        - GetWhip
+        - GetBombBag
+
+- stage: F210
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetMoleGloveA
+
+- stage: F300
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetBeetleB
+        - GetSozaiH
+        - GetSozaiC
+        - GetSozaiF
+
+- stage: F301_5
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetMapSea
+
+- stage: F303
+  layers:
+    - layerid: 1
+      oarcs:
+        - Goron_motion
+        - GoronD
+
+- stage: F402
+  layers:
+    - layerid: 0
+      oarcs:
+        - GetFruitB
+    - layerid: 2
+      oarcs:
+        - Amber
+        - DoorF
+        - DoorG
+        - GetHarp
+        - PLDoorLarge
+        - PLHarpPlay
+        - SwitchHarp
+        - TimeDoorA
+    - layerid: 4
+      oarcs:
+        - TimeDoorB
+
+- stage: S000
+  layers:
+    - layerid: 2
+      oarcs:
+        - GetSirenKey
+
+- stage: S100
+  layers:
+    - layerid: 2
+      oarcs:
+        - GetSizuku
+        - GetUroko
+
+- stage: S200
+  layers:
+    - layerid: 2
+      oarcs:
+        - GetEarring
+
+- objectpack:
+    - Alink
+    - Bc
+    - Bee
+    - Bird_Link
+    - BRockHole00
+    - BRockWall
+    - BRockWall00
+    - Camera
+    - Candle00
+    - Common
+    - DoorBoss
+    - FenceBoko
+    - FlowerA00
+    - FlowerB00
+    - FlowerB01
+    - FlowerBomb
+    - FlowerHeart
+    - FX_TBoxOpen
+    - FX_WaterColumn
+    - GetArrow
+    - GetBomb
+    - GetBombSet
+    - GetBottleEmpty
+    - GetBottleFairy
+    - GetBottleKinokoA
+    - GetBottleKinokoB
+    - GetBottleWater
+    - GetFairy
+    - GetGenki
+    - GetGuts
+    - GetHeart
+    - GetHeartKakera
+    - GetInsectBee
+    - GetInsectButterfly
+    - GetKeySmall
+    - GetMap
+    - GetRupee
+    - GetSeed
+    - GetSozaiE
+    - GetSozaiI
+    - GetSozaiJ
+    - GetSozaiM
+    - GoddessCube
+    - GoddessTBox
+    - GrassA
+    - GrassB
+    - GrassC
+    - GrassD
+    - GrassE
+    - GrassOcta
+    - HoleShovel
+    - InsectButterfly
+    - Kanban
+    - KanbanStone
+    - KanbanTree
+    - KibakoHang
+    - LockSmall
+    - MogumaMud
+    - MoundShovel
+    - MudShovel
+    - PLCommonAnime
+    - PLCommonAnmSnd
+    - PLCompItem
+    - PutArrow
+    - PutBombSet
+    - PutFairy
+    - PutGuts
+    - PutHeart
+    - PutHeartKakera
+    - PutKeySmall
+    - PutRupee
+    - PutSeed
+    - Rival
+    - RockCarryMiddle
+    - RockCarrySmall
+    - RockRollB
+    - SaveObjectA
+    - SaveObjectB
+    - SaveObjectC
+    - ShotMark
+    - ShutterChain
+    - ShutterFenced00
+    - ShutterFencedAnim
+    - SkyCmn
+    - SwitchHit
+    - SwitchWall
+    - SwordGirl
+    - TBoxBossT
+    - TBoxNormalT
+    - TBoxSmallT
+    - Tubo
+    - UI_Data
+    - WiiRemocon
+    - Zelda
+    - Zelda_face
+    - Zelda_hair
+    - Zelda_handL
+    - Zelda_handR

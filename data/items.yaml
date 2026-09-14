@@ -1,0 +1,1758 @@
+- id: 1
+  name: Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  shuffle: Dungeon
+- id: 2
+  name: Green Rupee
+  types:
+    - Rupees
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetRupee
+  shop_model_name: GetRupee
+- id: 3
+  name: Blue Rupee
+  types:
+    - Rupees
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBlueRupee
+  shop_model_name: GetRupee
+- id: 4
+  name: Red Rupee
+  types:
+    - Rupees
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetRedRupee
+  shop_model_name: GetRupee
+- id: 6
+  name: Heart
+  types:
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetHeart
+  shop_model_name: GetHeart
+- id: 8
+  name: 10 Arrows
+  oarc: null # ObjectPack
+  types:
+    - Ammo
+    - Minor Items
+  shop_arc_name: GetArrow
+  shop_model_name: GetArrowBundle
+- id: 9
+  name: Goddess White Sword
+  types:
+    - Major Items
+    - Main Quest Items
+    - Swords
+  oarc: null
+  advancement: true
+- id: 10
+  name: Progressive Sword
+  types:
+    - Major Items
+    - Main Quest Items
+    - Swords
+  oarc: GetSwordA
+  shop_arc_name: GetSwordA
+  shop_model_name: GetSwordA
+  advancement: true
+- id: 11
+  name: Goddess Sword
+  types:
+    - Major Items
+    - Main Quest Items
+    - Swords
+  oarc: null
+  advancement: true
+- id: 12
+  name: Goddess Longsword
+  types:
+    - Major Items
+    - Main Quest Items
+    - Swords
+  oarc: null
+  advancement: true
+- id: 13
+  name: Master Sword
+  types:
+    - Major Items
+    - Main Quest Items
+    - Swords
+  oarc: null
+  advancement: true
+- id: 14
+  name: True Master Sword
+  types:
+    - Major Items
+    - Main Quest Items
+    - Swords
+  oarc: null
+  advancement: true
+- id: 15
+  name: Sailcloth
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: Demo11_01
+  shop_arc_name: Demo11_01
+  shop_model_name: GetStole
+  advancement: true
+- id: 16
+  name: Goddess's Harp
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 19
+  name: Progressive Bow
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: 
+    - GetBowA
+    - GetBowB
+    - GetBowC
+  shop_arc_name: GetBowA
+  shop_model_name: GetBowA
+  advancement: true
+- id: 20
+  name: Clawshots
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetHookShot
+  shop_arc_name: GetHookShot
+  shop_model_name: GetHookShot
+  advancement: true
+- id: 21
+  name: Spiral Charge
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetBirdStatue
+  shop_arc_name: GetBirdStatue
+  shop_model_name: GetBirdStatue
+  advancement: true
+- id: 219
+  name: Loftwing
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetBirdStatue
+  shop_arc_name: GetBirdStatue
+  shop_model_name: GetBirdStatue
+  advancement: true
+- id: 25
+  name: Ancient Cistern Boss Key
+  types:
+    - Dungeon Items
+    - Boss Keys
+  oarc: GetKeyBoss2A
+  shuffle: Dungeon
+  shop_arc_name: GetKeyBoss2A
+  shop_model_name: GetKeyBoss2A
+  advancement: true
+- id: 26
+  name: Fire Sanctuary Boss Key
+  types:
+    - Dungeon Items
+    - Boss Keys
+  oarc: GetKeyBoss2B
+  shuffle: Dungeon
+  shop_arc_name: GetKeyBoss2B
+  shop_model_name: GetKeyBoss2B
+  advancement: true
+- id: 27
+  name: Sandship Boss Key
+  types:
+    - Dungeon Items
+    - Boss Keys
+  oarc: GetKeyBoss2C
+  shuffle: Dungeon
+  shop_arc_name: GetKeyBoss2C
+  shop_model_name: GetKeyBoss2C
+  advancement: true
+- id: 28
+  name: Key Piece
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetKeyKakera
+  shop_arc_name: GetKeyKakera
+  shop_model_name: GetKeyKakeraA
+  advancement: true
+- id: 29
+  name: Skyview Temple Boss Key
+  types:
+    - Dungeon Items
+    - Boss Keys
+  oarc: GetKeyBossA
+  shuffle: Dungeon
+  shop_arc_name: GetKeyBossA
+  shop_model_name: GetKeyBossA
+  advancement: true
+- id: 30
+  name: Earth Temple Boss Key
+  types:
+    - Dungeon Items
+    - Boss Keys
+  oarc: GetKeyBossB
+  shuffle: Dungeon
+  shop_arc_name: GetKeyBossB
+  shop_model_name: GetKeyBossB
+  advancement: true
+- id: 31
+  name: Lanayru Mining Facility Boss Key
+  types:
+    - Dungeon Items
+    - Boss Keys
+  oarc: GetKeyBossC
+  shuffle: Dungeon
+  shop_arc_name: GetKeyBossC
+  shop_model_name: GetKeyBossC
+  advancement: true
+- id: 32
+  name: Silver Rupee
+  types:
+    - Rupees
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetSilverRupee
+  shop_model_name: GetRupee
+- id: 33
+  name: Gold Rupee
+  types:
+    - Rupees
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetGoldRupee
+  shop_model_name: GetRupee
+- id: 34
+  name: Rupoor
+  types:
+    - Rupees
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetRupoor
+  shop_model_name: GetRupee
+- id: 35
+  name: Gratitude Crystal Pack
+  types:
+    - Side Quest Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetGenki
+  shop_model_name: GetGenki
+  advancement: true
+- id: 36
+  name: Glittering Spores
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBottleKinokoA
+  shop_model_name: GetBottleKinokoA
+  advancement: true
+- id: 40
+  name: 5 Bombs
+  types:
+    - Ammo
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBombSet
+  shop_model_name: GetBombSet
+- id: 41
+  name: 10 Bombs
+  types:
+    - Ammo
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBombSet
+  shop_model_name: GetBombSet
+- id: 42
+  name: Stamina Fruit
+  types:
+    - Minor Items
+  oarc: null # ObjectPack
+- id: 48
+  name: Gratitude Crystal
+  types:
+    - Side Quest Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetGenki
+  shop_model_name: GetGenki
+  advancement: true
+- id: 49
+  name: Gust Bellows
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetVacuum
+  shop_arc_name: GetVacuum
+  shop_model_name: GetVacuum
+  advancement: true
+- id: 50
+  name: Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+  shuffle: Dungeon
+- id: 52
+  name: Progressive Slingshot
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc:
+  - GetPachinkoA
+  - GetPachinkoB # Fixes weirdness with traps
+  shop_arc_name: GetPachinkoA
+  shop_model_name: GetPachinkoA
+  advancement: true
+- id: 53
+  name: Progressive Beetle
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: 
+  - GetBeetleA
+  - GetBeetleB
+  - GetBeetleC
+  - GetBeetleD
+  shop_arc_name: GetBeetleA
+  shop_model_name: GetBeetleA
+  advancement: true
+- id: 54
+  name: Bottle of Water
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBottleWater
+  shop_model_name: GetBottleWater
+  advancement: true
+- id: 55
+  name: Mushroom Spores
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBottleKinokoB
+  shop_model_name: GetBottleKinokoB
+  advancement: true
+- id: 56
+  name: Progressive Mitts
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc:
+  - GetMoleGloveA
+  - GetMoleGloveB
+  shop_arc_name: GetMoleGloveA
+  shop_model_name: GetMoleGloveA
+  advancement: true
+- id: 57
+  name: 5 Deku Seeds
+  types:
+    - Ammo
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetSeed
+  shop_model_name: GetSeed
+- id: 60
+  name: 10 Deku Seeds
+  types:
+    - Ammo
+    - Minor Items
+  oarc: GetSeedSet
+  shop_arc_name: GetSeedSet
+  shop_model_name: GetSeedSet
+- id: 63
+  name: Uncommon Treasure
+  types:
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetSozaiL
+  shop_model_name: GetSozaiL
+- id: 64
+  name: Rare Treasure
+  types:
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetSozaiP
+  shop_model_name: GetSozaiP
+- id: 65
+  name: Guardian Potion
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleMuteki
+  shop_arc_name: GetBottleMuteki
+  shop_model_name: GetBottleMuteki
+  advancement: true
+- id: 66
+  name: Guardian Potion Plus
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleMuteki
+  shop_arc_name: GetBottleMuteki
+  shop_model_name: GetBottleMuteki
+  advancement: true
+- id: 68
+  name: Water Dragon's Scale
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetUroko
+  shop_arc_name: GetUroko
+  shop_model_name: GetUroko
+  advancement: true
+- id: 70
+  name: Bug Medal
+  types:
+    - Medals
+    - Minor Items
+  oarc: GetMedal
+  shop_arc_name: GetMedal
+  shop_model_name: GetMedalReturn
+- id: 71
+  name: Progressive Bug Net
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc:
+  - GetNetA
+  - GetNetB
+  shop_arc_name: GetNetA
+  shop_model_name: GetNetA
+  advancement: true
+- id: 72
+  name: Fairy
+  types:
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetFairy
+  shop_model_name: GetFairy
+- id: 74
+  name: Sacred Water
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleHoly
+  shop_arc_name: GetBottleHoly
+  shop_model_name: GetBottleHoly
+  advancement: true
+- id: 75
+  name: Hook Beetle
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetBeetleB
+  shop_arc_name: GetBeetleB
+  shop_model_name: GetBeetleB
+  advancement: true
+- id: 76
+  name: Quick Beetle
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetBeetleC
+  shop_arc_name: GetBeetleC
+  shop_model_name: GetBeetleC
+  advancement: true
+- id: 77
+  name: Tough Beetle
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetBeetleD
+  shop_arc_name: GetBeetleD
+  shop_model_name: GetBeetleD
+  advancement: true
+- id: 78
+  name: Heart Potion
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleKusuri
+  shop_arc_name: GetBottleKusuri
+  shop_model_name: GetBottleKusuri
+  advancement: true
+- id: 79
+  name: Heart Potion Plus
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleKusuri
+  shop_arc_name: GetBottleKusuri
+  shop_model_name: GetBottleKusuri
+  advancement: true
+- id: 81
+  name: Heart Potion Plus Plus
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleKusuriS
+  shop_arc_name: GetBottleKusuriS
+  shop_model_name: GetBottleKusuriS
+  advancement: true
+- id: 84
+  name: Stamina Potion
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleGuts
+  shop_arc_name: GetBottleGuts
+  shop_model_name: GetBottleGuts
+  advancement: true
+- id: 85
+  name: Stamina Potion Plus
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleGuts
+  shop_arc_name: GetBottleGuts
+  shop_model_name: GetBottleGuts
+  advancement: true
+- id: 86
+  name: Air Potion
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleAir
+  shop_arc_name: GetBottleAir
+  shop_model_name: GetBottleAir
+  advancement: true
+- id: 87
+  name: Air Potion Plus
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleAir
+  shop_arc_name: GetBottleAir
+  shop_model_name: GetBottleAir
+  advancement: true
+- id: 88
+  name: Fairy in a Bottle
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBottleFairy
+  shop_model_name: GetBottleFairy
+  advancement: true
+- id: 90
+  name: Iron Bow
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetBowB
+  shop_arc_name: GetBowB
+  shop_model_name: GetBowB
+  advancement: true
+- id: 91
+  name: Sacred Bow
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetBowC
+  shop_arc_name: GetBowC
+  shop_model_name: GetBowC
+  advancement: true
+- id: 92
+  name: Bomb Bag
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetBombBag
+  shop_arc_name: GetBombBag
+  shop_model_name: GetBombBag
+  advancement: true
+- id: 93
+  name: Heart Container
+  types:
+    - Minor Items
+  oarc:
+  - GetHeartUtuwa
+  - PutHeartUtuwa
+  shop_arc_name: GetHeartUtuwa
+  shop_model_name: GetHeartUtuwa
+- id: 94
+  name: Heart Piece
+  types:
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetHeartKakera
+  shop_model_name: GetHeartKakera
+- id: 95
+  name: Triforce of Courage
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc:
+  - PutTriForceSingle
+  - GetTriForceSingle
+  shop_arc_name: GetTriForceSingle
+  shop_model_name: GetTriForceSingle
+  advancement: true
+- id: 96
+  name: Triforce of Power
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc:
+  - PutTriForceSingle
+  - GetTriForceSingle
+  shop_arc_name: GetTriForceSingle
+  shop_model_name: GetTriForceSingle
+  advancement: true
+- id: 97
+  name: Triforce of Wisdom
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc:
+  - PutTriForceSingle
+  - GetTriForceSingle
+  shop_arc_name: GetTriForceSingle
+  shop_model_name: GetTriForceSingle
+  advancement: true
+- id: 98
+  name: Sea Chart
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetMapSea
+  shop_arc_name: GetMapSea
+  shop_model_name: GetMapSea
+  advancement: true
+- id: 99
+  name: Mogma Mitts
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetMoleGloveB
+  shop_arc_name: GetMoleGloveB
+  shop_model_name: GetMoleGloveB
+  advancement: true
+- id: 100
+  name: Heart Medal
+  types:
+    - Medals
+    - Minor Items
+  oarc: GetMedal
+  shop_arc_name: GetMedal
+  shop_model_name: GetMedalHeart
+- id: 101
+  name: Rupee Medal
+  types:
+    - Medals
+    - Minor Items
+  oarc: GetMedal
+  shop_arc_name: GetMedal
+  shop_model_name: GetMedalLucky
+- id: 102
+  name: Treasure Medal
+  types:
+    - Medals
+    - Minor Items
+  oarc: GetMedal
+  shop_arc_name: GetMedal
+  shop_model_name: GetMedalHunter # TODO double check
+- id: 103
+  name: Potion Medal
+  types:
+    - Medals
+    - Minor Items
+  oarc: GetMedal
+  shop_arc_name: GetMedal
+  shop_model_name: GetMedalDurable
+- id: 104
+  name: Cursed Medal
+  types:
+    - Medals
+    - Minor Items
+  oarc: GetMedal
+  shop_arc_name: GetMedal
+  shop_model_name: GetMedalDemon
+- id: 105
+  name: Scattershot
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetPachinkoB
+  shop_arc_name: GetPachinkoB
+  shop_model_name: GetPachinkoB
+  advancement: true
+- id: 108
+  name: Progressive Wallet # Medium Wallet
+  types:
+    - Wallets
+    - Minor Items
+  oarc: 
+  - GetPurseB
+  - GetPurseC
+  - GetPurseD
+  - GetPurseE
+  shop_arc_name: GetPurseB
+  shop_model_name: GetPurseB
+  advancement: true
+- id: 109
+  name: Big Wallet
+  types:
+    - Wallets
+    - Minor Items
+  oarc: GetPurseC
+  shop_arc_name: GetPurseC
+  shop_model_name: GetPurseC
+  advancement: true
+- id: 110
+  name: Giant Wallet
+  types:
+    - Wallets
+    - Minor Items
+  oarc: GetPurseD
+  shop_arc_name: GetPurseD
+  shop_model_name: GetPurseD
+  advancement: true
+- id: 111
+  name: Tycoon Wallet
+  types:
+    - Wallets
+    - Minor Items
+  oarc: GetPurseE
+  shop_arc_name: GetPurseE
+  shop_model_name: GetPurseE
+  advancement: true
+- id: 112
+  name: Progressive Pouch
+  types:
+    - Major Items
+    - Side Quest Items
+  oarc:
+    - GetPouchA
+    - GetPouchB
+  shop_arc_name: GetPouchA
+  shop_model_name: GetPorchA # yea, that's a typo in the game
+  advancement: true
+- id: 113
+  name: Pouch Expansion
+  types:
+    - Major Items
+    - Side Quest Items
+  oarc: GetPouchB
+  shop_arc_name: GetPouchB
+  shop_model_name: GetPorchB # yea, that's a typo in the game
+- id: 114
+  name: Life Medal
+  types:
+    - Medals
+    - Minor Items
+  oarc: GetMedal
+  shop_arc_name: GetMedal
+  shop_model_name: GetMedalLife
+- id: 116
+  name: Wooden Shield
+  types:
+    - Shields
+    - Minor Items
+  oarc: GetShieldWood
+  shop_arc_name: GetShieldWood
+  shop_model_name: GetShieldWood
+- id: 125
+  name: Hylian Shield
+  types:
+    - Shields
+    - Minor Items
+  oarc: GetShieldHylia
+  shop_arc_name: GetShieldHylia
+  shop_model_name: GetShieldHylia
+- id: 126
+  name: Revitalizing Potion
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleRepair
+  shop_arc_name: GetBottleRepair
+  shop_model_name: GetBottleRepair
+  advancement: true
+- id: 127
+  name: Revitalizing Potion Plus
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleRepair
+  shop_arc_name: GetBottleRepair
+  shop_model_name: GetBottleRepair
+  advancement: true
+- id: 128
+  name: Small Seed Satchel
+  types:
+    - Ammo
+    - Minor Items
+  oarc: GetSpareSeedA # TODO upgrades?
+  shop_arc_name: GetSpareSeedA
+  shop_model_name: GetSpareSeedA
+- id: 131
+  name: Small Quiver
+  types:
+    - Ammo
+    - Minor Items
+  oarc: GetSpareQuiverA # TODO upgrades?
+  shop_arc_name: GetSpareQuiverA
+  shop_model_name: GetSpareQuiverA
+- id: 134
+  name: Small Bomb Bag
+  types:
+    - Ammo
+    - Minor Items
+  oarc: GetSpareBombBagA # TODO upgrades?
+  shop_arc_name: GetSpareBombBagA
+  shop_model_name: GetSpareBombBagA
+- id: 137
+  name: Whip
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetWhip
+  shop_arc_name: GetWhip
+  shop_model_name: GetWhip
+  advancement: true
+- id: 138
+  name: Fireshield Earrings
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetEarring
+  shop_arc_name: GetEarring
+  shop_model_name: GetEarring
+  advancement: true
+- id: 140
+  name: Big Bug Net
+  types:
+    - Major Items
+    - Item Wheel Items
+  oarc: GetNetB
+  shop_arc_name: GetNetB
+  shop_model_name: GetNetB
+  advancement: true
+- id: 141
+  name: Faron Grasshopper
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 142
+  name: Woodland Rhino Beetle
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 143
+  name: Deku Hornet
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 144
+  name: Skyloft Mantis
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 145
+  name: Volcanic Ladybug
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 146
+  name: Blessed Butterfly
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 147
+  name: Lanayru Ant
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 148
+  name: Sand Cicada
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 149
+  name: Gerudo Dragonfly
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 150
+  name: Eldin Roller
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 151
+  name: Sky Stag Beetle
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 152
+  name: Starry Firefly
+  types:
+    - Bugs
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 153
+  name: Empty Bottle
+  types:
+    - Major Items
+    - Side Quest Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetBottleEmpty
+  shop_model_name: GetBottleEmpty
+  advancement: true
+- id: 158
+  name: Cawlin's Letter
+  types:
+    - Major Items
+    - Side Quest Items
+  oarc: GetKobunALetter
+  shop_arc_name: GetKobunALetter
+  shop_model_name: GetKobunALetter
+  advancement: true
+- id: 159
+  name: Beedle's Insect Cage
+  types:
+    - Major Items
+    - Side Quest Items
+  oarc: GetTerryCage
+  shop_arc_name: GetTerryCage
+  shop_model_name: GetTerryCage
+  advancement: true
+- id: 160
+  name: Rattle
+  types:
+    - Major Items
+    - Side Quest Items
+  oarc:
+  - GetGaragara
+  - PutGaragara
+  shop_arc_name: GetGaragara
+  shop_model_name: GetGaragara
+  advancement: true
+- id: 161
+  name: Hornet Larvae
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 162
+  name: Bird Feather
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 163
+  name: Tumbleweed
+  types:
+    - Treasures
+    - Minor Items
+  oarc: GetSozaiC
+  shop_arc_name: GetSozaiC
+  shop_model_name: GetSozaiC
+- id: 164
+  name: Lizard Tail
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 165
+  name: Eldin Ore
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetSozaiE
+  shop_model_name: GetSozaiE
+- id: 166
+  name: Ancient Flower
+  types:
+    - Treasures
+    - Minor Items
+  oarc: GetSozaiF
+  shop_arc_name: GetSozaiF
+  shop_model_name: GetSozaiF
+- id: 167
+  name: Amber Relic
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 168
+  name: Dusk Relic
+  types:
+    - Treasures
+    - Minor Items
+  oarc: GetSozaiH
+  shop_arc_name: GetSozaiH
+  shop_model_name: GetSozaiH
+- id: 169
+  name: Jelly Blob
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 170
+  name: Monster Claw
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 171
+  name: Monster Horn
+  types:
+    - Treasures
+    - Minor Items
+  oarc: GetSozaiL
+  shop_arc_name: GetSozaiL
+  shop_model_name: GetSozaiL
+- id: 172
+  name: Ornamental Skull
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # TODO
+  shop_arc_name: null # TODO
+  shop_model_name: null # TODO
+- id: 173
+  name: Evil Crystal
+  types:
+    - Treasures
+    - Minor Items
+  oarc: null # ObjectPack
+  shop_arc_name: GetSozaiM
+  shop_model_name: GetSozaiM
+- id: 174
+  name: Blue Bird Feather
+  types:
+    - Treasures
+    - Minor Items
+  oarc: GetSozaiN
+  shop_arc_name: GetSozaiN
+  shop_model_name: GetSozaiN
+- id: 175
+  name: Golden Skull
+  types:
+    - Treasures
+    - Minor Items
+  oarc: GetSozaiO
+  shop_arc_name: GetSozaiO
+  shop_model_name: GetSozaiO
+- id: 176
+  name: Goddess Plume
+  types:
+    - Treasures
+    - Minor Items
+  oarc: GetSozaiP
+  shop_arc_name: GetSozaiP
+  shop_model_name: GetSozaiP
+- id: 177
+  name: Emerald Tablet
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetSekibanMapA
+  shop_arc_name: GetSekibanMapA
+  shop_model_name: SekibanMapA
+  advancement: true
+- id: 178
+  name: Ruby Tablet
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetSekibanMapB
+  shop_arc_name: GetSekibanMapB
+  shop_model_name: SekibanMapB
+  advancement: true
+- id: 179
+  name: Amber Tablet
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetSekibanMapC
+  shop_arc_name: GetSekibanMapC
+  shop_model_name: SekibanMapC
+  advancement: true
+- id: 180
+  name: Stone of Trials
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetSirenKey
+  shop_arc_name: GetSirenKey
+  shop_model_name: GetSirenKey
+  advancement: true
+- id: 186
+  name: Ballad of the Goddess
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 187
+  name: Farore's Courage
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 188
+  name: Nayru's Wisdom
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 189
+  name: Din's Power
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 190
+  name: Song of the Hero Part
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 191
+  name: Eldin Song of the Hero Part
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 192
+  name: Lanayru Song of the Hero Part
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 193
+  name: Song of the Hero
+  types:
+    - Major Items
+    - Main Quest Items
+    - Songs
+  oarc: GetHarp
+  shop_arc_name: GetHarp
+  shop_model_name: GetHarp
+  advancement: true
+- id: 194
+  name: Revitalizing Potion Plus Plus
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottleRepairS
+  shop_arc_name: GetBottleRepairS
+  shop_model_name: GetBottleRepairS
+  advancement: true
+- id: 195
+  name: Hot Pumpkin Soup
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottlePumpkin
+  shop_arc_name: GetBottlePumpkin
+  shop_model_name: GetBottlePumpkin
+  advancement: true
+- id: 196
+  name: Cold Pumpkin Soup
+  types:
+    - Bottles
+    - Major Items
+    - Side Quest Items
+  oarc: GetBottlePumpkin
+  shop_arc_name: GetBottlePumpkin
+  shop_model_name: GetBottlePumpkin
+  advancement: true
+- id: 197
+  name: Life Tree Seedling
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetSeedLife
+  shop_arc_name: GetSeedLife
+  shop_model_name: GetSeedLife
+  advancement: true
+- id: 198
+  name: Life Tree Fruit
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: GetFruitB
+  shop_arc_name: GetFruitB
+  shop_model_name: GetFruitB
+  advancement: true
+- id: 199
+  name: Extra Wallet
+  types:
+    - Wallets
+    - Minor Items
+  oarc: GetSparePurse
+  shop_arc_name: GetSparePurse
+  shop_model_name: GetSparePurse
+  advancement: true
+
+# Custom rando items
+- id: 200
+  name: Skyview Temple Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  advancement: true
+- id: 201
+  name: Lanayru Mining Facility Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  advancement: true
+- id: 202
+  name: Ancient Cistern Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  advancement: true
+- id: 203
+  name: Fire Sanctuary Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  advancement: true
+- id: 204
+  name: Sandship Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  advancement: true
+- id: 205
+  name: Sky Keep Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  advancement: true
+- id: 206
+  name: Lanayru Caves Small Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: null # ObjectPack
+  shop_arc_name: GetKeySmall
+  shop_model_name: GetKeySmallNormal
+  advancement: true
+- id: 207
+  name: Skyview Temple Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+- id: 208
+  name: Earth Temple Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+- id: 209
+  name: Lanayru Mining Facility Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+- id: 210
+  name: Ancient Cistern Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+- id: 211
+  name: Fire Sanctuary Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+- id: 212
+  name: Sandship Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+- id: 213
+  name: Sky Keep Map
+  types:
+    - Dungeon Items
+    - Maps
+  oarc: null # ObjectPack
+  shop_arc_name: GetMap
+  shop_model_name: GetMap
+- id: 214
+  name: Group of Tadtones
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: Onp
+  shop_arc_name: Onp
+  shop_model_name: OnpB
+  advancement: true
+- id: 215
+  name: Scrapper
+  types:
+    - Major Items
+    - Main Quest Items
+  oarc: DesertRobot
+  shop_arc_name: DesertRobot
+  shop_model_name: DesertRobot
+  advancement: true
+
+# AP-only dungeon key ring items (one ring per dungeon, replaces all small keys)
+- id: 220
+  name: Skyview Temple Key Ring
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: KeyRing
+  shop_arc_name: KeyRing
+  shop_model_name: KeyRing
+  advancement: true
+- id: 221
+  name: Lanayru Mining Facility Key Ring
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: KeyRing
+  shop_arc_name: KeyRing
+  shop_model_name: KeyRing
+  advancement: true
+- id: 222
+  name: Ancient Cistern Key Ring
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: KeyRing
+  shop_arc_name: KeyRing
+  shop_model_name: KeyRing
+  advancement: true
+- id: 223
+  name: Fire Sanctuary Key Ring
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: KeyRing
+  shop_arc_name: KeyRing
+  shop_model_name: KeyRing
+  advancement: true
+- id: 224
+  name: Sandship Key Ring
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: KeyRing
+  shop_arc_name: KeyRing
+  shop_model_name: KeyRing
+  advancement: true
+- id: 225
+  name: Sky Keep Key Ring
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: KeyRing
+  shop_arc_name: KeyRing
+  shop_model_name: KeyRing
+  advancement: true
+- id: 226
+  name: Lanayru Caves Key Ring
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: KeyRing
+  shop_arc_name: KeyRing
+  shop_model_name: KeyRing
+  advancement: true
+
+# AP-only skeleton key (one item unlocks all small key doors across all dungeons)
+- id: 227
+  name: Skeleton Key
+  types:
+    - Dungeon Items
+    - Small Keys
+  oarc: SkeletonKey
+  shop_arc_name: SkeletonKey
+  shop_model_name: SkeletonKey
+  advancement: true
+
+# - id: 240+ == traps
+
+- id: 250
+  name: Health Trap
+  types:
+    - Traps
+  oarc: null
+- id: 251
+  name: Groose Trap
+  types:
+    - Traps
+  oarc:
+    - RivalCmnAnm
+    - RivalNpcAnm
+- id: 252
+  name: Noise Trap
+  types:
+    - Traps
+  oarc: null
+- id: 253
+  name: Curse Trap
+  types:
+    - Traps
+  oarc: null
+- id: 254
+  name: Burn Trap
+  types:
+    - Traps
+  oarc: null
+
+#####################################################################
+#                      DO NOT USE ITEM ID 255                       #
+# THIS ID IS FREQUENTLY USED TO REPRESENT THE CONCEPT OF NO ITEM ID #
+#####################################################################
+
+# Dummy item to simulate game beatability for logic
+- id: 256
+  name: Game Beatable
+  types:
+    - Game Beatable
+  oarc: null
+  game_winning_item: true
+  advancement: true
+# Dummy items (for now) to simulate hitting goddess cubes
+- id: 257
+  name: Faron Woods Goddess Cube on West Great Tree near Exit
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Central Skyloft - Goddess Chest on West Cliff Island
+- id: 258
+  name: Faron Woods Goddess Cube on East Great Tree with Clawshots Target
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Volcanic Island - Inside Goddess Chest
+- id: 259
+  name: Faron Woods Goddess Cube on East Great Tree with Rope
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Inside the Thunderhead - Goddess Chest on East Island
+- id: 260
+  name: Deep Woods Goddess Cube near Goron
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Lumpy Pumpkin - Goddess Chest near Gossip Stone
+- id: 261
+  name: Deep Woods Goddess Cube in front of Temple
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Island Closest to Faron Pillar - Goddess Chest
+- id: 262
+  name: Deep Woods Goddess Cube on top of Temple
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Beedle's Island - Goddess Chest in Cage
+- id: 263
+  name: Lake Floria Goddess Cube
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Central Skyloft - Goddess Chest on Island near Waterfall
+- id: 264
+  name: Floria Waterfall Goddess Cube on High Ledge
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Fun Fun Island - Goddess Chest below Island
+- id: 265
+  name: Eldin Volcano Goddess Cube at Eldin Entrance
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Triple Island - Upper Goddess Chest
+- id: 266
+  name: Eldin Volcano Goddess Cube near Mogma Turf Entrance
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Island near Bamboo Island - Top Goddess Chest
+- id: 267
+  name: Eldin Volcano Goddess Cube West of Temple
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Bamboo Island - Goddess Chest behind Entrance
+- id: 268
+  name: Eldin Volcano Goddess Cube East of Temple
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Northeast Island - Goddess Chest in Cage
+- id: 269
+  name: Eldin Volcano Goddess Cube on Sand Slide
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Central Skyloft - Goddess Chest in Shed
+- id: 270
+  name: Mogma Turf Goddess Cube on Raised Pillar
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Isle of Songs - Lower Goddess Chest
+- id: 271
+  name: Volcano Summit Goddess Cube in Lava Lake
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Inside the Thunderhead - Mogma Mitts Island First Goddess Chest
+- id: 272
+  name: Volcano Summit Goddess Cube at Summit Waterfall
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Bug Heaven - Goddess Chest
+- id: 273
+  name: Volcano Summit Goddess Cube near Fire Sanctuary Entrance
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Isle of Songs - Top Goddess Chest
+- id: 274
+  name: Lanayru Mine Goddess Cube behind First Landing Robot
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Northeast Island - Goddess Chest behind Bombable Rocks
+- id: 275
+  name: Lanayru Desert Goddess Cube near Caged Robot
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Triple Island - Lower Goddess Chest
+- id: 276
+  name: Lanayru Desert Goddess Cube in Sand Oasis
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Volcanic Island - Outside Goddess Chest
+- id: 277
+  name: Lanayru Desert Goddess Cube in Secret Passageway
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Island near Bamboo Island - Goddess Chest in Cave
+- id: 278
+  name: Temple of Time Goddess Cube
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Beedle's Island - Top Goddess Chest
+- id: 279
+  name: Lanayru Gorge Goddess Cube
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Inside the Thunderhead - Mogma Mitts Island Second Goddess Chest
+- id: 280
+  name: Ancient Harbour Goddess Cube
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Bazaar - Goddess Chest
+- id: 281
+  name: Skipper's Retreat Goddess Cube
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Triple Island - Goddess Chest in Cage
+- id: 282
+  name: Pirate Stronghold Goddess Cube
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Central Skyloft - Goddess Chest on Waterfall Island
+- id: 283
+  name: Skyview Spring Goddess Cube
+  types:
+    - Goddess Cube
+  oarc: null
+  advancement: true
+  goddess_chest: Lumpy Pumpkin - Goddess Chest on Roof
+
+
+#####################################################################
+#                      DO NOT USE ITEM ID 511                       #
+# THIS ID IS FREQUENTLY USED TO REPRESENT THE CONCEPT OF NO ITEM ID #
+#####################################################################
