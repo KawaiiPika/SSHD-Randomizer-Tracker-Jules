@@ -1,0 +1,2511 @@
+###############################
+#           SPAWN             #
+###############################
+
+- type: Spawn
+  forward:
+    connection: Link's Spawn -> Knight Academy
+    exit_infos:
+      - stage: F405
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F001r
+        layer: 3
+        room: 1
+        entrance: 5
+
+###############################
+#          DUNGEONS           #
+###############################
+
+- type: Dungeon
+  forward:
+    connection: Deep Woods -> Skyview Entry
+    alias: Deep Woods -> Skyview Temple
+    exit_infos:
+      - stage: F101
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: D100
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Skyview Entry -> Deep Woods
+    alias: Skyview Temple -> Deep Woods
+    exit_infos:
+      - stage: D100
+        room: 0
+        index: 0
+      - stage: D100
+        room: 0
+        index: 2
+      - stage: D100
+        room: 2
+        index: 0
+      - stage: D100
+        room: 5
+        index: 0
+      - stage: D100
+        room: 9
+        index: 0
+      - stage: B100_1
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: F101
+        layer: 0
+        room: 0
+        entrance: 1
+    secondary_exit_infos: # Exit after striking goddess crest
+      - stage: B100_1
+        room: 0
+        index: 1
+- type: Dungeon
+  forward:
+    connection: Near Temple Entrance -> Earth Temple First Room
+    alias: Eldin Volcano -> Earth Temple
+    exit_infos:
+      - stage: F200
+        room: 4
+        index: 0
+    spawn_info:
+      - stage: D200
+        layer: 0
+        room: 1
+        entrance: 0
+  return:
+    connection: Earth Temple First Room -> Near Temple Entrance
+    alias: Earth Temple -> Eldin Volcano
+    exit_infos:
+      - stage: D200
+        room: 1
+        index: 0
+      - stage: D200
+        room: 1
+        index: 1
+      - stage: D200
+        room: 2
+        index: 0
+      - stage: D200
+        room: 4
+        index: 2
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 4
+        entrance: 1
+    secondary_exit_infos: # Exit after striking goddess crest
+      - stage: B210
+        room: 0
+        index: 0
+- type: Dungeon
+  forward:
+    connection: Top of LMF -> LMF First Room
+    alias: Lanayru Desert -> Lanayru Mining Facility
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 5
+    spawn_info:
+      - stage: D300
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: LMF First Room -> Lanayru Desert North
+    alias: Lanayru Mining Facility -> Lanayru Desert
+    # Conditional connections may only stay if the above connection
+    # is vanilla
+    conditional_vanilla_connections:
+     - LMF End of Hall of Ancient Robots -> Temple of Time West Post LMF Area
+    exit_infos:
+      - stage: D300
+        room: 0
+        index: 0
+      - stage: D300
+        room: 0
+        index: 1
+      - stage: D300
+        room: 5
+        index: 4
+      - stage: D300_1
+        room: 0
+        index: 0
+      - stage: D300_1
+        room: 0
+        index: 1
+      - stage: D300_1
+        room: 5
+        index: 4
+      - stage: F300_5
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 5
+    secondary_exit_infos: # Exit after the last minecart ride
+      - stage: F300_5
+        room: 0
+        index: 0
+    secondary_spawn_info:
+      - stage: F300_4
+        layer: 2
+        room: 0
+        entrance: 5
+- type: Dungeon
+  forward:
+    connection: Floria Waterfall Temple Ledge -> Ancient Cistern Lobby
+    alias: Floria Waterfall -> Ancient Cistern
+    exit_infos:
+      - stage: F102_1
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: D101
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Ancient Cistern Lobby -> Floria Waterfall Temple Ledge
+    alias: Ancient Cistern -> Floria Waterfall
+    exit_infos:
+      - stage: D101
+        room: 0
+        index: 2
+      - stage: D101
+        room: 0
+        index: 3
+      - stage: D101
+        room: 3
+        index: 1
+      - stage: D101
+        room: 4
+        index: 2
+      - stage: D101
+        room: 5
+        index: 0
+    spawn_info:
+      - stage: F102_1
+        layer: 0
+        room: 0
+        entrance: 1
+    secondary_exit_infos: # Exit after striking goddess crest
+      - stage: B101_1
+        room: 0
+        index: 2
+- type: Dungeon
+  forward:
+    connection: Lanayru Sand Sea -> Sandship Main Deck
+    alias: Lanayru Sand Sea -> Sandship
+    exit_infos:
+      - stage: F301_1
+        room: 0
+        index: 1
+      - stage: F301 # Going from harbour to sandship
+        room: 0
+        index: 0
+      - stage: F301
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: D301
+        layer: 1
+        room: 0
+        entrance: 0
+  return:
+    connection: Sandship Main Deck -> Lanayru Sand Sea
+    alias: Sandship -> Lanayru Sand Sea
+    exit_infos:
+      - stage: D301
+        room: 0
+        index: 0
+      - stage: D301
+        room: 0
+        index: 1
+      - stage: D301
+        room: 1
+        index: 2
+      - stage: D301
+        room: 2
+        index: 0
+      - stage: D301
+        room: 6
+        index: 0
+      - stage: D301
+        room: 9
+        index: 1
+      - stage: D301
+        room: 12
+        index: 0
+      - stage: D301
+        room: 13
+        index: 0
+      - stage: B301
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F301_1
+        layer: 0
+        room: 0
+        entrance: 4
+    secondary_exit_infos: # Exit after striking goddess crest
+      - stage: B301
+        room: 0
+        index: 3
+      - stage: D301 # Custom exit for striking crest on non-boss stage
+        room: 0
+        index: 7
+    secondary_spawn_info: # Spawn at Harbour where Skipper thanks you
+      - stage: F301
+        layer: 0
+        room: 0
+        entrance: 3
+- type: Dungeon
+  forward:
+    connection: Outside Fire Sanctuary -> Fire Sanctuary First Room
+    alias: Inside the Volcano -> Fire Sanctuary
+    exit_infos:
+      - stage: F201_3
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: D201
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Fire Sanctuary First Room -> Outside Fire Sanctuary
+    alias: Fire Sanctuary -> Inside the Volcano
+    exit_infos:
+      - stage: D201
+        room: 0
+        index: 1
+      - stage: D201
+        room: 3
+        index: 2
+      - stage: D201
+        room: 10
+        index: 2
+      - stage: D201_1
+        room: 1
+        index: 0
+      - stage: D201_1
+        room: 7
+        index: 0
+      - stage: D201_1
+        room: 5
+        index: 3
+      - stage: D201_1
+        room: 6
+        index: 2
+    spawn_info:
+      - stage: F201_3
+        layer: 0
+        room: 0
+        entrance: 1
+    secondary_exit_infos: # Exit after striking goddess crest
+      - stage: B201_1
+        room: 0
+        index: 1
+- type: Dungeon
+  forward:
+    connection: Sky Keep Entrance Platform -> Sky Keep Entryway
+    alias: Central Skyloft -> Sky Keep
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 48
+    spawn_info:
+      - stage: D003_7
+        layer: 0
+        room: 0
+        entrance: 4
+  return:
+    connection: Sky Keep Entryway -> Sky Keep Entrance Platform
+    alias: Sky Keep -> Central Skyloft
+    exit_infos: # most of them not needed
+      - stage: D003_0
+        room: 0
+        index: 1
+      - stage: D003_0
+        room: 0
+        index: 3
+      - stage: D003_1
+        room: 0
+        index: 1
+      - stage: D003_1
+        room: 0
+        index: 2
+      - stage: D003_2
+        room: 0
+        index: 1
+      - stage: D003_2
+        room: 0
+        index: 3
+      - stage: D003_3
+        room: 0
+        index: 1
+      - stage: D003_3
+        room: 0
+        index: 3
+      - stage: D003_4
+        room: 0
+        index: 1
+      - stage: D003_4
+        room: 0
+        index: 2
+      - stage: D003_5
+        room: 0
+        index: 1
+      - stage: D003_5
+        room: 0
+        index: 2
+      - stage: D003_6
+        room: 0
+        index: 1
+      - stage: D003_6
+        room: 0
+        index: 2
+      - stage: D003_7
+        room: 0
+        index: 1
+      - stage: D003_7
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 53
+    secondary_exit_infos: # Exit getting all 3 triforce pieces
+      - stage: F407
+        room: 0
+        index: 1
+    secondary_spawn_info: # Idk where this is
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 52
+
+###############################
+#           TRIALS            #
+###############################
+
+- type: Trial Gate
+  forward:
+    connection: Central Skyloft -> The Goddess's Silent Realm
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 45
+    spawn_info:
+      - stage: S000
+        layer: 2
+        room: 0
+        entrance: 0
+  return:
+    connection: The Goddess's Silent Realm -> Central Skyloft
+    exit_infos:
+      - stage: S000
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 83
+- type: Trial Gate
+  forward:
+    connection: Faron Woods -> Farore's Silent Realm
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 8
+    spawn_info:
+      - stage: S100
+        layer: 2
+        room: 0
+        entrance: 0
+  return:
+    connection: Farore's Silent Realm -> Faron Woods
+    exit_infos:
+      - stage: S100
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 48
+- type: Trial Gate
+  forward:
+    connection: Volcano Ascent -> Din's Silent Realm
+    alias: Eldin Volcano -> Din's Silent Realm
+    exit_infos:
+      - stage: F200
+        room: 2
+        index: 4
+    spawn_info:
+      - stage: S200
+        layer: 2
+        room: 2
+        entrance: 0
+  return:
+    connection: Din's Silent Realm -> Volcano Ascent
+    alias: Din's Silent Realm -> Eldin Volcano
+    exit_infos:
+      - stage: S200
+        room: 2
+        index: 1
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 2
+        entrance: 5
+- type: Trial Gate
+  forward:
+    connection: Lanayru Desert North -> Nayru's Silent Realm
+    alias: Lanayru Desert -> Nayru's Silent Realm
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 7
+    spawn_info:
+      - stage: S300
+        layer: 2
+        room: 0
+        entrance: 0
+  return:
+    connection: Nayru's Silent Realm -> Lanayru Desert North
+    alias: Nayru's Silent Realm -> Lanayru Desert
+    exit_infos:
+      - stage: S300
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 4
+
+###############################
+#        GATE OF TIME         #
+###############################
+
+- type: Gate of Time
+  forward:
+    connection: Sealed Temple -> Temple of Hylia
+    alias: Sealed Temple -> Gate of Time
+    exit_infos:
+      - stage: F402
+        room: 2
+        index: 5
+    spawn_info:
+      - stage: F404
+        layer: 1
+        room: 2
+        entrance: 4
+  return:
+    connection: Temple of Hylia -> Sealed Temple
+    alias: Gate of Time -> Sealed Temple
+    exit_infos:
+      - stage: F404
+        room: 2
+        index: 0
+    spawn_info:
+      - stage: F402
+        layer: 0
+        room: 2
+        entrance: 2
+
+###############################
+#            DOORS            #
+###############################
+
+- type: Door
+  door_couple_tag: Knight Academy Lower
+  forward:
+    connection: Knight Academy Lower East Door Exterior -> Knight Academy Lower East Door Interior
+    alias: Upper Skyloft -> Knight Academy Lower East Door
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F001r
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Knight Academy Lower East Door Interior -> Knight Academy Lower East Door Exterior
+    alias: Knight Academy Lower East Door -> Upper Skyloft
+    exit_infos:
+      - stage: F001r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 4
+- type: Door
+  door_couple_tag: Knight Academy Lower
+  forward:
+    connection: Knight Academy Lower West Door Exterior -> Knight Academy Lower West Door Interior
+    alias: Upper Skyloft -> Knight Academy Lower West Door
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: F001r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Knight Academy Lower West Door Interior -> Knight Academy Lower West Door Exterior
+    alias: Knight Academy Lower West Door -> Upper Skyloft
+    exit_infos:
+      - stage: F001r
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 5
+- type: Door
+  door_couple_tag: Knight Academy Upper
+  forward:
+    connection: Knight Academy Upper North Door Exterior -> Knight Academy Upper North Door Interior
+    alias: Upper Skyloft -> Knight Academy Upper North Door
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 24
+    spawn_info:
+      - stage: F001r
+        layer: 0
+        room: 0
+        entrance: 4
+  return:
+    connection: Knight Academy Upper North Door Interior -> Knight Academy Upper North Door Exterior
+    alias: Knight Academy Upper North Door -> Upper Skyloft
+    exit_infos:
+      - stage: F001r
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 24
+- type: Door
+  door_couple_tag: Knight Academy Upper
+  forward:
+    connection: Knight Academy Upper South Door Exterior -> Knight Academy Upper South Door Interior
+    alias: Upper Skyloft -> Knight Academy Upper South Door
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 23
+    spawn_info:
+      - stage: F001r
+        layer: 0
+        room: 0
+        entrance: 3
+  return:
+    connection: Knight Academy Upper South Door Interior -> Knight Academy Upper South Door Exterior
+    alias: Knight Academy Upper South Door -> Upper Skyloft
+    exit_infos:
+      - stage: F001r
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 23
+- type: Door
+  door_couple_tag: Sparring Hall
+  forward:
+    connection: Sparring Hall North Door Exterior -> Sparring Hall North Door Interior
+    alias: Upper Skyloft -> Sparring Hall North Door
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 27
+    spawn_info:
+      - stage: F009r
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Sparring Hall North Door Interior -> Sparring Hall North Door Exterior
+    alias: Sparring Hall North Door -> Upper Skyloft
+    exit_infos:
+      - stage: F009r
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 26
+- type: Door
+  door_couple_tag: Sparring Hall
+  forward:
+    connection: Sparring Hall South Door Exterior -> Sparring Hall South Door Interior
+    alias: Upper Skyloft -> Sparring Hall South Door
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 20
+    spawn_info:
+      - stage: F009r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Sparring Hall South Door Interior -> Sparring Hall South Door Exterior
+    alias: Sparring Hall South Door -> Upper Skyloft
+    exit_infos:
+      - stage: F009r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 21
+- type: Door
+  forward:
+    connection: Central Skyloft -> Orielle and Parrow's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 31
+    spawn_info:
+      - stage: F005r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Orielle and Parrow's House -> Central Skyloft
+    exit_infos:
+      - stage: F005r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 30
+- type: Door
+  forward:
+    connection: Central Skyloft -> Peatrice's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 38
+    spawn_info:
+      - stage: F018r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Peatrice's House -> Central Skyloft
+    exit_infos:
+      - stage: F018r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 38
+- type: Door
+  forward:
+    connection: Central Skyloft -> Kukiel's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 10
+    spawn_info:
+      - stage: F006r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Kukiel's House -> Central Skyloft
+    exit_infos:
+      - stage: F006r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 31
+- type: Door
+  forward:
+    connection: Central Skyloft -> Piper's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 32
+    spawn_info:
+      - stage: F007r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Piper's House -> Central Skyloft
+    exit_infos:
+      - stage: F007r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 32
+- type: Door
+  forward:
+    connection: Skyloft Village -> Bertie's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 34
+    spawn_info:
+      - stage: F014r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Bertie's House -> Skyloft Village
+    exit_infos:
+      - stage: F014r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 34
+- type: Door
+  forward:
+    connection: Skyloft Village -> Sparrot's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 33
+    spawn_info:
+      - stage: F013r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Sparrot's House -> Skyloft Village
+    exit_infos:
+      - stage: F013r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 33
+- type: Door
+  forward:
+    connection: Skyloft Village -> Pipit's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 36
+    spawn_info:
+      - stage: F016r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Pipit's House -> Skyloft Village
+    exit_infos:
+      - stage: F016r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 36
+- type: Door
+  forward:
+    connection: Skyloft Village -> Gondo's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 35
+    spawn_info:
+      - stage: F015r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Gondo's House -> Skyloft Village
+    exit_infos:
+      - stage: F015r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 35
+- type: Door
+  forward:
+    connection: Skyloft Village -> Rupin's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 37
+    spawn_info:
+      - stage: F017r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Rupin's House -> Skyloft Village
+    exit_infos:
+      - stage: F017r
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 37
+- type: Door
+  forward:
+    connection: Skyloft Village -> Batreaux's House
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 30
+    spawn_info:
+      - stage: F012r
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Batreaux's House -> Skyloft Village
+    exit_infos:
+      - stage: F012r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 29
+- type: Door
+  door_couple_tag: Lumpy Pumpkin
+  forward:
+    connection: Lumpy Pumpkin Main East Door Exterior -> Lumpy Pumpkin Main East Door Interior
+    alias: Sky -> Lumpy Pumpkin Main East Door
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 18
+    spawn_info:
+      - stage: F011r
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Lumpy Pumpkin Main East Door Interior -> Lumpy Pumpkin Main East Door Exterior
+    alias: Lumpy Pumpkin Main East Door -> Sky
+    exit_infos:
+      - stage: F011r
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F020
+        layer: 0
+        room: 0
+        entrance: 23
+- type: Door
+  door_couple_tag: Lumpy Pumpkin
+  forward:
+    connection: Lumpy Pumpkin Main West Door Exterior -> Lumpy Pumpkin Main West Door Interior
+    alias: Sky -> Lumpy Pumpkin Main West Door
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 19
+    spawn_info:
+      - stage: F011r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Lumpy Pumpkin Main West Door Interior -> Lumpy Pumpkin Main West Door Exterior
+    alias: Lumpy Pumpkin Main West Door -> Sky
+    exit_infos:
+      - stage: F011r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F020
+        layer: 0
+        room: 0
+        entrance: 22
+- type: Door
+  forward:
+    connection: Lumpy Pumpkin Back Door Exterior -> Lumpy Pumpkin Back Door Interior
+    alias: Sky -> Lumpy Pumpkin Back Door
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 20
+    spawn_info:
+      - stage: F011r
+        layer: 0
+        room: 0
+        entrance: 3
+  return:
+    connection: Lumpy Pumpkin Back Door Interior -> Lumpy Pumpkin Back Door Exterior
+    alias: Lumpy Pumpkin Back Door -> Sky
+    exit_infos:
+      - stage: F011r
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F020
+        layer: 0
+        room: 0
+        entrance: 24
+- type: Door
+  forward:
+    connection: Sealed Grounds Spiral -> Sealed Temple
+    exit_infos:
+      - stage: F401
+        room: 1
+        index: 0
+    spawn_info:
+      - stage: F402
+        layer: 0
+        room: 2
+        entrance: 0
+  return:
+    connection: Sealed Temple -> Sealed Grounds Spiral
+    exit_infos:
+      - stage: F402
+        room: 2
+        index: 0
+    spawn_info:
+      - stage: F401
+        layer: 0
+        room: 1
+        entrance: 2
+- type: Door
+  forward:
+    connection: Behind the Temple -> Sealed Temple
+    exit_infos:
+      - stage: F400
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F402
+        layer: 0
+        room: 2
+        entrance: 1
+  return:
+    connection: Sealed Temple -> Behind the Temple
+    exit_infos:
+      - stage: F402
+        room: 2
+        index: 1
+    spawn_info:
+      - stage: F400
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Door
+  forward:
+    connection: Skipper's Retreat Top -> Skipper's Retreat Shack
+    alias: Skipper's Retreat -> Skipper's Shack
+    exit_infos:
+      - stage: F301_3
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F301_5
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Skipper's Retreat Shack -> Skipper's Retreat Top
+    alias: Skipper's Shack -> Skipper's Retreat
+    exit_infos:
+      - stage: F301_5
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F301_3
+        layer: 0
+        room: 0
+        entrance: 1
+
+###############################
+#         INTERIORS           #
+###############################
+
+- type: Interior
+  forward:
+    connection: Upper Skyloft -> Knight Academy Chimney
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 57
+    spawn_info:
+      - stage: F001r
+        layer: 0
+        room: 6
+        entrance: 1
+  return:
+    connection: Knight Academy Chimney -> Upper Skyloft
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 100
+- type: Interior
+  forward:
+    connection: Upper Skyloft -> Inside the Statue of the Goddess
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 5
+    spawn_info:
+      - stage: F008r
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Inside the Statue of the Goddess -> Upper Skyloft
+    exit_infos:
+      - stage: F008r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 6
+- type: Interior
+  forward:
+    connection: Central Skyloft -> Bazaar North
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F004r
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Bazaar North -> Central Skyloft
+    exit_infos:
+      - stage: F004r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 2
+- type: Interior
+  forward:
+    connection: Central Skyloft -> Bazaar West
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 19
+    spawn_info:
+      - stage: F004r
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Bazaar West -> Central Skyloft
+    exit_infos:
+      - stage: F004r
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 20
+- type: Interior
+  forward:
+    connection: Central Skyloft -> Bazaar South
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F004r
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Bazaar South -> Central Skyloft
+    exit_infos:
+      - stage: F004r
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 3
+# Include again once entrance issues have been fixed
+# - type: Interior
+#   forward:
+#     connection: Central Skyloft -> Beedle's Airshop
+#     exit_infos:
+#       - stage: F000
+#         room: 0
+#         index: 26
+#     spawn_info:
+#       - stage: F002r
+#         layer: 0
+#         room: 0
+#         entrance: 0
+#   return:
+#     connection: Beedle's Airshop -> Central Skyloft
+#     exit_infos:
+#       - stage: F002r
+#         room: 0
+#         index: 0
+#       - stage: F002r # Trapdoor exit
+#         room: 0
+#         index: 1
+#     spawn_info:
+#       - stage: F000
+#         layer: 0
+#         room: 0
+#         entrance: 0
+- type: Interior
+  forward:
+    connection: Central Skyloft -> Waterfall Cave
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 6
+    spawn_info:
+      - stage: D000
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Waterfall Cave -> Central Skyloft
+    exit_infos:
+      - stage: D000
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 7
+- type: Interior
+  forward:
+    connection: Waterfall Cave -> Skyloft Past Waterfall Cave
+    exit_infos:
+      - stage: D000
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F000
+        layer: 0
+        room: 0
+        entrance: 8
+  return:
+    connection: Skyloft Past Waterfall Cave -> Waterfall Cave
+    exit_infos:
+      - stage: F000
+        room: 0
+        index: 7
+    spawn_info:
+      - stage: D000
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Interior
+  forward:
+    connection: Bamboo Island -> Bamboo Island Interior
+    alias: Sky -> Bamboo Island
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 13
+    spawn_info:
+      - stage: F019r
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Bamboo Island Interior -> Bamboo Island
+    alias: Bamboo Island -> Sky
+    exit_infos:
+      - stage: F019r
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F020
+        layer: 0
+        room: 0
+        entrance: 11
+- type: Interior
+  forward:
+    connection: Isle of Songs -> Isle of Songs Interior
+    alias: The Thunderhead -> Isle of Songs
+    exit_infos:
+      - stage: F023
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F010r
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Isle of Songs Interior -> Isle of Songs
+    alias: Isle of Songs -> The Thunderhead
+    exit_infos:
+      - stage: F010r
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F023
+        layer: 0
+        room: 0
+        entrance: 4
+- type: Interior
+  forward:
+    connection: Faron Woods -> Great Tree Interior Underwater
+    alias: Faron Woods -> Great Tree Underwater
+    can_start_at: false
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 6
+    spawn_info:
+      - stage: F100_1
+        layer: 0
+        room: 0
+        entrance: 4
+  return:
+    connection: Great Tree Interior Underwater -> Faron Woods
+    alias: Great Tree Underwater -> Faron Woods
+    exit_infos:
+      - stage: F100_1
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 7
+- type: Interior
+  forward:
+    connection: Great Tree Exterior Platforms -> Great Tree Interior Middle
+    alias: Faron Woods -> Great Tree Swinging Platforms
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F100_1
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Great Tree Interior Middle -> Great Tree Exterior Platforms
+    alias: Great Tree Swinging Platforms -> Faron Woods
+    exit_infos:
+      - stage: F100_1
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 4
+- type: Interior
+  forward:
+    connection: Great Tree Exterior Platforms -> Great Tree Interior Upper
+    alias: Faron Woods -> Great Tree Inner Bridge
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: F100_1
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Great Tree Interior Upper -> Great Tree Exterior Platforms
+    alias: Great Tree Inner Bridge -> Faron Woods
+    exit_infos:
+      - stage: F100_1
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 5
+- type: Interior
+  forward:
+    connection: Great Tree Exterior Top -> Great Tree Interior Upper
+    alias: Faron Woods Top of Great Tree -> Great Tree Inner Bridge
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 5
+    spawn_info:
+      - stage: F100_1
+        layer: 0
+        room: 0
+        entrance: 3
+  return:
+    connection: Great Tree Interior Upper -> Great Tree Exterior Top
+    alias: Great Tree Inner Bridge -> Faron Woods Top of Great Tree
+    exit_infos:
+      - stage: F100_1
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 6
+- type: Interior
+  forward:
+    connection: Outside Thrill Digger Cave -> Thrill Digger Cave
+    alias: Eldin Volcano -> Thrill Digger
+    exit_infos:
+      - stage: F200
+        room: 4
+        index: 1
+    spawn_info:
+      - stage: F211
+        layer: 1
+        room: 0
+        entrance: 0
+  return:
+    connection: Thrill Digger Cave -> Outside Thrill Digger Cave
+    alias: Thrill Digger -> Eldin Volcano
+    exit_infos:
+      - stage: F211
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 4
+        entrance: 2
+- type: Interior
+  forward:
+    connection: Lanayru Desert North -> Lightning Node
+    alias: Lanayru Desert -> Lightning Node
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F300_2
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Lightning Node -> Lanayru Desert North
+    alias: Lightning Node -> Lanayru Desert
+    exit_infos:
+      - stage: F300_2
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 7
+- type: Interior
+  forward:
+    connection: Lanayru Desert East -> Fire Node
+    alias: Lanayru Desert -> Fire Node
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F300_3
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Fire Node -> Lanayru Desert East
+    alias: Fire Node -> Lanayru Desert
+    exit_infos:
+      - stage: F300_3
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 3
+- type: Interior
+  forward:
+    connection: Lanayru Mine Caves Platform -> Lanayru Caves
+    alias: Lanayru Mine -> Lanayru Caves
+    exit_infos:
+      - stage: F300_1
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F303
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Lanayru Caves -> Lanayru Mine Caves Platform
+    alias: Lanayru Caves -> Lanayru Mine
+    exit_infos:
+      - stage: F303
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F300_1
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Interior
+  forward:
+    connection: Sand Oasis Highest Platform -> Lanayru Caves
+    alias: Lanayru Desert -> Lanayru Caves
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 8
+    spawn_info:
+      - stage: F303
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Lanayru Caves -> Sand Oasis Highest Platform
+    alias: Lanayru Caves -> Lanayru Desert
+    exit_infos:
+      - stage: F303
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 6
+- type: Interior
+  forward:
+    connection: Ancient Harbour Highest Platform -> Lanayru Caves Past Locked Door
+    alias: Ancient Harbour -> Lanayru Caves
+    exit_infos:
+      - stage: F301
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F303
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Lanayru Caves Past Locked Door -> Ancient Harbour Highest Platform
+    alias: Lanayru Caves -> Ancient Harbour
+    exit_infos:
+      - stage: F303
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F301
+        layer: 0
+        room: 0
+        entrance: 0
+- type: Interior
+  forward:
+    connection: Lanayru Gorge -> Lanayru Caves Past Crawlspace
+    alias: Lanayru Gorge -> Lanayru Caves
+    exit_infos:
+      - stage: F302
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F303
+        layer: 0
+        room: 0
+        entrance: 3
+  return:
+    connection: Lanayru Caves Past Crawlspace -> Lanayru Gorge
+    alias: Lanayru Caves -> Lanayru Gorge
+    exit_infos:
+      - stage: F303
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F302
+        layer: 2
+        room: 0
+        entrance: 0
+- type: Interior
+  forward:
+    connection: Shipyard End of Minecart Ride -> Construction Bay Upper Platform
+    alias: Shipyard -> Construction Bay Upper Door
+    exit_infos:
+      - stage: F301_4
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F301_7
+        layer: 0
+        room: 0
+        entrance: 4
+  return:
+    connection: Construction Bay Upper Platform -> Shipyard End of Minecart Ride
+    alias: Construction Bay Upper Door -> Shipyard
+    exit_infos:
+      - stage: F301_7
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F301_4
+        layer: 0
+        room: 0
+        entrance: 4
+- type: Interior
+  forward:
+    connection: Shipyard Dock -> Construction Bay Sand Pit
+    alias: Shipyard -> Construction Bay Lower Door
+    can_start_at: false
+    exit_infos:
+      - stage: F301_4
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: F301_7
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Construction Bay Sand Pit -> Shipyard Dock
+    alias: Construction Bay Lower Door -> Shipyard
+    exit_infos:
+      - stage: F301_7
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F301_4
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Interior
+  forward:
+    connection: Pirate Stronghold Dock -> Pirate Stronghold Side Door
+    exit_infos:
+      - stage: F301_6
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F301_2
+        layer: 0
+        room: 1
+        entrance: 0
+  return:
+    connection: Pirate Stronghold Side Door -> Pirate Stronghold Dock
+    exit_infos:
+      - stage: F301_2
+        room: 1
+        index: 0
+    spawn_info:
+      - stage: F301_6
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Interior
+  forward:
+    connection: Pirate Stronghold Inside the Shark Head -> Pirate Stronghold Top Door
+    exit_infos:
+      - stage: F301_6
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F301_2
+        layer: 0
+        room: 1
+        entrance: 1
+  return:
+    connection: Pirate Stronghold Top Door -> Pirate Stronghold Inside the Shark Head
+    exit_infos:
+      - stage: F301_2
+        room: 1
+        index: 2
+    spawn_info:
+      - stage: F301_6
+        layer: 0
+        room: 0
+        entrance: 2
+
+###############################
+#         OVERWORLD           #
+###############################
+
+- type: Overworld
+  forward:
+    connection: Sealed Grounds Upper Ledge -> Behind the Temple
+    alias: Sealed Grounds -> Behind the Temple
+    exit_infos:
+      - stage: F401
+        room: 1
+        index: 1
+    spawn_info:
+      - stage: F400
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Behind the Temple -> Sealed Grounds Upper Ledge
+    alias: Behind the Temple -> Sealed Grounds
+    exit_infos:
+      - stage: F400
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F401
+        layer: 0
+        room: 1
+        entrance: 0
+- type: Overworld
+  forward:
+    connection: Behind the Temple -> Faron Woods Entry
+    alias: Behind the Temple -> Faron Woods
+    exit_infos:
+      - stage: F400
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Faron Woods Entry -> Behind the Temple
+    alias: Faron Woods -> Behind the Temple
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F400
+        layer: 0
+        room: 0
+        entrance: 3
+- type: Overworld
+  forward:
+    connection: Faron Woods Ledge to Deep Woods -> Deep Woods Entry
+    alias: Faron Woods -> Deep Woods
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 13
+    spawn_info:
+      - stage: F101
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Deep Woods Entry -> Faron Woods Ledge to Deep Woods
+    alias: Deep Woods -> Faron Woods
+    exit_infos:
+      - stage: F101
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 45
+- type: Overworld
+  forward:
+    connection: Faron Woods -> Lake Floria
+    can_start_at: false
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 9
+      - stage: F100
+        room: 0
+        index: 12
+    spawn_info:
+      - stage: F102
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Lake Floria -> Faron Woods
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 100 # Entrance added for rando
+- type: Overworld
+  forward:
+    connection: Lake Floria After Emerged Area -> Farore's Lair
+    alias: Lake Floria -> Farore's Lair
+    exit_infos:
+      - stage: F102
+        room: 4
+        index: 0
+    spawn_info:
+      - stage: F102_2
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Farore's Lair -> Lake Floria After Emerged Area
+    alias: Farore's Lair -> Lake Floria
+    can_start_at: false
+    exit_infos:
+      - stage: F102_2
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F102
+        layer: 0
+        room: 4
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Farore's Lair -> Floria Waterfall
+    exit_infos:
+      - stage: F102_2
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F102_1
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Floria Waterfall -> Farore's Lair
+    exit_infos:
+      - stage: F102_1
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F102_2
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Floria Waterfall -> Faron Woods Floria Shortcut Ledge
+    alias: Floria Waterfall -> Faron Woods
+    exit_infos:
+      - stage: F102_1
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 17
+  return:
+    connection: Faron Woods Floria Shortcut Ledge -> Floria Waterfall
+    alias: Faron Woods -> Floria Waterfall
+    exit_infos:
+      - stage: F100
+        room: 0
+        index: 11
+    spawn_info:
+      - stage: F102_1
+        layer: 0
+        room: 0
+        entrance: 2
+- type: Overworld
+  forward:
+    connection: Volcano East -> Mogma Turf Dive
+    alias: Eldin Volcano -> Mogma Turf Dive
+    exit_infos:
+      - stage: F200
+        room: 2
+        index: 1
+    spawn_info:
+      - stage: F210
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Mogma Turf -> Volcano East
+    alias: Mogma Turf First Vent -> Eldin Volcano
+    exit_infos:
+      - stage: F210
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 2
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Mogma Turf Final Vent -> Past Mogma Turf
+    alias: Mogma Turf Second Vent -> Eldin Volcano
+    exit_infos:
+      - stage: F210
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 2
+        entrance: 2
+  return:
+    connection: Past Mogma Turf -> Mogma Turf Final Vent
+    alias: Eldin Volcano -> Mogma Turf Second Vent
+    spawn_info:
+      - stage: F210
+        layer: 0
+        room: 0
+        entrance: 100 # Custom entrance for rando
+- type: Overworld
+  forward:
+    connection: Hot Cave -> Volcano Summit
+    alias: Eldin Volcano -> Volcano Summit
+    can_start_at: false
+    exit_infos:
+      - stage: F200
+        room: 5
+        index: 1
+    spawn_info:
+      - stage: F201_1
+        layer: 0
+        room: 0
+        entrance: 4
+  return:
+    connection: Volcano Summit -> Hot Cave
+    alias: Volcano Summit -> Eldin Volcano
+    exit_infos:
+      - stage: F201_1
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 5
+        entrance: 2
+- type: Overworld
+  forward:
+    connection: Volcano Summit -> Volcano Summit Waterfall
+    exit_infos:
+      - stage: F201_1
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F201_4
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Volcano Summit Waterfall -> Volcano Summit
+    can_start_at: false
+    exit_infos:
+      - stage: F201_4
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F201_1
+        layer: 0
+        room: 0
+        entrance: 2
+- type: Overworld
+  forward:
+    connection: Volcano Summit -> Past Volcano Summit
+    alias: Volcano Summit -> Inside the Volcano
+    exit_infos:
+      - stage: F201_1
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F201_3
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Past Volcano Summit -> Volcano Summit
+    alias: Inside the Volcano -> Volcano Summit
+    can_start_at: false
+    exit_infos:
+      - stage: F201_3
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F201_1
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Lanayru Mine In Minecart -> Lanayru Desert South
+    alias: Lanayru Mine -> Lanayru Desert
+    exit_infos:
+      - stage: F300_1
+        room: 2
+        index: 0
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 2
+  return:
+    connection: Lanayru Desert South -> Lanayru Mine In Minecart
+    alias: Lanayru Desert -> Lanayru Mine
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F300_1
+        layer: 0
+        room: 2
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Sand Oasis End -> Temple of Time South
+    alias: Lanayru Desert -> Temple of Time South
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F300_4
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Temple of Time South -> Sand Oasis End
+    alias: Temple of Time South -> Lanayru Desert
+    exit_infos:
+      - stage: F300_4
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 0
+- type: Overworld
+  forward:
+    connection: Temple of Time North -> Lanayru Desert North
+    alias: Temple of Time North -> Lanayru Desert
+    exit_infos:
+      - stage: F300_4
+        room: 0
+        index: 1
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 1
+  return:
+    connection: Lanayru Desert North -> Temple of Time North
+    alias: Lanayru Desert -> Temple of Time North
+    exit_infos:
+      - stage: F300
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: F300_4
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Ancient Harbour -> Lanayru Sand Sea
+    exit_infos:
+      - stage: F301
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F301_1
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Lanayru Sand Sea -> Ancient Harbour
+    exit_infos:
+      - stage: F301_1
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F301
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Lanayru Sand Sea -> Skipper's Retreat Dock
+    alias: Lanayru Sand Sea -> Skipper's Retreat
+    exit_infos:
+      - stage: F301_1
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F301_3
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Skipper's Retreat Dock -> Lanayru Sand Sea
+    alias: Skipper's Retreat -> Lanayru Sand Sea
+    exit_infos:
+      - stage: F301_3
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F301_1
+        layer: 0
+        room: 0
+        entrance: 1
+- type: Overworld
+  forward:
+    connection: Lanayru Sand Sea -> Shipyard Dock
+    alias: Lanayru Sand Sea -> Shipyard
+    exit_infos:
+      - stage: F301_1
+        room: 0
+        index: 3
+    spawn_info:
+      - stage: F301_4
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Shipyard Dock -> Lanayru Sand Sea
+    alias: Shipyard -> Lanayru Sand Sea
+    exit_infos:
+      - stage: F301_4
+        room: 0
+        index: 2
+    spawn_info:
+      - stage: F301_1
+        layer: 0
+        room: 0
+        entrance: 2
+- type: Overworld
+  forward:
+    connection: Lanayru Sand Sea -> Pirate Stronghold Dock
+    alias: Lanayru Sand Sea -> Pirate Stronghold
+    exit_infos:
+      - stage: F301_1
+        room: 0
+        index: 4
+    spawn_info:
+      - stage: F301_6
+        layer: 0
+        room: 0
+        entrance: 0
+  return:
+    connection: Pirate Stronghold Dock -> Lanayru Sand Sea
+    alias: Pirate Stronghold -> Lanayru Sand Sea
+    exit_infos:
+      - stage: F301_6
+        room: 0
+        index: 0
+    spawn_info:
+      - stage: F301_1
+        layer: 0
+        room: 0
+        entrance: 3
+
+###############################
+#        BIRD STATUES         #
+###############################
+
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Sealed Grounds Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 68
+    spawn_info:
+      - stage: F401
+        layer: 0
+        room: 1
+        entrance: 8
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Behind the Temple Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 40
+    spawn_info:
+      - stage: F400
+        layer: 0
+        room: 0
+        entrance: 10
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Faron Woods Entry Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 41
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 50
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Viewing Platform Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 43
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 52
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> In the Woods Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 42
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 51
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Deep Woods Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 46
+    spawn_info:
+      - stage: F101
+        layer: 0
+        room: 0
+        entrance: 14
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Forest Temple Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 45
+    spawn_info:
+      - stage: F101
+        layer: 0
+        room: 0
+        entrance: 13
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> The Great Tree Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 44
+    spawn_info:
+      - stage: F100
+        layer: 0
+        room: 0
+        entrance: 53
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Lake Floria Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 47
+    spawn_info:
+      - stage: F102
+        layer: 0
+        room: 3
+        entrance: 2
+- type: Bird Statue
+  forward:
+    connection: Faron Pillar -> Floria Waterfall Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 48
+    spawn_info:
+      - stage: F102_1
+        layer: 0
+        room: 0
+        entrance: 5
+- type: Bird Statue
+  forward:
+    connection: Eldin Pillar -> Volcano Entrance Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 50
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 0
+        entrance: 2
+- type: Bird Statue
+  forward:
+    connection: Eldin Pillar -> Volcano East Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 51
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 2
+        entrance: 6
+- type: Bird Statue
+  forward:
+    connection: Eldin Pillar -> Volcano Ascent Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 52
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 2
+        entrance: 7
+- type: Bird Statue
+  forward:
+    connection: Eldin Pillar -> Temple Entrance Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 29
+    spawn_info:
+      - stage: F200
+        layer: 0
+        room: 4
+        entrance: 7
+- type: Bird Statue
+  forward:
+    connection: Eldin Pillar -> Inside the Volcano Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 30
+    spawn_info:
+      - stage: F201_3
+        layer: 0
+        room: 0
+        entrance: 3
+- type: Bird Statue
+  forward:
+    connection: Eldin Pillar -> Inside the Fire Sanctuary Statue
+    can_start_at: false
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 55
+    spawn_info:
+      - stage: D201
+        layer: 0
+        room: 10
+        entrance: 2
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Lanayru Mine Entry Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 56
+    spawn_info:
+      - stage: F300_1
+        layer: 0
+        room: 0
+        entrance: 2
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Desert Entrance Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 57
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 15
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> West Desert Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 58
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 16
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Desert Gorge Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 61
+    spawn_info:
+      - stage: F300_4
+        layer: 0
+        room: 0
+        entrance: 16
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Temple of Time Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 62
+    spawn_info:
+      - stage: F300_4
+        layer: 0
+        room: 0
+        entrance: 17
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> North Desert Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 59
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 17
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Stone Cache Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 60
+    spawn_info:
+      - stage: F300
+        layer: 0
+        room: 0
+        entrance: 18
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Ancient Harbour Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 63
+    spawn_info:
+      - stage: F301
+        layer: 0
+        room: 0
+        entrance: 10
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Skipper's Retreat Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 64
+    spawn_info:
+      - stage: F301_3
+        layer: 0
+        room: 0
+        entrance: 10
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Shipyard Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 65
+    spawn_info:
+      - stage: F301_4
+        layer: 0
+        room: 0
+        entrance: 10
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Pirate Stronghold Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 66
+    spawn_info:
+      - stage: F301_6
+        layer: 0
+        room: 0
+        entrance: 10
+- type: Bird Statue
+  forward:
+    connection: Lanayru Pillar -> Lanayru Gorge Statue
+    exit_infos:
+      - stage: F020
+        room: 0
+        index: 67 # TODO Check
+    spawn_info:
+      - stage: F302
+        layer: 0
+        room: 0
+        entrance: 12
+
+###############################
+#      Pillar Entrances       #
+###############################
+
+- type: Faron Region Entrance
+  forward:
+    connection: Faron Region Entrance -> Sealed Grounds Statue
+    can_start_at: false
+    spawn_info: 0
+
+- type: Eldin Region Entrance
+  forward:
+    connection: Eldin Region Entrance -> Volcano Entrance Statue
+    can_start_at: false
+    spawn_info: 0
+
+- type: Lanayru Region Entrance
+  forward:
+    connection: Lanayru Region Entrance -> Lanayru Mine Entry Statue
+    can_start_at: false
+    spawn_info: 0
