@@ -1,0 +1,37 @@
+import argparse
+
+
+def get_program_args():
+
+    parser = argparse.ArgumentParser(
+        description="A randomizer for The Legend of Zelda: Skyward Sword HD."
+    )
+
+    parser.add_argument(
+        "--nogui",
+        dest="nogui",
+        action="store_true",
+        help="Runs the randomizer without a GUI.",
+    )
+
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Generates a debug log when running the rando.",
+    )
+
+    parser.add_argument(
+        "--dryrun",
+        action="store_true",
+        help="Skip generating patch files.",
+    )
+
+    # parser.print_help()
+    import sys
+
+    if "pytest" in sys.modules:
+        args, _unknown = parser.parse_known_args()
+    else:
+        args = parser.parse_args()
+
+    return args
