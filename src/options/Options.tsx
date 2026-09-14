@@ -35,7 +35,6 @@ import {
     ClientManagerContext,
     useApConnectionStatus,
     useApConnectionStatusString,
-    useIsApConnected,
 } from '../archipelago/ClientHooks';
 import { getStoredArchipelagoServer } from '../LocalStorage';
 import type {
@@ -164,8 +163,6 @@ export default function Options() {
     } = useOptionsState();
     const appDispatch = useAppDispatch();
     const navigate = useNavigate();
-    const isClientConnected = useIsApConnected();
-
     const launch = useCallback(
         (shouldReset?: boolean) => {
             if (!loaded) {
@@ -206,7 +203,6 @@ export default function Options() {
                 dispatch={dispatch}
                 currentLogic={loaded}
                 currentSettings={settings}
-                clientConnected={isClientConnected}
             />
             {loaded && (
                 <OptionsList
@@ -229,7 +225,6 @@ function LaunchButtons({
     dispatch,
     currentLogic,
     currentSettings,
-    clientConnected,
 }: {
     loaded: boolean;
     hasChanges: boolean;
@@ -240,7 +235,6 @@ function LaunchButtons({
     dispatch: React.Dispatch<OptionsAction>;
     currentLogic: LogicBundle | undefined;
     currentSettings: AllTypedOptions | undefined;
-    clientConnected: boolean;
 }) {
     const canStart = loaded;
     const canResume = loaded && Boolean(counters);
