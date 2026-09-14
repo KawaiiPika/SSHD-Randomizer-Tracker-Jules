@@ -266,7 +266,7 @@ function LaunchButtons({
             <button
                 type="button"
                 className="tracker-button"
-                disabled={!canResume || !clientConnected}
+                disabled={!canResume}
                 onClick={() => confirmLaunch()}
             >
                 <div className={styles.continueButton}>
@@ -280,7 +280,7 @@ function LaunchButtons({
             <button
                 type="button"
                 className="tracker-button"
-                disabled={!canStart || !clientConnected}
+                disabled={!canStart}
                 onClick={() => confirmLaunch(true)}
             >
                 Launch New Tracker

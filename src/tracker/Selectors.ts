@@ -686,18 +686,18 @@ export const areasSelector = createSelector(
                         checkGroup,
                     );
 
-                const relevantExits = logic.exitsByHintRegion[area].filter(
-                    (e) => {
-                        const exitMapping = exitsById[e];
-                        if (!exitMapping) {
-                            return false;
-                        }
-                        return (
-                            exitMapping.canAssign &&
-                            exitMapping.rule.type === 'random'
-                        );
-                    },
-                );
+                const relevantExits = (
+                    logic.exitsByHintRegion[area] ?? []
+                ).filter((e) => {
+                    const exitMapping = exitsById[e];
+                    if (!exitMapping) {
+                        return false;
+                    }
+                    return (
+                        exitMapping.canAssign &&
+                        exitMapping.rule.type === 'random'
+                    );
+                });
 
                 const remainingExits = relevantExits.filter((e) => {
                     const exitMapping = exitsById[e];
