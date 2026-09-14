@@ -1,0 +1,4 @@
+seed: AdventureAuraLuvBokoblin
+World 1:
+  randomize_door_entrances: "on"
+  decouple_double_doors: "on"
