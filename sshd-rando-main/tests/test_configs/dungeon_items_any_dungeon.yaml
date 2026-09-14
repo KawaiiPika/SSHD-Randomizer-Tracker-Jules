@@ -1,7 +1,0 @@
-seed: PeaterPlumeKeeseQuiver
-World 1:
-  boss_keys: any_dungeon
-  map_mode: any_dungeon
-  small_keys: anywhere
-  key_rings_in_pool: off
-  skeleton_key_in_pool: off
