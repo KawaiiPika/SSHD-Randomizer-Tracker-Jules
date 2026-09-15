@@ -17,6 +17,7 @@ import {
     checkSelector,
     rawItemCountSelector,
     totalCountersSelector,
+    totalGratitudeCrystalsSelector,
 } from './tracker/Selectors';
 import {
     acceptSettings,
@@ -671,5 +672,38 @@ describe('full logic tests', () => {
             "Upper Skyloft - Crystal in Link's Room",
         ]);
         expect(checkState(bat30Check)).toBe('outLogic');
+    });
+
+    it('requires Goddesss Harp and Ballad of the Goddess to access closed Thunderhead', () => {
+        updateSettingsWithReset('open-thunderhead', 'Ballad');
+        dispatch(clickItem({ item: 'Progressive Mitts', take: false }));
+
+        const eastIslandCheck =
+            '\\Sky\\Thunderhead\\East Island\\East Island Chest';
+        expect(checkState(eastIslandCheck)).toBe('outLogic');
+
+        // Only Ballad of the Goddess - still out of logic without Goddess's Harp in SSHD logic
+        dispatch(clickItem({ item: 'Ballad of the Goddess', take: false }));
+        expect(checkState(eastIslandCheck)).toBe('outLogic');
+
+        // With Goddess's Harp - now both are acquired, Thunderhead opens
+        dispatch(clickItem({ item: "Goddess's Harp", take: false }));
+        expect(checkState(eastIslandCheck)).toBe('inLogic');
+    });
+
+    it('tracks individual gratitude crystals and combines with loose crystal checks without double counting', () => {
+        // Starting with 1 pack = 5 crystals
+        dispatch(clickItem({ item: 'Gratitude Crystal Pack', take: false }));
+        expect(readSelector(totalGratitudeCrystalsSelector)).toBe(5);
+
+        // Receive 3 individual crystals (e.g. from Archipelago)
+        dispatch(setItemCounts([{ item: 'Gratitude Crystal', count: 3 }]));
+        expect(readSelector(totalGratitudeCrystalsSelector)).toBe(8);
+
+        // Clicking a loose crystal check in the world that gave one of those crystals
+        const looseCrystalCheck = tester.findCheckId('Central Skyloft', 'Shed');
+        dispatch(clickCheck({ checkId: looseCrystalCheck }));
+        // Should not double count to 9; max(singleCount: 3, looseCount: 1) = 3 -> total = 8
+        expect(readSelector(totalGratitudeCrystalsSelector)).toBe(8);
     });
 });

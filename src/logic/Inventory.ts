@@ -36,15 +36,17 @@ export const itemMaxes = {
     "Farore's Courage": 1,
     "Nayru's Wisdom": 1,
     "Din's Power": 1,
-    'Song of the Hero': 3,
+    'Song of the Hero': 4,
     Triforce: 3,
 
     "Cawlin's Letter": 1,
     'Horned Colossus Beetle': 1,
     'Baby Rattle': 1,
+    'Gratitude Crystal': 15,
     'Gratitude Crystal Pack': 13,
     'Spiral Charge': 1,
     'Life Tree Fruit': 1,
+    'Life Tree Seedling': 1,
     'Group of Tadtones': 17,
     Scrapper: 1,
 

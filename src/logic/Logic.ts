@@ -572,10 +572,19 @@ export function parseLogic(raw: RawLogic): Logic {
             for (const [exit, exitRequirementExpression] of Object.entries(
                 rawArea.exits,
             )) {
-                const expr = parseExpr(exitRequirementExpression);
                 const fullExitName = exit.startsWith('\\')
                     ? exit
                     : `${rawArea.name}\\${exit}`;
+                let reqExpr = exitRequirementExpression;
+                if (
+                    fullExitName ===
+                        '\\Sky\\Around Skyloft\\Exit to Thunderhead' ||
+                    exit === 'Exit to Thunderhead'
+                ) {
+                    reqExpr =
+                        "Open Thunderhead option | (Ballad of the Goddess & Goddess's Harp)";
+                }
+                const expr = parseExpr(reqExpr);
                 if (allAreas[fullExitName]) {
                     // logical exit
                     const destArea = allAreas[fullExitName];

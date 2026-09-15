@@ -37,6 +37,7 @@ export const sothItems = [
     'Faron Song of the Hero Part',
     'Eldin Song of the Hero Part',
     'Lanayru Song of the Hero Part',
+    'Levias Song of the Hero Part',
 ];
 
 export const sothItemReplacement = 'Song of the Hero';
@@ -153,7 +154,10 @@ export function getTooltipOpaqueBits(
         }
         if (item === sothItemReplacement) {
             for (let i = 1; i <= count; i++) {
-                set(sothItems[i - 1]);
+                const sothItem = sothItems[i - 1];
+                if (sothItem && logic.itemBits[sothItem] !== undefined) {
+                    set(sothItem);
+                }
             }
         } else if (item === triforceItemReplacement) {
             for (let i = 1; i <= count; i++) {
@@ -161,7 +165,10 @@ export function getTooltipOpaqueBits(
             }
         } else {
             for (let i = 1; i <= count; i++) {
-                set(itemName(item, i));
+                const name = itemName(item, i);
+                if (logic.itemBits[name] !== undefined) {
+                    set(name);
+                }
             }
         }
     }

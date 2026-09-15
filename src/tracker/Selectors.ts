@@ -178,13 +178,14 @@ export const totalGratitudeCrystalsSelector = createSelector(
         logicSelector,
         checkedChecksSelector,
         rawItemCountSelector('Gratitude Crystal Pack'),
+        rawItemCountSelector('Gratitude Crystal'),
     ],
-    (logic, checkedChecks, packCount) => {
+    (logic, checkedChecks, packCount, singleCount) => {
         const looseCrystalCount = getNumLooseGratitudeCrystals(
             logic,
             checkedChecks,
         );
-        return packCount * 5 + looseCrystalCount;
+        return packCount * 5 + Math.max(singleCount, looseCrystalCount);
     },
 );
 

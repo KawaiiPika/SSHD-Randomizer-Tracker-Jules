@@ -100,6 +100,25 @@ export class APClientManager {
     status: ClientConnectionState = { state: 'loggedOut' };
     statusSubscriptions: Set<() => void> = new Set();
 
+    pendingLocationIds: number[] = [];
+    pendingItemIds: number[] = [];
+
+    processNetItem(netItemId: number) {
+        if (!this.idToItem) return;
+        const item = this.idToItem[netItemId];
+        if (!item) return;
+        if (item.includes(sothItemReplacement)) {
+            this.add(sothItemReplacement);
+        } else if (item.includes(triforceItemReplacement)) {
+            this.add(triforceItemReplacement);
+        } else if (
+            isItem(item) &&
+            (!item.includes('Pouch') || !this.inventory['Progressive Pouch'])
+        ) {
+            this.add(item);
+        }
+    }
+
     add(item: InventoryItem, count: number = 1) {
         this.inventory[item] ??= 0;
         this.inventory[item] += count;
@@ -158,6 +177,8 @@ export class APClientManager {
             this.resolveItems = undefined;
             this.changeStage = undefined;
             this.resolveCubes = undefined;
+            this.pendingItemIds = [];
+            this.pendingLocationIds = [];
 
             this.status = { state: 'loggedOut' };
             this.notifyStatusSubscribers();
@@ -217,15 +238,21 @@ export class APClientManager {
                 string,
                 number | string[]
             >;
-            this.checkedLocations = [
-                ...this.connectedData.checked_locations.map(
-                    (location_id) => this.idToLocation![location_id],
-                ),
-            ];
             this.loadedSettings = optionIndicesToOptions(optionDefs, slotData);
-            this.resolveLocations?.(this.checkedLocations);
             this.requiredDungeons =
                 (slotData['required_dungeons'] as string[]) ?? [];
+
+            if (this.idToLocation && this.connectedData.checked_locations) {
+                this.checkedLocations = this.connectedData.checked_locations
+                    .map((location_id) => this.idToLocation![location_id])
+                    .filter((loc): loc is string => Boolean(loc));
+                this.resolveLocations?.(this.checkedLocations);
+            } else if (this.connectedData.checked_locations) {
+                this.pendingLocationIds.push(
+                    ...this.connectedData.checked_locations,
+                );
+            }
+
             client.socket.send({
                 cmd: 'GetDataPackage',
                 games: ['Skyward Sword', 'Skyward Sword HD'],
@@ -256,6 +283,24 @@ export class APClientManager {
                     ssData.location_name_to_id,
                 );
                 this.idToItem = invert<string, number>(ssData.item_name_to_id);
+
+                if (this.pendingLocationIds.length > 0) {
+                    const resolved = this.pendingLocationIds
+                        .map((location_id) => this.idToLocation![location_id])
+                        .filter((loc): loc is string => Boolean(loc));
+                    this.checkedLocations = Array.from(
+                        new Set([...this.checkedLocations, ...resolved]),
+                    );
+                    this.pendingLocationIds = [];
+                    this.resolveLocations?.(this.checkedLocations);
+                }
+                if (this.pendingItemIds.length > 0) {
+                    for (const netItemId of this.pendingItemIds) {
+                        this.processNetItem(netItemId);
+                    }
+                    this.pendingItemIds = [];
+                    this.resolveItems?.(this.inventory);
+                }
             }
         });
 
@@ -341,32 +386,30 @@ export class APClientManager {
         });
 
         client.socket.on('receivedItems', (content) => {
+            if (!this.idToItem) {
+                this.pendingItemIds.push(...content.items.map((i) => i.item));
+                return;
+            }
             for (const netItem of content.items) {
-                const item = this.idToItem![netItem.item];
-                if (item.includes(sothItemReplacement)) {
-                    this.add(sothItemReplacement);
-                } else if (item.includes(triforceItemReplacement)) {
-                    this.add(triforceItemReplacement);
-                } else if (
-                    isItem(item) &&
-                    (!item.includes('Pouch') ||
-                        !this.inventory['Progressive Pouch'])
-                ) {
-                    this.add(item);
-                }
+                this.processNetItem(netItem.item);
             }
             this.resolveItems?.(this.inventory);
         });
 
         client.socket.on('roomUpdate', (content) => {
             if (content.checked_locations) {
-                this.checkedLocations.push(
-                    ...content.checked_locations.map(
-                        (location_id) => this.idToLocation![location_id],
-                    ),
-                );
+                if (this.idToLocation) {
+                    const newLocs = content.checked_locations
+                        .map((location_id) => this.idToLocation![location_id])
+                        .filter((loc): loc is string => Boolean(loc));
+                    this.checkedLocations = Array.from(
+                        new Set([...this.checkedLocations, ...newLocs]),
+                    );
+                    this.resolveLocations?.(this.checkedLocations);
+                } else {
+                    this.pendingLocationIds.push(...content.checked_locations);
+                }
             }
-            this.resolveLocations?.(this.checkedLocations);
         });
 
         client.socket.on('bounced', (content) => {

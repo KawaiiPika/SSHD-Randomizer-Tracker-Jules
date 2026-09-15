@@ -43,6 +43,7 @@ export function getAdditionalItems(
     }
 
     const looseCrystals = getNumLooseGratitudeCrystals(logic, checkedChecks);
-    result['Gratitude Crystal'] = looseCrystals;
+    const inventoryCrystals = inventory['Gratitude Crystal'] ?? 0;
+    result['Gratitude Crystal'] = Math.max(inventoryCrystals, looseCrystals);
     return result;
 }

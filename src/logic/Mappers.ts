@@ -158,13 +158,18 @@ export function mapInventory(logic: Logic, itemCounts: Record<string, number>) {
         if (
             count === undefined ||
             item === 'Sailcloth' ||
-            item === 'Tumbleweed'
+            item === 'Tumbleweed' ||
+            item === 'Gratitude Crystal' ||
+            item === 'Gratitude Crystal Pack'
         ) {
             continue;
         }
         if (item === sothItemReplacement) {
             for (let i = 1; i <= count; i++) {
-                b.set(sothItems[i - 1], b.true());
+                const sothItem = sothItems[i - 1];
+                if (sothItem && logic.itemLookup[sothItem] !== undefined) {
+                    b.set(sothItem, b.true());
+                }
             }
         } else if (item === triforceItemReplacement) {
             for (let i = 1; i <= count; i++) {
@@ -172,7 +177,52 @@ export function mapInventory(logic: Logic, itemCounts: Record<string, number>) {
             }
         } else {
             for (let i = 1; i <= count; i++) {
-                b.set(itemName(item, i), b.true());
+                const name = itemName(item, i);
+                if (logic.itemLookup[name] !== undefined) {
+                    b.set(name, b.true());
+                }
+            }
+        }
+    }
+
+    const totalCrystals =
+        (itemCounts['Gratitude Crystal Pack'] ?? 0) * 5 +
+        (itemCounts['Gratitude Crystal'] ?? 0);
+    if (totalCrystals > 0) {
+        let effectivePacks: number;
+        let effectiveSingles: number;
+
+        if (totalCrystals >= 70) {
+            effectiveSingles = 15;
+            effectivePacks = Math.min(13, Math.floor((totalCrystals - 15) / 5));
+        } else {
+            const rawPacks = itemCounts['Gratitude Crystal Pack'] ?? 0;
+            const rawSingles = itemCounts['Gratitude Crystal'] ?? 0;
+            if (rawPacks > 0) {
+                effectivePacks = Math.min(
+                    13,
+                    rawPacks + Math.floor(rawSingles / 5),
+                );
+                effectiveSingles = Math.min(15, rawSingles % 5);
+            } else {
+                effectivePacks = Math.min(13, Math.floor(totalCrystals / 5));
+                effectiveSingles = Math.min(15, totalCrystals % 5);
+                if (totalCrystals <= 15) {
+                    effectiveSingles = totalCrystals;
+                }
+            }
+        }
+
+        for (let i = 1; i <= effectivePacks; i++) {
+            const name = itemName('Gratitude Crystal Pack', i);
+            if (logic.itemLookup[name] !== undefined) {
+                b.set(name, b.true());
+            }
+        }
+        for (let i = 1; i <= effectiveSingles; i++) {
+            const name = itemName('Gratitude Crystal', i);
+            if (logic.itemLookup[name] !== undefined) {
+                b.set(name, b.true());
             }
         }
     }

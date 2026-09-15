@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { totalGratitudeCrystalsSelector } from '../../../tracker/Selectors';
-// import { clickItem } from '../../../tracker/Slice';
+import { clickItem } from '../../../tracker/Slice';
 import { BasicItem } from '../../BasicItem';
 import allImages from '../../Images';
 
@@ -13,9 +13,11 @@ export function GratitudeCrystals({
     imgWidth?: number;
     grid?: boolean;
 }) {
-    // const dispatch = useDispatch();
-    const handleClick = () => {
-        // dispatch(clickItem({ item: 'Gratitude Crystal Pack', take }));
+    const dispatch = useDispatch();
+    const handleClick = (take?: boolean) => {
+        dispatch(
+            clickItem({ item: 'Gratitude Crystal Pack', take: Boolean(take) }),
+        );
     };
 
     const count = useSelector(totalGratitudeCrystalsSelector);
