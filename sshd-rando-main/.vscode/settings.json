@@ -1,0 +1,13 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "yaml.maxItemsComputed": 50000,
+    "yaml.format.enable": false,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "rust-analyzer.linkedProjects": [
+        "./asm/additions/rust-additions/Cargo.toml"
+    ]
+}
