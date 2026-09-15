@@ -8,7 +8,11 @@ import {
 export function getNumLooseGratitudeCrystals(
     logic: Logic,
     checkedChecks: Set<string>,
+    isShuffleOn?: boolean,
 ) {
+    if (isShuffleOn) {
+        return 0;
+    }
     return [...checkedChecks].filter(
         (check) => logic.checks[check]?.type === 'loose_crystal',
     ).length;

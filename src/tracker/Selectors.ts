@@ -179,11 +179,17 @@ export const totalGratitudeCrystalsSelector = createSelector(
         checkedChecksSelector,
         rawItemCountSelector('Gratitude Crystal Pack'),
         rawItemCountSelector('Gratitude Crystal'),
+        settingSelector('gratitude-crystal-shuffle'),
+        settingSelector('gratitude_crystal_shuffle'),
     ],
-    (logic, checkedChecks, packCount, singleCount) => {
+    (logic, checkedChecks, packCount, singleCount, gc1, gc2) => {
+        const gcVal = (gc1 ?? gc2) as any;
+        const isShuffleOn =
+            gcVal === 'on' || gcVal === true || gcVal === 'true';
         const looseCrystalCount = getNumLooseGratitudeCrystals(
             logic,
             checkedChecks,
+            isShuffleOn,
         );
         return packCount * 5 + Math.max(singleCount, looseCrystalCount);
     },
@@ -352,7 +358,8 @@ const optimisticLogicBitsSelector = createSelector(
 const skyKeepNonprogressSelector = createSelector(
     [settingsSelector],
     (settings) =>
-        settings['empty-unrequired-dungeons'] === true &&
+        ((settings['empty-unrequired-dungeons'] as any) === true ||
+            (settings['empty-unrequired-dungeons'] as any) === 'on') &&
         (settings['triforce-required'] === false ||
             settings['triforce-shuffle'] === 'Anywhere'),
 );
@@ -364,10 +371,14 @@ const areaNonprogressSelector = createSelector(
         requiredDungeonsSelector,
     ],
     (skyKeepNonprogress, emptyUnrequiredDungeons, requiredDungeons) => {
+        const isEudOn =
+            (emptyUnrequiredDungeons as any) === true ||
+            (emptyUnrequiredDungeons as any) === 'on' ||
+            (emptyUnrequiredDungeons as any) === 'true';
         return (area: string) =>
             area === 'Sky Keep'
                 ? skyKeepNonprogress
-                : emptyUnrequiredDungeons && isDungeon(area)
+                : isEudOn && isDungeon(area)
                   ? !requiredDungeons.includes(area)
                   : false;
     },
@@ -399,12 +410,17 @@ export const isCheckBannedSelector = createSelector(
         settingSelector('rupeesanity'),
         settingSelector('shopsanity'),
         settingSelector('beedle-shopsanity'),
+        settingSelector('beedle-shop-shuffle'),
         settingSelector('rupin-shopsanity'),
         settingSelector('luv-shopsanity'),
         settingSelector('tadtonesanity'),
+        settingSelector('tadtone-shuffle'),
         settingSelector('treasuresanity-in-silent-realms'),
         settingSelector('trial-treasure-amount'),
         settingSelector('hint-distribution'),
+        settingSelector('npc-closet-shuffle'),
+        settingSelector('stamina-fruit-shuffle'),
+        settingSelector('underground-rupee-shuffle'),
     ],
     (
         logic,
@@ -413,12 +429,17 @@ export const isCheckBannedSelector = createSelector(
         rupeeSanity,
         shopSanity,
         beedleShopsanity,
+        beedleShopShuffle,
         rupinShopSanity,
         luvShopSanity,
         tadtoneSanity,
+        tadtoneShuffle,
         silentRealmTreasuresanity,
         silentRealmTreasureAmount,
         hintDistro,
+        npcClosetShuffle,
+        staminaFruitShuffle,
+        undergroundRupeeShuffle,
     ) => {
         const bannedChecks = new Set(bannedLocations);
         const rupeesExcluded =
@@ -427,11 +448,30 @@ export const isCheckBannedSelector = createSelector(
             ? silentRealmTreasureAmount
             : 0;
         const banBeedle =
-            shopSanity !== undefined
-                ? shopSanity !== true
-                : beedleShopsanity !== true;
+            beedleShopShuffle !== undefined
+                ? (beedleShopShuffle as any) === 'vanilla' ||
+                  (beedleShopShuffle as any) === 'off' ||
+                  (beedleShopShuffle as any) === false
+                : shopSanity !== undefined
+                  ? shopSanity !== true
+                  : beedleShopsanity !== true;
         const banGearShop = rupinShopSanity !== true;
         const banPotionShop = luvShopSanity !== true;
+        const banClosets =
+            (npcClosetShuffle as any) === 'vanilla' ||
+            (npcClosetShuffle as any) === 'off' ||
+            (npcClosetShuffle as any) === false;
+        const banStaminaFruit =
+            (staminaFruitShuffle as any) === 'off' ||
+            (staminaFruitShuffle as any) === false;
+        const banUndergroundRupee =
+            (undergroundRupeeShuffle as any) === 'off' ||
+            (undergroundRupeeShuffle as any) === false;
+        const isTadtoneBanned =
+            tadtoneSanity !== undefined
+                ? !tadtoneSanity
+                : (tadtoneShuffle as any) === 'off' ||
+                  (tadtoneShuffle as any) === false;
 
         const trialTreasurePattern = /Relic (\d+)/;
         const isExcessRelic = (check: LogicalCheck) => {
@@ -463,6 +503,11 @@ export const isCheckBannedSelector = createSelector(
 
         return (checkId: string) => {
             const check = logic.checks[checkId];
+            const checkType = check.type as string;
+            const isClosetCheck =
+                checkType === 'closet' ||
+                checkType === 'Closets' ||
+                check.name.includes('Closet');
             return (
                 bannedChecks.has(check.name) ||
                 areaNonprogress(logic.checks[checkId].area!) ||
@@ -473,7 +518,10 @@ export const isCheckBannedSelector = createSelector(
                 (banBeedle && check.type === 'beedle_shop') ||
                 (banGearShop && check.type === 'gear_shop') ||
                 (banPotionShop && check.type === 'potion_shop') ||
-                (!tadtoneSanity && check.type === 'tadtone') ||
+                (isTadtoneBanned && check.type === 'tadtone') ||
+                (banClosets && isClosetCheck) ||
+                (banStaminaFruit && checkType === 'stamina_fruit') ||
+                (banUndergroundRupee && checkType === 'underground_rupee') ||
                 (check.type === 'gossip_stone' && !gossipStoneUsed(checkId))
             );
         };

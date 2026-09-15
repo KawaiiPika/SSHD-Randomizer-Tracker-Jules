@@ -144,4 +144,32 @@ export interface GeneratedOptions {
     'random-puzzles': boolean;
     /** Ammo Availability */
     'ammo-availability': 'Scarce' | 'Vanilla' | 'Useful' | 'Plentiful';
+    /** Gratitude Crystal Shuffle */
+    'gratitude-crystal-shuffle'?: 'off' | 'on' | boolean;
+    'gratitude_crystal_shuffle'?: 'off' | 'on' | boolean;
+    /** NPC Closet Shuffle */
+    'npc-closet-shuffle'?: 'vanilla' | 'randomized' | boolean;
+    'npc_closet_shuffle'?: 'vanilla' | 'randomized' | boolean;
+    /** Stamina Fruit Shuffle */
+    'stamina-fruit-shuffle'?: 'off' | 'on' | boolean;
+    'stamina_fruit_shuffle'?: 'off' | 'on' | boolean;
+    /** Underground Rupee Shuffle */
+    'underground-rupee-shuffle'?: 'off' | 'on' | boolean;
+    'underground_rupee_shuffle'?: 'off' | 'on' | boolean;
+    /** Beedle Shop Shuffle */
+    'beedle-shop-shuffle'?: 'vanilla' | 'junk_only' | 'randomized' | boolean;
+    'beedle_shop_shuffle'?: 'vanilla' | 'junk_only' | 'randomized' | boolean;
+    /** Goddess Chest Shuffle */
+    'goddess-chest-shuffle'?: 'off' | 'on' | boolean;
+    'goddess_chest_shuffle'?: 'off' | 'on' | boolean;
+    /** Trial Treasure Shuffle */
+    'trial-treasure-shuffle'?: number;
+    'trial_treasure_shuffle'?: number;
+    /** Tadtone Shuffle */
+    'tadtone-shuffle'?: 'off' | 'on' | boolean;
+    'tadtone_shuffle'?: 'off' | 'on' | boolean;
+    /** Gossip Stone Treasure Shuffle */
+    'gossip-stone-treasure-shuffle'?: 'off' | 'on' | boolean;
+    'gossip_stone_treasure_shuffle'?: 'off' | 'on' | boolean;
 }
+

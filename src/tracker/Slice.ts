@@ -157,6 +157,10 @@ const trackerSlice = createSlice({
             }
             state.hasBeenModified = true;
         },
+        setRequiredDungeons: (state, action: PayloadAction<string[]>) => {
+            state.requiredDungeons = action.payload;
+            state.hasBeenModified = true;
+        },
         bulkEditChecks: (
             state,
             action: PayloadAction<{ checks: string[]; markChecked: boolean }>,
@@ -242,6 +246,7 @@ export const {
     clickCheckInternal,
     setItemCounts,
     clickDungeonName,
+    setRequiredDungeons,
     bulkEditChecks,
     mapEntrance,
     cancelItemAssignment,

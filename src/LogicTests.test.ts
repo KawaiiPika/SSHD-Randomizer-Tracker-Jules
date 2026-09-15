@@ -706,4 +706,36 @@ describe('full logic tests', () => {
         // Should not double count to 9; max(singleCount: 3, looseCount: 1) = 3 -> total = 8
         expect(readSelector(totalGratitudeCrystalsSelector)).toBe(8);
     });
+
+    it('does not count loose crystal checks as crystals when gratitude_crystal_shuffle is on', () => {
+        updateSettings('gratitude_crystal_shuffle', 'on');
+        const looseCrystalCheck = tester.findCheckId('Central Skyloft', 'Shed');
+        dispatch(clickCheck({ checkId: looseCrystalCheck }));
+        // Loose crystal checks should not inflate crystal count when shuffle is on
+        expect(readSelector(totalGratitudeCrystalsSelector)).toBe(0);
+    });
+
+    it('shows dungeon checks when empty-unrequired-dungeons is disabled', () => {
+        updateSettings('empty-unrequired-dungeons', false);
+        const areas = readSelector(areasSelector);
+        const skyview = areas.find((a) => a.name === 'Skyview');
+        expect(skyview).toBeDefined();
+        expect(skyview!.checks.numTotal).toBeGreaterThan(0);
+    });
+
+    it('filters closet checks when npc-closet-shuffle is vanilla', () => {
+        updateSettings('npc-closet-shuffle', 'vanilla');
+        const areas = readSelector(areasSelector);
+        const closetCheckInList = areas.some((area) =>
+            area.checks.list.some((c) => c.includes("Zelda's Closet")),
+        );
+        expect(closetCheckInList).toBe(false);
+
+        updateSettings('npc-closet-shuffle', 'randomized');
+        const updatedAreas = readSelector(areasSelector);
+        const closetCheckInList2 = updatedAreas.some((area) =>
+            area.checks.list.some((c) => c.includes("Zelda's Closet")),
+        );
+        expect(closetCheckInList2).toBe(true);
+    });
 });

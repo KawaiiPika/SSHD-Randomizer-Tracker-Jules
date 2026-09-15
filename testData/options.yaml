@@ -243,6 +243,63 @@
         Note, it is not possible to shuffle some freestanding rupees yet (e.g. the rupees on the Lumpy Pumpkin
         chandelier)."
   ui: option_rupeesanity
+- name: Gratitude Crystal Shuffle
+  command: gratitude-crystal-shuffle
+  type: singlechoice
+  choices:
+    - off
+    - on
+  default: on
+  help: "Determines if single gratitude crystal locations are randomized."
+- name: NPC Closet Shuffle
+  command: npc-closet-shuffle
+  type: singlechoice
+  choices:
+    - vanilla
+    - randomized
+  default: vanilla
+  help: "Determines if NPC closets contain randomized items."
+- name: Stamina Fruit Shuffle
+  command: stamina-fruit-shuffle
+  type: singlechoice
+  choices:
+    - off
+    - on
+  default: off
+  help: "Determines if stamina fruits are randomized."
+- name: Underground Rupee Shuffle
+  command: underground-rupee-shuffle
+  type: singlechoice
+  choices:
+    - off
+    - on
+  default: off
+  help: "Determines if underground rupees are randomized."
+- name: Beedle Shop Shuffle
+  command: beedle-shop-shuffle
+  type: singlechoice
+  choices:
+    - vanilla
+    - junk_only
+    - randomized
+  default: randomized
+  help: "Determines how Beedle's Airshop is randomized."
+- name: Goddess Chest Shuffle
+  command: goddess-chest-shuffle
+  type: singlechoice
+  choices:
+    - off
+    - on
+  default: off
+  help: "Determines if Goddess Chests are randomized."
+- name: Tadtone Shuffle
+  command: tadtone-shuffle
+  type: singlechoice
+  choices:
+    - off
+    - on
+  default: off
+  help: "Determines if Tadtones are randomized."
 - name: Place Scrap Shop Upgrades
   command: gondo-upgrades
   type: boolean

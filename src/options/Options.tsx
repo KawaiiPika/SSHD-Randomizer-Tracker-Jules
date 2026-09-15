@@ -30,6 +30,7 @@ import {
 } from '../loader/LogicLoader';
 import { useReleases } from '../loader/ReleasesLoader';
 import { type LogicBundle, loadLogic } from '../logic/Slice';
+import { setRequiredDungeons } from '../tracker/Slice';
 // import { decodePermalink, encodePermalink } from '../permalink/Settings';
 import {
     ClientManagerContext,
@@ -61,15 +62,31 @@ const optionCategorization_ = {
         'rupeesanity',
         'shopsanity',
         'beedle-shopsanity',
+        'beedle-shop-shuffle',
+        'beedle_shop_shuffle',
         'luv-shopsanity',
         'rupin-shopsanity',
         'gondo-upgrades',
         'tadtonesanity',
+        'tadtone-shuffle',
+        'tadtone_shuffle',
         'treasuresanity-in-silent-realms',
         'trial-treasure-amount',
         'small-key-mode',
         'boss-key-mode',
         'empty-unrequired-dungeons',
+        'gratitude-crystal-shuffle',
+        'gratitude_crystal_shuffle',
+        'npc-closet-shuffle',
+        'npc_closet_shuffle',
+        'stamina-fruit-shuffle',
+        'stamina_fruit_shuffle',
+        'underground-rupee-shuffle',
+        'underground_rupee_shuffle',
+        'goddess-chest-shuffle',
+        'goddess_chest_shuffle',
+        'gossip-stone-treasure-shuffle',
+        'gossip_stone_treasure_shuffle',
     ],
     'Starting Items': [
         'starting-sword',
@@ -515,6 +532,7 @@ function PermalinkChooser({
     const apStatus = useApConnectionStatus();
     const apStatusString = useApConnectionStatusString();
     const isConnected = apStatus.state === 'loggedIn';
+    const appDispatch = useAppDispatch();
 
     const connectToArchipelago = () => {
         clientManager
@@ -525,6 +543,11 @@ function PermalinkChooser({
                         type: 'changeSettings',
                         settings: clientManager.getLoadedSettings()!,
                     });
+                    if (clientManager.requiredDungeons.length > 0) {
+                        appDispatch(
+                            setRequiredDungeons(clientManager.requiredDungeons),
+                        );
+                    }
                 }
             });
     };

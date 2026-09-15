@@ -25,7 +25,7 @@ function kebabToSnake(input: string): string {
 
 function optionIndicesToOptions(
     optionDefs: OptionDefs,
-    loadedOptions: Record<string, number | string[]>,
+    loadedOptions: Record<string, any>,
 ): AllTypedOptions {
     const settings: Partial<Record<OptionsCommand, OptionValue>> =
         defaultSettings(optionDefs);
@@ -33,22 +33,74 @@ function optionIndicesToOptions(
     settings['excluded-locations'] = [];
     settings['starting-items'] = [];
     for (const option of optionDefs) {
-        const loadedVal = loadedOptions[kebabToSnake(option.command)];
-        if (option.permalink !== false && loadedVal !== undefined) {
+        const snakeName = kebabToSnake(option.command);
+        const loadedVal =
+            loadedOptions[snakeName] ??
+            loadedOptions[option.command] ??
+            loadedOptions[snakeName.replace(/^setting_/, '')];
+
+        if (
+            option.permalink !== false &&
+            loadedVal !== undefined &&
+            loadedVal !== null
+        ) {
             if (option.command === 'excluded-locations') {
                 settings[option.command] = loadedVal;
             } else if (option.type === 'boolean') {
-                settings[option.command] = loadedVal === 1;
+                if (typeof loadedVal === 'boolean') {
+                    settings[option.command] = loadedVal;
+                } else if (typeof loadedVal === 'number') {
+                    settings[option.command] = loadedVal === 1;
+                } else if (typeof loadedVal === 'string') {
+                    const lower = loadedVal.toLowerCase();
+                    settings[option.command] =
+                        lower === 'true' || lower === 'on' || lower === '1';
+                }
             } else if (option.type === 'int') {
-                settings[option.command] = loadedVal;
-            } else if (option.type === 'multichoice') {
-                // shouldn't be possible
+                settings[option.command] =
+                    typeof loadedVal === 'number'
+                        ? loadedVal
+                        : parseInt(loadedVal, 10);
             } else if (option.type === 'singlechoice') {
-                settings[option.command] = option.choices[loadedVal as number];
+                if (typeof loadedVal === 'number') {
+                    settings[option.command] =
+                        option.choices[loadedVal] ?? option.choices[0];
+                } else if (typeof loadedVal === 'string') {
+                    const matchedChoice = option.choices.find(
+                        (choice) =>
+                            choice.toLowerCase() === loadedVal.toLowerCase() ||
+                            kebabToSnake(choice.toLowerCase()) ===
+                                kebabToSnake(loadedVal.toLowerCase()),
+                    );
+                    if (matchedChoice) {
+                        settings[option.command] = matchedChoice;
+                    }
+                }
             }
         }
     }
-    // console.log(settings);
+
+    for (const key of Object.keys(loadedOptions)) {
+        const val = loadedOptions[key];
+        const kebabKey = key.replace(/_/g, '-') as OptionsCommand;
+        if (
+            settings[kebabKey] === undefined &&
+            (typeof val === 'boolean' ||
+                typeof val === 'number' ||
+                typeof val === 'string')
+        ) {
+            (settings as any)[kebabKey] = val;
+        }
+        if (
+            settings[key as OptionsCommand] === undefined &&
+            (typeof val === 'boolean' ||
+                typeof val === 'number' ||
+                typeof val === 'string')
+        ) {
+            (settings as any)[key] = val;
+        }
+    }
+
     return settings as AllTypedOptions;
 }
 
