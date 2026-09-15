@@ -228,7 +228,3 @@ fabric.properties
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
-
-# Local temporary downloaded files
-sshd-rando-main/
-sshd-rando-main.zip
