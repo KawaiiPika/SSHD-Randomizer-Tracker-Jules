@@ -39,6 +39,8 @@ jobs:
     needs: build
     permissions:
       contents: write
+      pages: write
+      id-token: write
     if: github.event_name == 'push' && github.ref == 'refs/heads/archipelago'
     steps:
       - uses: actions/checkout@v4
@@ -54,9 +56,22 @@ jobs:
       # All paths should resolve to index.html, but on GitHub
       # Pages our only workaround is serving the app from 404 too
       - run: cp build/index.html build/404.html
-      - name: Deploy
+      - run: touch build/.nojekyll
+      - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
           publish_branch: gh-pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        continue-on-error: true
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./build
+        continue-on-error: true
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
