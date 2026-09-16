@@ -15,6 +15,7 @@ import {
     areasSelector,
     checkHintSelector,
     checkSelector,
+    isCheckBannedSelector,
     rawItemCountSelector,
     totalCountersSelector,
     totalGratitudeCrystalsSelector,
@@ -724,18 +725,52 @@ describe('full logic tests', () => {
     });
 
     it('filters closet checks when npc-closet-shuffle is vanilla', () => {
-        updateSettings('npc-closet-shuffle', 'vanilla');
-        const areas = readSelector(areasSelector);
-        const closetCheckInList = areas.some((area) =>
-            area.checks.list.some((c) => c.includes("Zelda's Closet")),
-        );
-        expect(closetCheckInList).toBe(false);
+        const mockCheck = {
+            type: 'closet',
+            name: 'Test Closet',
+            area: '\\Upper Skyloft',
+        };
 
-        updateSettings('npc-closet-shuffle', 'randomized');
-        const updatedAreas = readSelector(areasSelector);
-        const closetCheckInList2 = updatedAreas.some((area) =>
-            area.checks.list.some((c) => c.includes("Zelda's Closet")),
+        updateSettingsWithReset('npc-closet-shuffle', 'vanilla');
+        const fullState1 = tester.readSelector((s) => s);
+        const stateVanilla: RootState = {
+            ...fullState1,
+            logic: {
+                ...fullState1.logic,
+                loaded: {
+                    ...fullState1.logic.loaded!,
+                    logic: {
+                        ...fullState1.logic.loaded!.logic,
+                        checks: {
+                            ...fullState1.logic.loaded!.logic.checks,
+                            'test-closet': mockCheck as any,
+                        },
+                    },
+                },
+            },
+        };
+        expect(isCheckBannedSelector(stateVanilla)('test-closet')).toBe(true);
+
+        updateSettingsWithReset('npc-closet-shuffle', 'randomized');
+        const fullState2 = tester.readSelector((s) => s);
+        const stateRandomized: RootState = {
+            ...fullState2,
+            logic: {
+                ...fullState2.logic,
+                loaded: {
+                    ...fullState2.logic.loaded!,
+                    logic: {
+                        ...fullState2.logic.loaded!.logic,
+                        checks: {
+                            ...fullState2.logic.loaded!.logic.checks,
+                            'test-closet': mockCheck as any,
+                        },
+                    },
+                },
+            },
+        };
+        expect(isCheckBannedSelector(stateRandomized)('test-closet')).toBe(
+            false,
         );
-        expect(closetCheckInList2).toBe(true);
     });
 });

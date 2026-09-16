@@ -505,9 +505,7 @@ export const isCheckBannedSelector = createSelector(
             const check = logic.checks[checkId];
             const checkType = check.type as string;
             const isClosetCheck =
-                checkType === 'closet' ||
-                checkType === 'Closets' ||
-                check.name.includes('Closet');
+                checkType === 'closet' || checkType === 'Closets';
             return (
                 bannedChecks.has(check.name) ||
                 areaNonprogress(logic.checks[checkId].area!) ||

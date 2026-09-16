@@ -116,6 +116,10 @@ describe('tooltips', () => {
             computer = createComputer();
         });
 
+        afterAll(() => {
+            computer?.destroy();
+        });
+
         it.concurrent('computes Nothing', async ({ expect }) => {
             const result = await getTooltipExpression(
                 computer,
@@ -198,6 +202,10 @@ describe('tooltips', () => {
             tester.dispatch(setTrickSemiLogic(true));
             tester.dispatch(setEnabledSemilogicTricks(['Stuttersprint']));
             computer = createComputer();
+        });
+
+        afterAll(() => {
+            computer?.destroy();
         });
 
         it.concurrent('shows tricks if asked', async ({ expect }) => {
