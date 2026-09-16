@@ -194,7 +194,7 @@ describe('optionIndicesToOptions Archipelago slot_data mapping', () => {
                 "Beedle's Insect Cage": 1,
             },
         });
-        const startingItems = settingsDict['starting-items'] as string[];
+        const startingItems = settingsDict['starting-items'];
         expect(startingItems).toContain('Progressive Pouch');
         expect(startingItems).toContain('Scrapper');
         expect(startingItems).toContain('Skyview Map');
@@ -205,7 +205,7 @@ describe('optionIndicesToOptions Archipelago slot_data mapping', () => {
         const settingsArray = optionIndicesToOptions(options, {
             starting_items: ['Progressive Pouch', 'Skyview Temple Small Key'],
         });
-        const startingItemsArr = settingsArray['starting-items'] as string[];
+        const startingItemsArr = settingsArray['starting-items'];
         expect(startingItemsArr).toContain('Progressive Pouch');
         expect(startingItemsArr).toContain('Skyview Small Key');
     });
