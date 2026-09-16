@@ -9,12 +9,16 @@ import { stubFalse } from '../utils/Function';
 export const nonRandomizedExits = [
     '\\Faron\\Sealed Grounds\\Sealed Temple\\Gate of Time Exit',
     "\\Faron\\Sealed Grounds\\Hylia's Temple\\Gate of Time Exit",
+    "\\Skyloft\\Skyloft Village\\Batreaux's House Exit",
+    "Batreaux's House Exit",
 ];
 
 /** Entrances that are not available for randomization even if ER is on. */
 export const nonRandomizedEntrances = [
     '\\Faron\\Sealed Grounds\\Sealed Temple\\Gate of Time Exit',
     "\\Faron\\Sealed Grounds\\Hylia's Temple\\Gate of Time Entrance",
+    "\\Skyloft\\Skyloft Village\\Batreaux's House Entrance",
+    "Batreaux's House Entrance",
 ];
 
 /** Exits and entrances that are neutered and don't do anything. */
@@ -44,7 +48,7 @@ export const runtimeOptions: OptionMapping[] = [
     m(
         "Open Batreaux's Shed option",
         'open-batreaux-shed',
-        (val) => val === 'on' || val === true,
+        (val) => val !== false && val !== 'off',
     ),
     m('Open ET option', 'open-et', true),
     m('Open LMF option', 'open-lmf', 'Open'),
