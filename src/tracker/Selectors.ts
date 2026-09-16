@@ -8,6 +8,8 @@ import {
 import {
     dumpCheckToSSHDName,
     oldDumpShortNameToSSHDName,
+    sshdNameToDumpCheck,
+    sshdNameToOldShortName,
 } from '../data/SSHDLocationMapping';
 import { parseHintsText } from '../hints/HintsParser';
 import {
@@ -366,6 +368,25 @@ export const availableLocationsSetSelector = createSelector(
             if (mappedShort) {
                 set.add(mappedShort);
                 set.add(mappedShort.trim());
+            }
+
+            const revDump =
+                sshdNameToDumpCheck[trimmed] ?? sshdNameToDumpCheck[loc];
+            if (revDump) {
+                set.add(revDump);
+                set.add(revDump.trim());
+            }
+            const revShort =
+                sshdNameToOldShortName[trimmed] ?? sshdNameToOldShortName[loc];
+            if (revShort) {
+                set.add(revShort);
+                set.add(revShort.trim());
+            }
+
+            const dashIdx = trimmed.indexOf(' - ');
+            if (dashIdx !== -1) {
+                const afterDash = trimmed.substring(dashIdx + 3).trim();
+                set.add(afterDash);
             }
         }
         return set;
