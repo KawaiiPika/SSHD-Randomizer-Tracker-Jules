@@ -730,7 +730,7 @@ describe('full logic tests', () => {
         const logic = tester.readSelector(logicSelector);
         const originalType = logic.checks[checkId].type;
         try {
-            logic.checks[checkId].type = 'closet' as any;
+            logic.checks[checkId].type = 'closet';
             updateSettingsWithReset('npc-closet-shuffle', 'vanilla');
             expect(readSelector(isCheckBannedSelector)(checkId)).toBe(true);
 

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import eldinMap from '../../assets/maps/Eldin.png';
-import faronMap from '../../assets/maps/Faron.png';
-import lanayruMap from '../../assets/maps/Lanayru.png';
-import skyMap from '../../assets/maps/Sky.png';
-import skyloftMap from '../../assets/maps/Skyloft.png';
+import eldinMap from '../../assets/maps/eldin.png';
+import faronMap from '../../assets/maps/faron.png';
+import lanayruMap from '../../assets/maps/lanayru.png';
+import skyMap from '../../assets/maps/sky.png';
+import skyloftMap from '../../assets/maps/skyloft.png';
 import mapData from '../../data/mapData.json';
 import type {
     InterfaceAction,

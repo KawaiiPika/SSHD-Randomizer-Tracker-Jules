@@ -30,7 +30,6 @@ import {
 } from '../loader/LogicLoader';
 import { useReleases } from '../loader/ReleasesLoader';
 import { type LogicBundle, loadLogic } from '../logic/Slice';
-import { setRequiredDungeons } from '../tracker/Slice';
 // import { decodePermalink, encodePermalink } from '../permalink/Settings';
 import {
     ClientManagerContext,
@@ -46,7 +45,7 @@ import type {
     OptionsCommand,
 } from '../permalink/SettingsTypes';
 import { useAppDispatch } from '../store/Store';
-import { acceptSettings, reset } from '../tracker/Slice';
+import { acceptSettings, reset, setRequiredDungeons } from '../tracker/Slice';
 import Acknowledgement from './Acknowledgment';
 import styles from './Options.module.css';
 import { OptionsPresets } from './OptionsPresets';

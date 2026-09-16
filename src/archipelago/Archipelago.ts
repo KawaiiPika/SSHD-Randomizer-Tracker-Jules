@@ -25,7 +25,7 @@ function kebabToSnake(input: string): string {
 
 function optionIndicesToOptions(
     optionDefs: OptionDefs,
-    loadedOptions: Record<string, any>,
+    loadedOptions: Record<string, unknown>,
 ): AllTypedOptions {
     const settings: Partial<Record<OptionsCommand, OptionValue>> =
         defaultSettings(optionDefs);
@@ -34,7 +34,7 @@ function optionIndicesToOptions(
     settings['starting-items'] = [];
     for (const option of optionDefs) {
         const snakeName = kebabToSnake(option.command);
-        const loadedVal =
+        const loadedVal: unknown =
             loadedOptions[snakeName] ??
             loadedOptions[option.command] ??
             loadedOptions[snakeName.replace(/^setting_/, '')];
@@ -45,7 +45,9 @@ function optionIndicesToOptions(
             loadedVal !== null
         ) {
             if (option.command === 'excluded-locations') {
-                settings[option.command] = loadedVal;
+                if (Array.isArray(loadedVal)) {
+                    settings[option.command] = loadedVal as string[];
+                }
             } else if (option.type === 'boolean') {
                 if (typeof loadedVal === 'boolean') {
                     settings[option.command] = loadedVal;
@@ -57,10 +59,11 @@ function optionIndicesToOptions(
                         lower === 'true' || lower === 'on' || lower === '1';
                 }
             } else if (option.type === 'int') {
-                settings[option.command] =
-                    typeof loadedVal === 'number'
-                        ? loadedVal
-                        : parseInt(loadedVal, 10);
+                if (typeof loadedVal === 'number') {
+                    settings[option.command] = loadedVal;
+                } else if (typeof loadedVal === 'string') {
+                    settings[option.command] = parseInt(loadedVal, 10);
+                }
             } else if (option.type === 'singlechoice') {
                 if (typeof loadedVal === 'number') {
                     settings[option.command] =
@@ -80,24 +83,20 @@ function optionIndicesToOptions(
         }
     }
 
-    for (const key of Object.keys(loadedOptions)) {
-        const val = loadedOptions[key];
-        const kebabKey = key.replace(/_/g, '-') as OptionsCommand;
+    const finalSettings = settings as Record<string, OptionValue>;
+    for (const [key, val] of Object.entries(loadedOptions)) {
+        const kebabKey = key.replace(/_/g, '-');
         if (
-            settings[kebabKey] === undefined &&
-            (typeof val === 'boolean' ||
-                typeof val === 'number' ||
-                typeof val === 'string')
+            typeof val === 'boolean' ||
+            typeof val === 'number' ||
+            typeof val === 'string'
         ) {
-            (settings as any)[kebabKey] = val;
-        }
-        if (
-            settings[key as OptionsCommand] === undefined &&
-            (typeof val === 'boolean' ||
-                typeof val === 'number' ||
-                typeof val === 'string')
-        ) {
-            (settings as any)[key] = val;
+            if (finalSettings[kebabKey] === undefined) {
+                finalSettings[kebabKey] = val;
+            }
+            if (finalSettings[key] === undefined) {
+                finalSettings[key] = val;
+            }
         }
     }
 
@@ -286,13 +285,11 @@ export class APClientManager {
         client.socket.on('connected', (content) => {
             this.connectedData = content;
             setStoredArchipelagoServer(server);
-            const slotData = content.slot_data as Record<
-                string,
-                number | string[]
-            >;
+            const slotData = content.slot_data as Record<string, unknown>;
             this.loadedSettings = optionIndicesToOptions(optionDefs, slotData);
-            this.requiredDungeons =
-                (slotData['required_dungeons'] as string[]) ?? [];
+            this.requiredDungeons = Array.isArray(slotData['required_dungeons'])
+                ? (slotData['required_dungeons'] as string[])
+                : [];
 
             if (this.idToLocation && this.connectedData.checked_locations) {
                 this.checkedLocations = this.connectedData.checked_locations

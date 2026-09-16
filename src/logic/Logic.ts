@@ -67,7 +67,10 @@ export interface LogicalCheck {
         | 'gear_shop'
         | 'potion_shop'
         | 'tr_cube'
-        | 'tr_dummy';
+        | 'tr_dummy'
+        | 'closet'
+        | 'stamina_fruit'
+        | 'underground_rupee';
     name: string;
     originalItem: string | undefined;
     area: string | undefined;
@@ -97,6 +100,9 @@ export function isRegularItemCheck(type: LogicalCheck['type']) {
         case 'beedle_shop':
         case 'gear_shop':
         case 'potion_shop':
+        case 'closet':
+        case 'stamina_fruit':
+        case 'underground_rupee':
             return true;
         case 'loose_crystal':
         case 'gossip_stone':
@@ -1158,6 +1164,18 @@ function getCheckType(
         !checkName.includes("Water Dragon's Reward")
     ) {
         return 'tadtone';
+    } else if (checkType.includes('Closet') || checkType.includes('closet')) {
+        return 'closet';
+    } else if (
+        checkType.includes('Stamina Fruit') ||
+        checkType.includes('stamina_fruit')
+    ) {
+        return 'stamina_fruit';
+    } else if (
+        checkType.includes('Underground Rupee') ||
+        checkType.includes('underground_rupee')
+    ) {
+        return 'underground_rupee';
     } else {
         return 'regular';
     }
