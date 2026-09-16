@@ -599,11 +599,133 @@ export function patchRawLogicForSSHD(raw: RawLogic): RawLogic {
         raw.items.push('Life Tree Seedling');
     }
 
+    // Ensure Batreaux reward macros in sslib / Battlecats59 dump.yaml are satisfied by gratitude crystals
+    if (raw.areas) {
+        if (!raw.areas.locations) {
+            raw.areas.locations = {};
+        }
+        const batreauxLevels: [string, string][] = [
+            ['Can Receive Batreaux Level 1 Rewards', '\\5 Gratitude Crystals'],
+            ['Can Receive Batreaux Level 2 Rewards', '\\10 Gratitude Crystals'],
+            ['Can Receive Batreaux Level 3 Rewards', '\\30 Gratitude Crystals'],
+            ['Can Receive Batreaux Level 4 Rewards', '\\40 Gratitude Crystals'],
+            ['Can Receive Batreaux Level 5 Rewards', '\\50 Gratitude Crystals'],
+            ['Can Receive Batreaux Level 6 Rewards', '\\70 Gratitude Crystals'],
+            ['Can Receive Batreaux Level 7 Rewards', '\\80 Gratitude Crystals'],
+        ];
+        for (const [key, target] of batreauxLevels) {
+            if (raw.areas.locations[key] !== undefined) {
+                raw.areas.locations[key] = target;
+            }
+        }
+
+        // Patch Opened Shed in Skyloft Village so open-batreaux-shed option works
+        const patchOpenedShed = (area: RawArea) => {
+            if (area.name === '\\Skyloft\\Skyloft Village' && area.locations) {
+                if (area.locations['Opened Shed']) {
+                    area.locations['Opened Shed'] =
+                        "Open Batreaux's Shed option | Night";
+                }
+            }
+            for (const sub of Object.values(area.sub_areas || {})) {
+                patchOpenedShed(sub);
+            }
+        };
+        patchOpenedShed(raw.areas);
+    }
+
     // Rename dump checks to official SSHD / Archipelago names
     for (const [id, check] of Object.entries(raw.checks)) {
         const sshdName = dumpCheckToSSHDName[id];
         if (sshdName) {
             check.short_name = sshdName;
+        }
+
+        // Catch all variations of Batreaux reward names from any upstream fork
+        if (
+            id.includes("Batreaux's House\\First Reward") ||
+            id.includes("Batreaux's House\\5 Crystals") ||
+            check.short_name === "Batreaux's House - First Reward" ||
+            check.short_name === 'First Reward' ||
+            check.short_name === "Batreaux's House - 5 Crystals" ||
+            check.short_name === '5 Crystals'
+        ) {
+            check.short_name = '5 Gratitude Crystals Reward';
+        } else if (
+            id.includes("Batreaux's House\\Second Reward") ||
+            id.includes("Batreaux's House\\10 Crystals") ||
+            check.short_name === "Batreaux's House - Second Reward" ||
+            check.short_name === 'Second Reward' ||
+            check.short_name === "Batreaux's House - 10 Crystals" ||
+            check.short_name === '10 Crystals'
+        ) {
+            check.short_name = '10 Gratitude Crystals Reward';
+        } else if (
+            id.includes("Batreaux's House\\Third Reward") ||
+            (id.includes("Batreaux's House\\30 Crystals") &&
+                !id.includes('Chest')) ||
+            check.short_name === "Batreaux's House - Third Reward" ||
+            check.short_name === 'Third Reward' ||
+            check.short_name === "Batreaux's House - 30 Crystals" ||
+            check.short_name === '30 Crystals'
+        ) {
+            check.short_name = '30 Gratitude Crystals Reward';
+        } else if (
+            id.includes("Batreaux's House\\Chest") ||
+            id.includes('30 Crystals Chest') ||
+            ((check.short_name === "Batreaux's House - Chest" ||
+                check.short_name === "Batreaux's House - 30 Crystals Chest" ||
+                check.short_name === '30 Crystals Chest') &&
+                check.type === "Batreaux's Rewards")
+        ) {
+            check.short_name = '30 Gratitude Crystals Reward Chest';
+        } else if (
+            id.includes("Batreaux's House\\Fourth Reward") ||
+            id.includes("Batreaux's House\\40 Crystals") ||
+            check.short_name === "Batreaux's House - Fourth Reward" ||
+            check.short_name === 'Fourth Reward' ||
+            check.short_name === "Batreaux's House - 40 Crystals" ||
+            check.short_name === '40 Crystals'
+        ) {
+            check.short_name = '40 Gratitude Crystals Reward';
+        } else if (
+            id.includes("Batreaux's House\\Fifth Reward") ||
+            id.includes("Batreaux's House\\50 Crystals") ||
+            check.short_name === "Batreaux's House - Fifth Reward" ||
+            check.short_name === 'Fifth Reward' ||
+            check.short_name === "Batreaux's House - 50 Crystals" ||
+            check.short_name === '50 Crystals'
+        ) {
+            check.short_name = '50 Gratitude Crystals Reward';
+        } else if (
+            id.includes("Batreaux's House\\Sixth Reward") ||
+            (id.includes("Batreaux's House\\70 Crystals") &&
+                !id.includes('Second')) ||
+            check.short_name === "Batreaux's House - Sixth Reward" ||
+            check.short_name === 'Sixth Reward' ||
+            check.short_name === "Batreaux's House - 70 Crystals" ||
+            check.short_name === '70 Crystals'
+        ) {
+            check.short_name = '70 Gratitude Crystals First Reward';
+        } else if (
+            id.includes("Batreaux's House\\Seventh Reward") ||
+            id.includes('70 Crystals Second Reward') ||
+            check.short_name === "Batreaux's House - Seventh Reward" ||
+            check.short_name === 'Seventh Reward' ||
+            check.short_name ===
+                "Batreaux's House - 70 Crystals Second Reward" ||
+            check.short_name === '70 Crystals Second Reward'
+        ) {
+            check.short_name = '70 Gratitude Crystals Second Reward';
+        } else if (
+            id.includes("Batreaux's House\\Final Reward") ||
+            id.includes("Batreaux's House\\80 Crystals") ||
+            check.short_name === "Batreaux's House - Final Reward" ||
+            check.short_name === 'Final Reward' ||
+            check.short_name === "Batreaux's House - 80 Crystals" ||
+            check.short_name === '80 Crystals'
+        ) {
+            check.short_name = '80 Gratitude Crystals Reward';
         }
     }
 

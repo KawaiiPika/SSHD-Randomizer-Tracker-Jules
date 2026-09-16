@@ -352,32 +352,35 @@ export const availableLocationsSetSelector = createSelector(
     (locs) => {
         if (!locs || locs.length === 0) return null;
         const set = new Set<string>();
-        for (const loc of locs) {
-            const trimmed = loc.trim();
-            set.add(loc);
+
+        const addVariants = (str: string) => {
+            if (!str) return;
+            const trimmed = str.trim();
+            set.add(str);
             set.add(trimmed);
+
             const mapped =
-                dumpCheckToSSHDName[trimmed] ?? dumpCheckToSSHDName[loc];
+                dumpCheckToSSHDName[trimmed] ?? dumpCheckToSSHDName[str];
             if (mapped) {
                 set.add(mapped);
                 set.add(mapped.trim());
             }
             const mappedShort =
                 oldDumpShortNameToSSHDName[trimmed] ??
-                oldDumpShortNameToSSHDName[loc];
+                oldDumpShortNameToSSHDName[str];
             if (mappedShort) {
                 set.add(mappedShort);
                 set.add(mappedShort.trim());
             }
 
             const revDump =
-                sshdNameToDumpCheck[trimmed] ?? sshdNameToDumpCheck[loc];
+                sshdNameToDumpCheck[trimmed] ?? sshdNameToDumpCheck[str];
             if (revDump) {
                 set.add(revDump);
                 set.add(revDump.trim());
             }
             const revShort =
-                sshdNameToOldShortName[trimmed] ?? sshdNameToOldShortName[loc];
+                sshdNameToOldShortName[trimmed] ?? sshdNameToOldShortName[str];
             if (revShort) {
                 set.add(revShort);
                 set.add(revShort.trim());
@@ -387,7 +390,20 @@ export const availableLocationsSetSelector = createSelector(
             if (dashIdx !== -1) {
                 const afterDash = trimmed.substring(dashIdx + 3).trim();
                 set.add(afterDash);
+                const mappedDash =
+                    dumpCheckToSSHDName[afterDash] ??
+                    oldDumpShortNameToSSHDName[afterDash];
+                if (mappedDash) {
+                    set.add(mappedDash);
+                    set.add(mappedDash.trim());
+                }
+            } else {
+                set.add(`Batreaux's House - ${trimmed}`);
             }
+        };
+
+        for (const loc of locs) {
+            addVariants(loc);
         }
         return set;
     },
@@ -400,14 +416,24 @@ export const areaHasApLocationsSelector = createSelector(
         const areasWithLocations = new Set<string>();
         for (const [checkId, check] of Object.entries(logic.checks)) {
             const checkSshdName = dumpCheckToSSHDName[checkId];
+            const oldShortName =
+                oldDumpShortNameToSSHDName[check.name] ??
+                oldDumpShortNameToSSHDName[check.name.trim()];
             if (
                 apLocationsSet.has(check.name) ||
                 apLocationsSet.has(check.name.trim()) ||
+                apLocationsSet.has(`Batreaux's House - ${check.name.trim()}`) ||
                 apLocationsSet.has(checkId) ||
                 apLocationsSet.has(checkId.trim()) ||
                 (checkSshdName &&
                     (apLocationsSet.has(checkSshdName) ||
-                        apLocationsSet.has(checkSshdName.trim())))
+                        apLocationsSet.has(checkSshdName.trim()) ||
+                        apLocationsSet.has(
+                            `Batreaux's House - ${checkSshdName.trim()}`,
+                        ))) ||
+                (oldShortName &&
+                    (apLocationsSet.has(oldShortName) ||
+                        apLocationsSet.has(oldShortName.trim())))
             ) {
                 if (check.area) {
                     areasWithLocations.add(check.area);
@@ -619,14 +645,26 @@ export const isCheckBannedSelector = createSelector(
 
             if (availableLocationsSet) {
                 const checkSshdName = dumpCheckToSSHDName[checkId];
+                const oldShortName =
+                    oldDumpShortNameToSSHDName[check.name] ??
+                    oldDumpShortNameToSSHDName[check.name.trim()];
                 const isCheckInAp =
                     availableLocationsSet.has(check.name) ||
                     availableLocationsSet.has(check.name.trim()) ||
+                    availableLocationsSet.has(
+                        `Batreaux's House - ${check.name.trim()}`,
+                    ) ||
                     availableLocationsSet.has(checkId) ||
                     availableLocationsSet.has(checkId.trim()) ||
                     (checkSshdName &&
                         (availableLocationsSet.has(checkSshdName) ||
-                            availableLocationsSet.has(checkSshdName.trim())));
+                            availableLocationsSet.has(checkSshdName.trim()) ||
+                            availableLocationsSet.has(
+                                `Batreaux's House - ${checkSshdName.trim()}`,
+                            ))) ||
+                    (oldShortName &&
+                        (availableLocationsSet.has(oldShortName) ||
+                            availableLocationsSet.has(oldShortName.trim())));
 
                 if (isCheckInAp) {
                     return false;

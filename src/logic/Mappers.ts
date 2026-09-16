@@ -1,4 +1,8 @@
-import type { OptionDefs, TypedOptions } from '../permalink/SettingsTypes';
+import type {
+    OptionDefs,
+    OptionValue,
+    TypedOptions,
+} from '../permalink/SettingsTypes';
 import { appDebug } from '../utils/Debug';
 import type { Requirements } from './bitlogic/BitLogic';
 import { BitVector } from './bitlogic/BitVector';
@@ -45,8 +49,9 @@ export function mapSettings(
         const [item, command, expect] = option;
         const val = settings[command];
         const match =
-            val !== undefined &&
-            (typeof expect === 'function' ? expect(val) : expect === val);
+            typeof expect === 'function'
+                ? expect(val as OptionValue)
+                : val !== undefined && expect === val;
         if (match) {
             appDebug('setting', item);
             b.set(item, b.true());

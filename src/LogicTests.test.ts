@@ -950,6 +950,25 @@ describe('full logic tests', () => {
         expect(batreauxArea?.checks.numRemaining).toBe(9);
         expect(batreauxArea?.checks.list.length).toBe(9);
         expect(batreauxArea?.hidden).toBe(false);
+
+        const logic = readSelector(logicSelector);
+        const checkNames = batreauxArea?.checks.list.map((c) => {
+            const rawName = logic.checks[c].name;
+            return rawName.includes('-')
+                ? rawName.substring(rawName.indexOf('-') + 1).trim()
+                : rawName;
+        });
+        expect(checkNames).toEqual([
+            '5 Gratitude Crystals Reward',
+            '10 Gratitude Crystals Reward',
+            '30 Gratitude Crystals Reward',
+            '30 Gratitude Crystals Reward Chest',
+            '40 Gratitude Crystals Reward',
+            '50 Gratitude Crystals Reward',
+            '70 Gratitude Crystals First Reward',
+            '70 Gratitude Crystals Second Reward',
+            '80 Gratitude Crystals Reward',
+        ]);
     });
 
     it('requires Gate of Time open and Life Tree Seedling for Tree of Life fruit', () => {

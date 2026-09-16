@@ -10,7 +10,9 @@ export const nonRandomizedExits = [
     '\\Faron\\Sealed Grounds\\Sealed Temple\\Gate of Time Exit',
     "\\Faron\\Sealed Grounds\\Hylia's Temple\\Gate of Time Exit",
     "\\Skyloft\\Skyloft Village\\Batreaux's House Exit",
+    "\\Skyloft\\Skyloft Village\\Batreaux's House\\Exit",
     "Batreaux's House Exit",
+    "Batreaux's House - Exit",
 ];
 
 /** Entrances that are not available for randomization even if ER is on. */
@@ -18,7 +20,9 @@ export const nonRandomizedEntrances = [
     '\\Faron\\Sealed Grounds\\Sealed Temple\\Gate of Time Exit',
     "\\Faron\\Sealed Grounds\\Hylia's Temple\\Gate of Time Entrance",
     "\\Skyloft\\Skyloft Village\\Batreaux's House Entrance",
+    "\\Skyloft\\Skyloft Village\\Batreaux's House\\Entrance",
     "Batreaux's House Entrance",
+    "Batreaux's House - Entrance",
 ];
 
 /** Exits and entrances that are neutered and don't do anything. */

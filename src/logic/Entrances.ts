@@ -175,7 +175,8 @@ export function getEntrancePools(
                 ([entranceId]) =>
                     !bannedExitsAndEntrances.includes(entranceId) &&
                     areaGraph.entrances[entranceId].stage !== undefined &&
-                    !nonRandomizedEntrances.includes(entranceId),
+                    !nonRandomizedEntrances.includes(entranceId) &&
+                    !entranceId.includes("Batreaux's House"),
             )
             .map(([id, def]) => ({
                 id,
@@ -221,7 +222,10 @@ export function getExitRules(
             continue;
         }
 
-        if (nonRandomizedExits.includes(exitId)) {
+        if (
+            nonRandomizedExits.includes(exitId) ||
+            exitId.includes("Batreaux's House")
+        ) {
             result[exitId] = { type: 'vanilla' };
             continue;
         }

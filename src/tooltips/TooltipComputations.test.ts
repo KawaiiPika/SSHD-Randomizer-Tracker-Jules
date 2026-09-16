@@ -186,6 +186,20 @@ describe('tooltips', () => {
                 `"(Digging Mitts and Ruby Tablet and (Bow or Slingshot))"`,
             );
         });
+
+        it.concurrent(
+            'shows Gratitude Crystals requirement for Batreaux check without impossible',
+            async ({ expect }) => {
+                const checkId = tester.findCheckId(
+                    "Batreaux's House",
+                    '5 Crystals',
+                );
+                const result = await getTooltipExpression(computer, checkId);
+                const formatted = formatExpr(result);
+                expect(formatted).not.toContain('Impossible');
+                expect(formatted).toContain('5 Gratitude Crystals');
+            },
+        );
     });
 
     describe('trick logic', () => {
