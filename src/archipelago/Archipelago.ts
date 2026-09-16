@@ -54,7 +54,16 @@ const COMMAND_ALIASES: Record<string, string[]> = {
         'starting-items',
         'starting_inventory',
     ],
-    'starting-sword': ['starting_sword', 'starting-sword'],
+    'starting-sword': [
+        'starting_sword',
+        'starting-sword',
+        'starting_swords',
+        'starting-swords',
+        'start_sword',
+        'start-sword',
+        'swordless',
+        'sword',
+    ],
     'starting-tablet-count': [
         'starting_tablets',
         'starting_tablet_count',
@@ -156,33 +165,63 @@ const COMMAND_ALIASES: Record<string, string[]> = {
     'damage-multiplier': ['damage_multiplier', 'damage-multiplier'],
 };
 
+function normalizeOptionKey(key: string): string {
+    return key.toLowerCase().replace(/[-_]/g, '');
+}
+
 function findLoadedValue(
     command: string,
     loadedOptions: Record<string, unknown>,
 ): unknown {
-    const candidates = COMMAND_ALIASES[command] ?? [];
-    for (const key of candidates) {
+    const rawCandidates = [
+        ...(COMMAND_ALIASES[command] ?? []),
+        command,
+        kebabToSnake(command),
+    ];
+
+    // 1. First try exact candidate keys and explicit prefix variations
+    const candidateKeys = new Set<string>();
+    for (const c of rawCandidates) {
+        candidateKeys.add(c);
+        const snake = kebabToSnake(c);
+        candidateKeys.add(snake);
+        candidateKeys.add(`option_${snake}`);
+        candidateKeys.add(`setting_${snake}`);
+        candidateKeys.add(`option-${c}`);
+        candidateKeys.add(`setting-${c}`);
+        candidateKeys.add(snake.replace(/^option_/, ''));
+        candidateKeys.add(snake.replace(/^setting_/, ''));
+    }
+
+    for (const key of candidateKeys) {
         if (loadedOptions[key] !== undefined && loadedOptions[key] !== null) {
             return loadedOptions[key];
         }
     }
-    const snake = kebabToSnake(command);
-    if (loadedOptions[snake] !== undefined && loadedOptions[snake] !== null) {
-        return loadedOptions[snake];
+
+    // 2. Normalized fallback (case-insensitive, ignoring hyphens and underscores)
+    const normalizedTargets = new Set<string>();
+    for (const c of rawCandidates) {
+        const norm = normalizeOptionKey(c);
+        normalizedTargets.add(norm);
+        normalizedTargets.add(`option${norm}`);
+        normalizedTargets.add(`setting${norm}`);
+        if (norm.startsWith('option')) {
+            normalizedTargets.add(norm.replace(/^option/, ''));
+        }
+        if (norm.startsWith('setting')) {
+            normalizedTargets.add(norm.replace(/^setting/, ''));
+        }
     }
-    if (
-        loadedOptions[command] !== undefined &&
-        loadedOptions[command] !== null
-    ) {
-        return loadedOptions[command];
+
+    for (const [key, value] of Object.entries(loadedOptions)) {
+        if (value === undefined || value === null) continue;
+        const normKey = normalizeOptionKey(key);
+        if (normalizedTargets.has(normKey)) {
+            return value;
+        }
     }
-    const noPrefix = snake.replace(/^setting_/, '');
-    if (
-        loadedOptions[noPrefix] !== undefined &&
-        loadedOptions[noPrefix] !== null
-    ) {
-        return loadedOptions[noPrefix];
-    }
+
     return undefined;
 }
 
@@ -197,20 +236,25 @@ function parseSmallKeyMode(val: unknown): string | undefined {
                 return 'Anywhere';
             case 3:
                 return 'Lanayru Caves Key Only';
+            case 4:
+                return 'Vanilla';
             default:
                 return undefined;
         }
     }
     if (typeof val === 'string') {
-        const s = val.toLowerCase().replace(/[-_\s]+/g, '');
-        if (s === 'vanilla') return 'Vanilla';
+        const trimmed = val.trim();
+        if (/^\d+$/.test(trimmed)) {
+            return parseSmallKeyMode(parseInt(trimmed, 10));
+        }
+        const s = trimmed.toLowerCase().replace(/[-_\s]+/g, '');
+        if (['vanilla', 'removed'].includes(s)) return 'Vanilla';
         if (
             [
                 'owndungeon',
                 'ownregion',
                 'owndungeonrestricted',
                 'restricted',
-                'removed',
             ].includes(s)
         ) {
             return 'Own Dungeon - Restricted';
@@ -240,12 +284,24 @@ function parseBossKeyMode(val: unknown): string | undefined {
                 return 'Own Dungeon';
             case 2:
                 return 'Anywhere';
+            case 3:
+                return 'Own Dungeon';
+            case 4:
+                return 'Anywhere';
+            case 5:
+                return 'Anywhere';
+            case 6:
+                return 'Vanilla';
             default:
                 return undefined;
         }
     }
     if (typeof val === 'string') {
-        const s = val.toLowerCase().replace(/[-_\s]+/g, '');
+        const trimmed = val.trim();
+        if (/^\d+$/.test(trimmed)) {
+            return parseBossKeyMode(parseInt(trimmed, 10));
+        }
+        const s = trimmed.toLowerCase().replace(/[-_\s]+/g, '');
         if (['vanilla', 'removed'].includes(s)) return 'Vanilla';
         if (['owndungeon', 'ownregion'].includes(s)) return 'Own Dungeon';
         if (['anywhere', 'anydungeon', 'overworld'].includes(s))
@@ -254,8 +310,28 @@ function parseBossKeyMode(val: unknown): string | undefined {
     return undefined;
 }
 
-function parseMapMode(val: unknown): string | undefined {
+function parseMapMode(
+    val: unknown,
+    isArchipelago: boolean = true,
+): string | undefined {
     if (typeof val === 'number') {
+        if (isArchipelago) {
+            switch (val) {
+                case 0:
+                    return 'Vanilla';
+                case 1:
+                    return 'Own Dungeon - Restricted';
+                case 2:
+                    return 'Own Dungeon - Unrestricted';
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    return 'Anywhere';
+                default:
+                    return undefined;
+            }
+        }
         switch (val) {
             case 0:
                 return 'Removed';
@@ -272,7 +348,11 @@ function parseMapMode(val: unknown): string | undefined {
         }
     }
     if (typeof val === 'string') {
-        const s = val.toLowerCase().replace(/[-_\s]+/g, '');
+        const trimmed = val.trim();
+        if (/^\d+$/.test(trimmed)) {
+            return parseMapMode(parseInt(trimmed, 10), isArchipelago);
+        }
+        const s = trimmed.toLowerCase().replace(/[-_\s]+/g, '');
         if (s === 'removed') return 'Removed';
         if (s === 'vanilla') return 'Vanilla';
         if (
@@ -296,27 +376,38 @@ function parseMapMode(val: unknown): string | undefined {
 }
 
 function parseStartingSword(val: unknown): string | undefined {
+    const choices = [
+        'Swordless',
+        'Practice Sword',
+        'Goddess Sword',
+        'Goddess Longsword',
+        'Goddess White Sword',
+        'Master Sword',
+        'True Master Sword',
+    ];
     if (typeof val === 'number') {
-        const choices = [
-            'Swordless',
-            'Practice Sword',
-            'Goddess Sword',
-            'Goddess Longsword',
-            'Goddess White Sword',
-            'Master Sword',
-            'True Master Sword',
-        ];
         return choices[val];
     }
+    if (typeof val === 'boolean') {
+        return val ? 'Swordless' : undefined;
+    }
     if (typeof val === 'string') {
-        const s = val.toLowerCase().replace(/[-_\s]+/g, '');
-        if (['nosword', 'swordless', 'none'].includes(s)) return 'Swordless';
-        if (['practicesword', 'practice'].includes(s)) return 'Practice Sword';
-        if (s === 'goddesssword') return 'Goddess Sword';
-        if (s === 'goddesslongsword') return 'Goddess Longsword';
-        if (s === 'goddesswhitesword') return 'Goddess White Sword';
-        if (s === 'mastersword') return 'Master Sword';
-        if (s === 'truemastersword') return 'True Master Sword';
+        const trimmed = val.trim();
+        if (/^\d+$/.test(trimmed)) {
+            const num = parseInt(trimmed, 10);
+            return choices[num];
+        }
+        const s = trimmed.toLowerCase().replace(/[-_\s]+/g, '');
+        if (['nosword', 'swordless', 'none', '0'].includes(s))
+            return 'Swordless';
+        if (['practicesword', 'practice', '1'].includes(s))
+            return 'Practice Sword';
+        if (['goddesssword', '2'].includes(s)) return 'Goddess Sword';
+        if (['goddesslongsword', '3'].includes(s)) return 'Goddess Longsword';
+        if (['goddesswhitesword', '4'].includes(s))
+            return 'Goddess White Sword';
+        if (['mastersword', '5'].includes(s)) return 'Master Sword';
+        if (['truemastersword', '6'].includes(s)) return 'True Master Sword';
     }
     return undefined;
 }
@@ -362,6 +453,15 @@ export function optionIndicesToOptions(
     const settings: Partial<Record<OptionsCommand, OptionValue>> =
         defaultSettings(optionDefs);
 
+    const isArchipelagoSlotData = Object.keys(loadedOptions).some(
+        (k) =>
+            k.startsWith('option_') ||
+            k === 'world_version' ||
+            k === 'rando_version' ||
+            k === 'location_to_item_map' ||
+            k === 'custom_flag_to_location',
+    );
+
     for (const option of optionDefs) {
         const loadedVal: unknown = findLoadedValue(
             option.command,
@@ -391,7 +491,7 @@ export function optionIndicesToOptions(
                     settings[option.command] = parsed;
                 }
             } else if (option.command === 'map-mode') {
-                const parsed = parseMapMode(loadedVal);
+                const parsed = parseMapMode(loadedVal, isArchipelagoSlotData);
                 if (parsed) {
                     settings[option.command] = parsed;
                 }
@@ -475,6 +575,14 @@ export function optionIndicesToOptions(
                 }
             }
         }
+    }
+
+    if (
+        isArchipelagoSlotData &&
+        settings['starting-sword'] === 'Goddess Sword' &&
+        findLoadedValue('starting-sword', loadedOptions) === undefined
+    ) {
+        settings['starting-sword'] = 'Swordless';
     }
 
     const finalSettings = settings as Record<string, OptionValue>;

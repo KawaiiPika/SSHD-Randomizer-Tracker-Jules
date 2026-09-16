@@ -6,6 +6,7 @@ import {
 import { createTestLogic } from '../testing/TestingUtils';
 import { resolveItem } from './Inventory';
 import { optionsSelector } from './Selectors';
+import { getInitialItems } from './TrackerModifications';
 
 describe('Inventory resolveItem', () => {
     it('resolves Skyview Temple Small Key and Boss Key', () => {
@@ -238,5 +239,59 @@ describe('optionIndicesToOptions Archipelago slot_data mapping', () => {
         expect(settings['got-sword-requirement']).toBe('True Master Sword');
         expect(settings['open-lake-floria']).toBe('Open');
         expect(settings['open-et']).toBe(true);
+    });
+
+    it('correctly maps option_ prefix and numeric starting_sword from Archipelago slot_data', () => {
+        const options = getOptions();
+
+        // option_starting_sword as integer 0 (Swordless)
+        const s0 = optionIndicesToOptions(options, {
+            option_starting_sword: 0,
+        });
+        expect(s0['starting-sword']).toBe('Swordless');
+        const initial0 = getInitialItems(s0);
+        expect(initial0['Progressive Sword']).toBe(0);
+
+        // option_starting_sword as integer 1 (Practice Sword)
+        const s1 = optionIndicesToOptions(options, {
+            option_starting_sword: 1,
+        });
+        expect(s1['starting-sword']).toBe('Practice Sword');
+        const initial1 = getInitialItems(s1);
+        expect(initial1['Progressive Sword']).toBe(1);
+
+        // option_starting_sword as integer 2 (Goddess Sword)
+        const s2 = optionIndicesToOptions(options, {
+            option_starting_sword: 2,
+        });
+        expect(s2['starting-sword']).toBe('Goddess Sword');
+        const initial2 = getInitialItems(s2);
+        expect(initial2['Progressive Sword']).toBe(2);
+
+        // option_starting_sword as string '0'
+        const sStr0 = optionIndicesToOptions(options, {
+            option_starting_sword: '0',
+        });
+        expect(sStr0['starting-sword']).toBe('Swordless');
+
+        // option_starting_sword as string 'no_sword'
+        const sNoSword = optionIndicesToOptions(options, {
+            option_starting_sword: 'no_sword',
+        });
+        expect(sNoSword['starting-sword']).toBe('Swordless');
+
+        // Case-insensitive / PascalCase / alias
+        const sPascal = optionIndicesToOptions(options, {
+            StartingSword: 0,
+        });
+        expect(sPascal['starting-sword']).toBe('Swordless');
+
+        // Missing starting_sword in Archipelago slot_data defaults to Swordless
+        const sApMissing = optionIndicesToOptions(options, {
+            world_version: [0, 7, 2],
+            option_randomize_entrances: 0,
+        });
+        expect(sApMissing['starting-sword']).toBe('Swordless');
+        expect(getInitialItems(sApMissing)['Progressive Sword']).toBe(0);
     });
 });
