@@ -951,4 +951,43 @@ describe('full logic tests', () => {
         expect(batreauxArea?.checks.list.length).toBe(9);
         expect(batreauxArea?.hidden).toBe(false);
     });
+
+    it('requires Gate of Time open and Life Tree Seedling for Tree of Life fruit', () => {
+        dispatch(setAvailableLocations(undefined));
+        const checkId =
+            '\\Faron\\Sealed Grounds\\Sealed Temple\\Collect Fruit from the Tree of Life';
+
+        // Initially out of logic
+        expect(checkState(checkId)).toBe('outLogic');
+
+        // Only seedling in inventory -> still out of logic (Gate of Time not open)
+        dispatch(setItemCounts([{ item: 'Life Tree Seedling', count: 1 }]));
+        expect(checkState(checkId)).toBe('outLogic');
+
+        // Configure required dungeons to empty for this test
+        dispatch(setRequiredDungeons([]));
+
+        // Give necessary inventory to reach Sealed Temple and open Gate of Time:
+        dispatch(
+            setItemCounts([
+                { item: 'Life Tree Seedling', count: 1 },
+                { item: 'Sailcloth', count: 1 },
+                { item: 'Emerald Tablet', count: 1 },
+                { item: "Goddess's Harp", count: 1 },
+                { item: 'Ballad of the Goddess', count: 1 },
+                { item: 'Progressive Sword', count: 6 },
+            ]),
+        );
+
+        expect(checkState(checkId)).toBe('inLogic');
+
+        // Without the seedling, it should be out of logic even with Gate of Time open
+        dispatch(
+            setItemCounts([
+                { item: 'Life Tree Seedling', count: 0 },
+                { item: 'Progressive Sword', count: 6 },
+            ]),
+        );
+        expect(checkState(checkId)).toBe('outLogic');
+    });
 });

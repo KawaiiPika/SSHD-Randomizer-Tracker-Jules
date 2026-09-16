@@ -554,9 +554,12 @@ function PermalinkChooser({
                         );
                     }
                     if (clientManager.availableLocations.length > 0) {
+                        const trimmed = clientManager.availableLocations
+                            .map((l) => l.trim())
+                            .filter(Boolean);
                         appDispatch(
                             setAvailableLocations(
-                                clientManager.availableLocations,
+                                trimmed.length > 0 ? trimmed : undefined,
                             ),
                         );
                     }

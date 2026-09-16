@@ -439,7 +439,8 @@ export const extraSSHDChecks: {
         shortName: 'Sealed Temple - Collect Fruit from the Tree of Life',
         type: 'item',
         originalItem: 'Life Tree Fruit',
-        requirement: 'True',
+        requirement:
+            '\\Faron\\Sealed Grounds\\Sealed Temple\\Open Gate of Time & Life Tree Seedling',
     },
     {
         areaId: "\\Faron\\Sealed Grounds\\Hylia's Temple",
@@ -593,6 +594,9 @@ export function patchRawLogicForSSHD(raw: RawLogic): RawLogic {
     }
     if (!raw.items.includes("Open Batreaux's Shed option")) {
         raw.items.push("Open Batreaux's Shed option");
+    }
+    if (!raw.items.includes('Life Tree Seedling')) {
+        raw.items.push('Life Tree Seedling');
     }
 
     // Rename dump checks to official SSHD / Archipelago names

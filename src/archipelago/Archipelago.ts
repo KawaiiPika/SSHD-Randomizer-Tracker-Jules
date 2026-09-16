@@ -1,4 +1,10 @@
-import { Client, type ConnectedPacket, type MessageNode } from 'archipelago.js';
+import {
+    Client,
+    type ConnectedPacket,
+    type DataPackage,
+    type DataPackagePacket,
+    type MessageNode,
+} from 'archipelago.js';
 import { invert } from 'es-toolkit';
 import type { ReactNode } from 'react';
 import React from 'react';
@@ -311,6 +317,19 @@ export class APClientManager {
                 ...(content.checked_locations ?? []),
             ];
 
+            const slotGame = content.slot_info[content.slot]?.game;
+            const pkg =
+                (slotGame ? client.package.findPackage(slotGame) : null) ??
+                client.package.findPackage('Skyward Sword HD') ??
+                client.package.findPackage('Skyward Sword');
+            if (pkg) {
+                this.idToLocation = pkg.reverseLocationTable as Record<
+                    number,
+                    string
+                >;
+                this.idToItem = pkg.reverseItemTable as Record<number, string>;
+            }
+
             if (this.idToLocation && this.connectedData.checked_locations) {
                 this.checkedLocations = this.connectedData.checked_locations
                     .map((location_id) =>
@@ -339,11 +358,81 @@ export class APClientManager {
                 this.allLocationIds = allLocIds;
             }
 
+            if (!this.idToLocation) {
+                client.package
+                    .fetchPackage([
+                        slotGame ?? 'Skyward Sword HD',
+                        'Skyward Sword HD',
+                        'Skyward Sword',
+                    ])
+                    .then(() => {
+                        const fetchedPkg =
+                            (slotGame
+                                ? client.package.findPackage(slotGame)
+                                : null) ??
+                            client.package.findPackage('Skyward Sword HD') ??
+                            client.package.findPackage('Skyward Sword');
+                        if (fetchedPkg) {
+                            this.idToLocation =
+                                fetchedPkg.reverseLocationTable as Record<
+                                    number,
+                                    string
+                                >;
+                            this.idToItem =
+                                fetchedPkg.reverseItemTable as Record<
+                                    number,
+                                    string
+                                >;
+                            if (this.allLocationIds.length > 0) {
+                                this.availableLocations = Array.from(
+                                    new Set(
+                                        this.allLocationIds
+                                            .map((id) =>
+                                                this.idToLocation![id]?.trim(),
+                                            )
+                                            .filter((loc): loc is string =>
+                                                Boolean(loc),
+                                            ),
+                                    ),
+                                );
+                                this.allLocationIds = [];
+                                this.resolveAvailableLocations?.(
+                                    this.availableLocations,
+                                );
+                            }
+                            if (this.pendingLocationIds.length > 0) {
+                                const resolved = this.pendingLocationIds
+                                    .map((id) => this.idToLocation![id]?.trim())
+                                    .filter((loc): loc is string =>
+                                        Boolean(loc),
+                                    );
+                                this.checkedLocations = Array.from(
+                                    new Set([
+                                        ...this.checkedLocations,
+                                        ...resolved,
+                                    ]),
+                                );
+                                this.pendingLocationIds = [];
+                                this.resolveLocations?.(this.checkedLocations);
+                            }
+                            if (this.pendingItemIds.length > 0) {
+                                for (const netItemId of this.pendingItemIds) {
+                                    this.processNetItem(netItemId);
+                                }
+                                this.pendingItemIds = [];
+                                this.resolveItems?.(this.inventory);
+                            }
+                        }
+                    })
+                    .catch((err) => {
+                        console.error('Failed to fetch data package:', err);
+                    });
+            }
+
             client.socket.send({
                 cmd: 'GetDataPackage',
                 games: ['Skyward Sword', 'Skyward Sword HD'],
             });
-            const slotGame = content.slot_info[content.slot]?.game;
             const cubePrefix =
                 slotGame === 'Skyward Sword HD'
                     ? 'skyward_sword_hd_cubes'
@@ -360,10 +449,18 @@ export class APClientManager {
         });
 
         client.socket.on('dataPackage', (content) => {
+            const rawPacket: unknown = Array.isArray(content)
+                ? content[0]
+                : content;
+            const dataPackage: DataPackage | undefined =
+                rawPacket &&
+                typeof rawPacket === 'object' &&
+                'data' in rawPacket
+                    ? (rawPacket as DataPackagePacket).data
+                    : (rawPacket as DataPackage | undefined);
             const ssData =
-                content.data.games['Skyward Sword HD'] ??
-                content.data.games['Skyward Sword'];
-            console.log(ssData);
+                dataPackage?.games?.['Skyward Sword HD'] ??
+                dataPackage?.games?.['Skyward Sword'];
             if (ssData !== undefined) {
                 this.idToLocation = invert<string, number>(
                     ssData.location_name_to_id,
