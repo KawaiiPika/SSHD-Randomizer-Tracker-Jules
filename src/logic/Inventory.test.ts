@@ -1,6 +1,11 @@
-import { describe, expect, it } from 'vitest';
-import { APClientManager } from '../archipelago/Archipelago';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import {
+    APClientManager,
+    optionIndicesToOptions,
+} from '../archipelago/Archipelago';
+import { createTestLogic } from '../testing/TestingUtils';
 import { resolveItem } from './Inventory';
+import { optionsSelector } from './Selectors';
 
 describe('Inventory resolveItem', () => {
     it('resolves Skyview Temple Small Key and Boss Key', () => {
@@ -124,5 +129,114 @@ describe('APClientManager processNetItem', () => {
         // Skyview Boss Key
         manager.processNetItem(102);
         expect(manager.inventory['Skyview Boss Key']).toBe(1);
+    });
+});
+
+describe('optionIndicesToOptions Archipelago slot_data mapping', () => {
+    const tester = createTestLogic();
+
+    beforeAll(tester.initialize);
+    beforeEach(tester.reset);
+
+    function getOptions() {
+        return tester.readSelector(optionsSelector);
+    }
+
+    it('maps small_key_shuffle and boss_key_shuffle from AP slot data', () => {
+        const options = getOptions();
+
+        // Test "anywhere"
+        const settingsAnywhere = optionIndicesToOptions(options, {
+            small_key_shuffle: 'anywhere',
+            boss_key_shuffle: 'anywhere',
+        });
+        expect(settingsAnywhere['small-key-mode']).toBe('Anywhere');
+        expect(settingsAnywhere['boss-key-mode']).toBe('Anywhere');
+
+        // Test "own_region" / "own_dungeon"
+        const settingsOwnDungeon = optionIndicesToOptions(options, {
+            small_keys: 'own_region',
+            boss_keys: 'own_dungeon',
+        });
+        expect(settingsOwnDungeon['small-key-mode']).toBe(
+            'Own Dungeon - Restricted',
+        );
+        expect(settingsOwnDungeon['boss-key-mode']).toBe('Own Dungeon');
+
+        // Test "lanayru_caves_only" and "vanilla"
+        const settingsCaves = optionIndicesToOptions(options, {
+            small_key_shuffle: 'lanayru_caves_only',
+            boss_key_shuffle: 'vanilla',
+        });
+        expect(settingsCaves['small-key-mode']).toBe('Lanayru Caves Key Only');
+        expect(settingsCaves['boss-key-mode']).toBe('Vanilla');
+
+        // Test numeric choice indices
+        const settingsNumeric = optionIndicesToOptions(options, {
+            small_key_shuffle: 2, // Anywhere
+            boss_key_shuffle: 1, // Own Dungeon
+        });
+        expect(settingsNumeric['small-key-mode']).toBe('Anywhere');
+        expect(settingsNumeric['boss-key-mode']).toBe('Own Dungeon');
+    });
+
+    it('maps custom_starting_items and starting_items with aliases', () => {
+        const options = getOptions();
+
+        // Dict format with aliases
+        const settingsDict = optionIndicesToOptions(options, {
+            custom_starting_items: {
+                'Progressive Pouch': 1,
+                Sailcloth: 1,
+                Scrapper: 1,
+                'Skyview Temple Map': 1,
+                Rattle: 1,
+                "Beedle's Insect Cage": 1,
+            },
+        });
+        const startingItems = settingsDict['starting-items'] as string[];
+        expect(startingItems).toContain('Progressive Pouch');
+        expect(startingItems).toContain('Scrapper');
+        expect(startingItems).toContain('Skyview Map');
+        expect(startingItems).toContain('Baby Rattle');
+        expect(startingItems).toContain('Horned Colossus Beetle');
+
+        // Array format
+        const settingsArray = optionIndicesToOptions(options, {
+            starting_items: ['Progressive Pouch', 'Skyview Temple Small Key'],
+        });
+        const startingItemsArr = settingsArray['starting-items'] as string[];
+        expect(startingItemsArr).toContain('Progressive Pouch');
+        expect(startingItemsArr).toContain('Skyview Small Key');
+    });
+
+    it('maps sword, tablets, shuffles, and convenience options correctly', () => {
+        const options = getOptions();
+
+        const settings = optionIndicesToOptions(options, {
+            starting_sword: 'no_sword',
+            starting_tablets: 0,
+            map_shuffle: 'own_dungeon_unrestricted',
+            gratitude_crystal_shuffle: true,
+            stamina_fruit_shuffle: false,
+            npc_closet_shuffle: true,
+            rupee_shuffle: 'vanilla',
+            empty_unrequired_dungeons: true,
+            gate_of_time_sword_requirement: 'true_master_sword',
+            open_lake_floria: 'open',
+            open_earth_temple: 'open',
+        });
+
+        expect(settings['starting-sword']).toBe('Swordless');
+        expect(settings['starting-tablet-count']).toBe(0);
+        expect(settings['map-mode']).toBe('Own Dungeon - Unrestricted');
+        expect(settings['gratitude-crystal-shuffle']).toBe('on');
+        expect(settings['stamina-fruit-shuffle']).toBe('off');
+        expect(settings['npc-closet-shuffle']).toBe('randomized');
+        expect(settings['rupeesanity']).toBe(false);
+        expect(settings['empty-unrequired-dungeons']).toBe(true);
+        expect(settings['got-sword-requirement']).toBe('True Master Sword');
+        expect(settings['open-lake-floria']).toBe('Open');
+        expect(settings['open-et']).toBe(true);
     });
 });

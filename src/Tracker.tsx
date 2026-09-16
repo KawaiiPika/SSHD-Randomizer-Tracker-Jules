@@ -23,8 +23,10 @@ import LocationGroupContextMenu from './locationTracker/LocationGroupContextMenu
 import type { InventoryItem } from './logic/Inventory';
 import { isLogicLoadedSelector, logicSelector } from './logic/Selectors';
 import { goddessChestCheckToCubeCheck } from './logic/TrackerModifications';
+import type { AllTypedOptions } from './permalink/SettingsTypes';
 import { MakeTooltipsAvailable } from './tooltips/TooltipHooks';
 import {
+    acceptSettings,
     bulkEditChecks,
     // clickDungeonName,
     setAvailableLocations,
@@ -186,11 +188,16 @@ function TrackerContents() {
             );
         };
 
+        const clientSettingsCallback = (settings: AllTypedOptions) => {
+            dispatch(acceptSettings({ settings }));
+        };
+
         clientManager?.setLocationCallback(clientLocationCallback);
         clientManager?.setAvailableLocationsCallback(
             clientAvailableLocationsCallback,
         );
         clientManager?.setItemCallback(clientItemCallback);
+        clientManager?.setSettingsCallback(clientSettingsCallback);
         clientManager?.setNewStageCallback(stageCallback);
         clientManager?.setCubeCallback(clientCubeCallback);
         /* This will have to happen somewhere else to work properly

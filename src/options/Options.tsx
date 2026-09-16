@@ -544,10 +544,18 @@ function PermalinkChooser({
             ?.login(server, inputSlot, inputPassword, options!)
             .then((connected) => {
                 if (connected) {
-                    dispatch({
-                        type: 'changeSettings',
-                        settings: clientManager.getLoadedSettings()!,
-                    });
+                    const loadedSettings = clientManager.getLoadedSettings();
+                    if (loadedSettings) {
+                        dispatch({
+                            type: 'changeSettings',
+                            settings: loadedSettings,
+                        });
+                        appDispatch(
+                            acceptSettings({
+                                settings: loadedSettings,
+                            }),
+                        );
+                    }
                     if (clientManager.requiredDungeons.length > 0) {
                         appDispatch(
                             setRequiredDungeons(clientManager.requiredDungeons),
