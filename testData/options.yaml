@@ -246,6 +246,7 @@
 - name: Gratitude Crystal Shuffle
   command: gratitude-crystal-shuffle
   type: singlechoice
+  permalink: false
   choices:
     - off
     - on
@@ -254,6 +255,7 @@
 - name: NPC Closet Shuffle
   command: npc-closet-shuffle
   type: singlechoice
+  permalink: false
   choices:
     - vanilla
     - randomized
@@ -262,6 +264,7 @@
 - name: Stamina Fruit Shuffle
   command: stamina-fruit-shuffle
   type: singlechoice
+  permalink: false
   choices:
     - off
     - on
@@ -270,6 +273,7 @@
 - name: Underground Rupee Shuffle
   command: underground-rupee-shuffle
   type: singlechoice
+  permalink: false
   choices:
     - off
     - on
@@ -278,6 +282,7 @@
 - name: Beedle Shop Shuffle
   command: beedle-shop-shuffle
   type: singlechoice
+  permalink: false
   choices:
     - vanilla
     - junk_only
@@ -287,6 +292,7 @@
 - name: Goddess Chest Shuffle
   command: goddess-chest-shuffle
   type: singlechoice
+  permalink: false
   choices:
     - off
     - on
@@ -295,6 +301,7 @@
 - name: Tadtone Shuffle
   command: tadtone-shuffle
   type: singlechoice
+  permalink: false
   choices:
     - off
     - on

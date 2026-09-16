@@ -458,19 +458,23 @@ export const isCheckBannedSelector = createSelector(
         const banGearShop = rupinShopSanity !== true;
         const banPotionShop = luvShopSanity !== true;
         const banClosets =
+            npcClosetShuffle === undefined ||
             (npcClosetShuffle as any) === 'vanilla' ||
             (npcClosetShuffle as any) === 'off' ||
             (npcClosetShuffle as any) === false;
         const banStaminaFruit =
+            staminaFruitShuffle === undefined ||
             (staminaFruitShuffle as any) === 'off' ||
             (staminaFruitShuffle as any) === false;
         const banUndergroundRupee =
+            undergroundRupeeShuffle === undefined ||
             (undergroundRupeeShuffle as any) === 'off' ||
             (undergroundRupeeShuffle as any) === false;
         const isTadtoneBanned =
             tadtoneSanity !== undefined
                 ? !tadtoneSanity
-                : (tadtoneShuffle as any) === 'off' ||
+                : tadtoneShuffle === undefined ||
+                  (tadtoneShuffle as any) === 'off' ||
                   (tadtoneShuffle as any) === false;
 
         const trialTreasurePattern = /Relic (\d+)/;

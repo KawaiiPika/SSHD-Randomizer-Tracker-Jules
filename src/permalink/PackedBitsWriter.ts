@@ -12,6 +12,9 @@ class PackedBitsWriter {
     }
 
     write(value: number, length: number) {
+        if (!length || length <= 0) {
+            return;
+        }
         let val = value;
         let len = length;
         let bitsToRead;

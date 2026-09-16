@@ -6,6 +6,7 @@ import {
 } from './customization/Slice';
 import { type InventoryItem, itemMaxes } from './logic/Inventory';
 import type { LogicalState } from './logic/Locations';
+import { logicSelector } from './logic/Selectors';
 import type { TypedOptions } from './permalink/SettingsTypes';
 import type { AppAction, RootState, SyncThunkResult } from './store/Store';
 import { createTestLogic } from './testing/TestingUtils';
@@ -725,52 +726,18 @@ describe('full logic tests', () => {
     });
 
     it('filters closet checks when npc-closet-shuffle is vanilla', () => {
-        const mockCheck = {
-            type: 'closet',
-            name: 'Test Closet',
-            area: '\\Upper Skyloft',
-        };
+        const checkId = tester.findCheckId('Upper Skyloft', "Fledge's Gift");
+        const logic = tester.readSelector(logicSelector);
+        const originalType = logic.checks[checkId].type;
+        try {
+            logic.checks[checkId].type = 'closet' as any;
+            updateSettingsWithReset('npc-closet-shuffle', 'vanilla');
+            expect(readSelector(isCheckBannedSelector)(checkId)).toBe(true);
 
-        updateSettingsWithReset('npc-closet-shuffle', 'vanilla');
-        const fullState1 = tester.readSelector((s) => s);
-        const stateVanilla: RootState = {
-            ...fullState1,
-            logic: {
-                ...fullState1.logic,
-                loaded: {
-                    ...fullState1.logic.loaded!,
-                    logic: {
-                        ...fullState1.logic.loaded!.logic,
-                        checks: {
-                            ...fullState1.logic.loaded!.logic.checks,
-                            'test-closet': mockCheck as any,
-                        },
-                    },
-                },
-            },
-        };
-        expect(isCheckBannedSelector(stateVanilla)('test-closet')).toBe(true);
-
-        updateSettingsWithReset('npc-closet-shuffle', 'randomized');
-        const fullState2 = tester.readSelector((s) => s);
-        const stateRandomized: RootState = {
-            ...fullState2,
-            logic: {
-                ...fullState2.logic,
-                loaded: {
-                    ...fullState2.logic.loaded!,
-                    logic: {
-                        ...fullState2.logic.loaded!.logic,
-                        checks: {
-                            ...fullState2.logic.loaded!.logic.checks,
-                            'test-closet': mockCheck as any,
-                        },
-                    },
-                },
-            },
-        };
-        expect(isCheckBannedSelector(stateRandomized)('test-closet')).toBe(
-            false,
-        );
+            updateSettingsWithReset('npc-closet-shuffle', 'randomized');
+            expect(readSelector(isCheckBannedSelector)(checkId)).toBe(false);
+        } finally {
+            logic.checks[checkId].type = originalType;
+        }
     });
 });

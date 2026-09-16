@@ -16,6 +16,9 @@ class PackedBitsReader {
     }
 
     read(length: number) {
+        if (!length || length <= 0) {
+            return 0;
+        }
         let bitsRead = 0;
         let value = 0;
         let bitsLeftToRead = length;

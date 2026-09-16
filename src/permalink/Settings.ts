@@ -30,8 +30,10 @@ export function decodePermalink(
                 }
                 settings[option.command] = values;
             } else if (option.type === 'singlechoice') {
-                settings[option.command] =
-                    option.choices[reader.read(option.bits)];
+                const bits =
+                    option.bits ??
+                    Math.ceil(Math.log2(option.choices.length || 1));
+                settings[option.command] = option.choices[reader.read(bits)];
             }
         }
     }
@@ -76,11 +78,10 @@ export function validateSettings(
     optionDefs: OptionDefs,
     userSettings: Partial<AllTypedOptions>,
 ): AllTypedOptions {
-    const settings: Partial<Record<OptionsCommand, OptionValue>> = {};
+    const settings: Partial<Record<OptionsCommand, OptionValue>> = {
+        ...userSettings,
+    };
     for (const optionDef of optionDefs) {
-        if (optionDef.permalink === false) {
-            continue;
-        }
         const key = optionDef.command;
         const value = userSettings[key];
         settings[key] = validateValue(optionDef, value) ?? optionDef.default;
@@ -113,9 +114,12 @@ export function encodePermalink(
                     }
                 }
             } else if (option.type === 'singlechoice') {
+                const bits =
+                    option.bits ??
+                    Math.ceil(Math.log2(option.choices.length || 1));
                 writer.write(
                     option.choices.indexOf(settings[option.command] as string),
-                    option.bits,
+                    bits,
                 );
             }
         }
