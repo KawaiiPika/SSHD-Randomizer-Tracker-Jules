@@ -6,16 +6,11 @@ import {
 } from './TrackerModifications';
 
 export function getNumLooseGratitudeCrystals(
-    logic: Logic,
-    checkedChecks: Set<string>,
-    isShuffleOn?: boolean,
+    _logic?: Logic,
+    _checkedChecks?: Set<string>,
+    _isShuffleOn?: boolean,
 ) {
-    if (isShuffleOn) {
-        return 0;
-    }
-    return [...checkedChecks].filter(
-        (check) => logic.checks[check]?.type === 'loose_crystal',
-    ).length;
+    return 0;
 }
 
 export function getAdditionalItems(
@@ -46,8 +41,6 @@ export function getAdditionalItems(
         }
     }
 
-    const looseCrystals = getNumLooseGratitudeCrystals(logic, checkedChecks);
-    const inventoryCrystals = inventory['Gratitude Crystal'] ?? 0;
-    result['Gratitude Crystal'] = Math.max(inventoryCrystals, looseCrystals);
+    result['Gratitude Crystal'] = inventory['Gratitude Crystal'] ?? 0;
     return result;
 }

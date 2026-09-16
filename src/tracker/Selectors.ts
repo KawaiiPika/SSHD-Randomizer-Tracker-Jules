@@ -26,10 +26,7 @@ import {
 } from '../logic/Locations';
 import type { LogicalCheck } from '../logic/Logic';
 import { mapInventory, mapSettings } from '../logic/Mappers';
-import {
-    getAdditionalItems,
-    getNumLooseGratitudeCrystals,
-} from '../logic/Misc';
+import { getAdditionalItems } from '../logic/Misc';
 import { exploreAreaGraph } from '../logic/Pathfinding';
 import {
     areaGraphSelector,
@@ -175,24 +172,10 @@ const checkItemsSelector = createSelector(
 
 export const totalGratitudeCrystalsSelector = createSelector(
     [
-        logicSelector,
-        checkedChecksSelector,
         rawItemCountSelector('Gratitude Crystal Pack'),
         rawItemCountSelector('Gratitude Crystal'),
-        settingSelector('gratitude-crystal-shuffle'),
-        settingSelector('gratitude_crystal_shuffle'),
     ],
-    (logic, checkedChecks, packCount, singleCount, gc1, gc2) => {
-        const gcVal: unknown = gc1 ?? gc2;
-        const isShuffleOn =
-            gcVal === 'on' || gcVal === true || gcVal === 'true';
-        const looseCrystalCount = getNumLooseGratitudeCrystals(
-            logic,
-            checkedChecks,
-            isShuffleOn,
-        );
-        return packCount * 5 + Math.max(singleCount, looseCrystalCount);
-    },
+    (packCount, singleCount) => packCount * 5 + singleCount,
 );
 
 const allowedStartingEntrancesSelector = createSelector(

@@ -32,6 +32,7 @@ function optionIndicesToOptions(
     // Excluded locations are handled differently, and starting items are just manually sent by AP
     settings['excluded-locations'] = [];
     settings['starting-items'] = [];
+    settings['empty-unrequired-dungeons'] = false;
     for (const option of optionDefs) {
         const snakeName = kebabToSnake(option.command);
         const loadedVal: unknown =
@@ -287,9 +288,12 @@ export class APClientManager {
             setStoredArchipelagoServer(server);
             const slotData = content.slot_data as Record<string, unknown>;
             this.loadedSettings = optionIndicesToOptions(optionDefs, slotData);
-            this.requiredDungeons = Array.isArray(slotData['required_dungeons'])
+            const rawReqDungeons = Array.isArray(slotData['required_dungeons'])
                 ? (slotData['required_dungeons'] as string[])
                 : [];
+            this.requiredDungeons = rawReqDungeons.map((name) =>
+                name === 'Skyview Temple' ? 'Skyview' : name,
+            );
 
             if (this.idToLocation && this.connectedData.checked_locations) {
                 this.checkedLocations = this.connectedData.checked_locations

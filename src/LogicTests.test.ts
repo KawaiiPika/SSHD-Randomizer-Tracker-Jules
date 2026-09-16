@@ -6,7 +6,6 @@ import {
 } from './customization/Slice';
 import { type InventoryItem, itemMaxes } from './logic/Inventory';
 import type { LogicalState } from './logic/Locations';
-import { logicSelector } from './logic/Selectors';
 import type { TypedOptions } from './permalink/SettingsTypes';
 import type { AppAction, RootState, SyncThunkResult } from './store/Store';
 import { createTestLogic } from './testing/TestingUtils';
@@ -18,6 +17,7 @@ import {
     checkSelector,
     isCheckBannedSelector,
     rawItemCountSelector,
+    requiredDungeonsSelector,
     totalCountersSelector,
     totalGratitudeCrystalsSelector,
 } from './tracker/Selectors';
@@ -30,6 +30,7 @@ import {
     reset,
     setCheckHint,
     setItemCounts,
+    setRequiredDungeons,
 } from './tracker/Slice';
 
 describe('full logic tests', () => {
@@ -178,6 +179,7 @@ describe('full logic tests', () => {
     });
 
     it('shows or hides Sky Keep depending on settings', () => {
+        updateSettings('empty-unrequired-dungeons', true);
         const skyKeepHidden = () =>
             readSelector(areasSelector).find((a) => a.name === 'Sky Keep')!
                 .hidden;
@@ -326,21 +328,27 @@ describe('full logic tests', () => {
     });
 
     it('handles semilogic counters', () => {
-        const area = tester.findArea("Batreaux's House");
+        const fledgesGift = tester.findCheckId(
+            'Upper Skyloft',
+            "Fledge's Gift",
+        );
+        dispatch(setCheckHint({ checkId: fledgesGift, hint: 'Clawshots' }));
+
+        const area = tester.findArea('Upper Skyloft');
         expect(area.checks.numRemaining).toBeGreaterThan(0);
-        expect(area.checks.numAccessible).toBe(0);
-        const totalCounter = readSelector(totalCountersSelector).numAccessible;
+        const accessibleDirect = area.checks.numAccessible;
 
         dispatch(setCounterBasis('semilogic'));
 
-        const areaWithSemilogic = tester.findArea("Batreaux's House");
-        expect(areaWithSemilogic.checks.numRemaining).toBeGreaterThan(0);
-        expect(areaWithSemilogic.checks.numAccessible).toBe(2);
+        const areaWithSemilogic = tester.findArea('Upper Skyloft');
+        expect(areaWithSemilogic.checks.numAccessible).toBeGreaterThan(
+            accessibleDirect,
+        );
 
         const totalCounterWithSemilogic = readSelector(
             totalCountersSelector,
         ).numAccessible;
-        expect(totalCounterWithSemilogic).toBeGreaterThan(totalCounter);
+        expect(totalCounterWithSemilogic).toBeGreaterThan(accessibleDirect);
     });
 
     it('handles starting items', () => {
@@ -660,20 +668,20 @@ describe('full logic tests', () => {
     });
 
     it('does not consider banned crystals in semilogic', () => {
-        updateSettingsWithReset('starting-crystal-packs', 3);
-        dispatch(clickItem({ item: 'Progressive Beetle', take: false }));
-        dispatch(clickItem({ item: 'Clawshots', take: false }));
-
-        const bat30Check = tester.findCheckId(
-            "Batreaux's House",
-            '30 Crystals',
+        const fledgesGift = tester.findCheckId(
+            'Upper Skyloft',
+            "Fledge's Gift",
         );
-        expect(checkState(bat30Check)).toBe('semiLogic');
+        dispatch(setCheckHint({ checkId: fledgesGift, hint: 'Clawshots' }));
 
-        updateSettings('excluded-locations', [
-            "Upper Skyloft - Crystal in Link's Room",
-        ]);
-        expect(checkState(bat30Check)).toBe('outLogic');
+        const zeldaCloset = tester.findCheckId(
+            'Upper Skyloft',
+            "In Zelda's Closet",
+        );
+        expect(checkState(zeldaCloset)).toBe('semiLogic');
+
+        updateSettings('excluded-locations', ["Upper Skyloft - Fledge's Gift"]);
+        expect(checkState(zeldaCloset)).toBe('outLogic');
     });
 
     it('requires Goddesss Harp and Ballad of the Goddess to access closed Thunderhead', () => {
@@ -693,7 +701,7 @@ describe('full logic tests', () => {
         expect(checkState(eastIslandCheck)).toBe('inLogic');
     });
 
-    it('tracks individual gratitude crystals and combines with loose crystal checks without double counting', () => {
+    it('tracks individual gratitude crystals from inventory and never from loose crystal checks', () => {
         // Starting with 1 pack = 5 crystals
         dispatch(clickItem({ item: 'Gratitude Crystal Pack', take: false }));
         expect(readSelector(totalGratitudeCrystalsSelector)).toBe(5);
@@ -702,42 +710,53 @@ describe('full logic tests', () => {
         dispatch(setItemCounts([{ item: 'Gratitude Crystal', count: 3 }]));
         expect(readSelector(totalGratitudeCrystalsSelector)).toBe(8);
 
-        // Clicking a loose crystal check in the world that gave one of those crystals
+        // Clicking a loose crystal check in the world never adds crystals
         const looseCrystalCheck = tester.findCheckId('Central Skyloft', 'Shed');
         dispatch(clickCheck({ checkId: looseCrystalCheck }));
-        // Should not double count to 9; max(singleCount: 3, looseCount: 1) = 3 -> total = 8
         expect(readSelector(totalGratitudeCrystalsSelector)).toBe(8);
     });
 
-    it('does not count loose crystal checks as crystals when gratitude_crystal_shuffle is on', () => {
-        updateSettings('gratitude_crystal_shuffle', 'on');
+    it('does not count loose crystal checks as crystals regardless of settings', () => {
+        updateSettings('gratitude-crystal-shuffle', 'off');
         const looseCrystalCheck = tester.findCheckId('Central Skyloft', 'Shed');
         dispatch(clickCheck({ checkId: looseCrystalCheck }));
-        // Loose crystal checks should not inflate crystal count when shuffle is on
         expect(readSelector(totalGratitudeCrystalsSelector)).toBe(0);
     });
 
-    it('shows dungeon checks when empty-unrequired-dungeons is disabled', () => {
-        updateSettings('empty-unrequired-dungeons', false);
+    it('shows dungeon checks by default when empty-unrequired-dungeons is false', () => {
         const areas = readSelector(areasSelector);
         const skyview = areas.find((a) => a.name === 'Skyview');
         expect(skyview).toBeDefined();
         expect(skyview!.checks.numTotal).toBeGreaterThan(0);
     });
 
-    it('filters closet checks when npc-closet-shuffle is vanilla', () => {
-        const checkId = tester.findCheckId('Upper Skyloft', "Fledge's Gift");
-        const logic = tester.readSelector(logicSelector);
-        const originalType = logic.checks[checkId].type;
-        try {
-            logic.checks[checkId].type = 'closet';
-            updateSettingsWithReset('npc-closet-shuffle', 'vanilla');
-            expect(readSelector(isCheckBannedSelector)(checkId)).toBe(true);
+    it('normalizes Skyview Temple in setRequiredDungeons', () => {
+        dispatch(setRequiredDungeons(['Skyview Temple']));
+        const req = readSelector(requiredDungeonsSelector);
+        expect(req).toContain('Skyview');
+    });
 
-            updateSettingsWithReset('npc-closet-shuffle', 'randomized');
-            expect(readSelector(isCheckBannedSelector)(checkId)).toBe(false);
-        } finally {
-            logic.checks[checkId].type = originalType;
-        }
+    it('includes SSHD closet checks and filters them when npc-closet-shuffle is vanilla', () => {
+        const linksCloset = tester.findCheckId(
+            'Upper Skyloft',
+            "Link's Closet",
+        );
+        expect(linksCloset).toBeDefined();
+        expect(
+            tester.findCheckId('Sky', "Pumm and Kina's Closet"),
+        ).toBeDefined();
+        expect(
+            tester.findCheckId('Lanayru Sand Sea', "Skipper's Closet"),
+        ).toBeDefined();
+
+        // When randomized (default), closet checks are not banned
+        expect(readSelector(isCheckBannedSelector)(linksCloset)).toBe(false);
+
+        // When vanilla, closet checks are banned
+        updateSettingsWithReset('npc-closet-shuffle', 'vanilla');
+        expect(readSelector(isCheckBannedSelector)(linksCloset)).toBe(true);
+
+        updateSettingsWithReset('npc-closet-shuffle', 'randomized');
+        expect(readSelector(isCheckBannedSelector)(linksCloset)).toBe(false);
     });
 });

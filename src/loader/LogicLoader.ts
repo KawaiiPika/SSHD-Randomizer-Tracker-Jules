@@ -1,5 +1,6 @@
 import { isEqual } from 'es-toolkit';
 import { load } from 'js-yaml';
+import { patchRawLogicForSSHD } from '../logic/TrackerModifications';
 import type { RawLogic, RawPresets } from '../logic/UpstreamTypes';
 import type { MultiChoiceOption, OptionDefs } from '../permalink/SettingsTypes';
 import { compareBy } from '../utils/Compare';
@@ -162,6 +163,79 @@ export async function loadRemoteLogic(
     return [...(await getAndPatchLogic(loader)), remoteName];
 }
 
+export const sshdOptionDefs: OptionDefs = [
+    {
+        name: 'Gratitude Crystal Shuffle',
+        command: 'gratitude-crystal-shuffle',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['off', 'on'],
+        bits: 1,
+        default: 'on',
+        help: 'Determines if single gratitude crystal locations are randomized.',
+    },
+    {
+        name: 'NPC Closet Shuffle',
+        command: 'npc-closet-shuffle',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['vanilla', 'randomized'],
+        bits: 1,
+        default: 'randomized',
+        help: 'Determines if NPC closets contain randomized items.',
+    },
+    {
+        name: 'Stamina Fruit Shuffle',
+        command: 'stamina-fruit-shuffle',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['off', 'on'],
+        bits: 1,
+        default: 'off',
+        help: 'Determines if stamina fruits are randomized.',
+    },
+    {
+        name: 'Underground Rupee Shuffle',
+        command: 'underground-rupee-shuffle',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['off', 'on'],
+        bits: 1,
+        default: 'off',
+        help: 'Determines if underground rupees are randomized.',
+    },
+    {
+        name: 'Beedle Shop Shuffle',
+        command: 'beedle-shop-shuffle',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['vanilla', 'junk_only', 'randomized'],
+        bits: 2,
+        default: 'randomized',
+        help: "Determines how Beedle's Airshop is randomized.",
+    },
+    {
+        name: 'Goddess Chest Shuffle',
+        command: 'goddess-chest-shuffle',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['off', 'on'],
+        bits: 1,
+        default: 'off',
+        help: 'Determines if Goddess Chests are randomized.',
+    },
+    {
+        name: 'Tadtone Shuffle',
+        command: 'tadtone-shuffle',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['off', 'on'],
+        bits: 1,
+        default: 'off',
+        help: 'Determines if Tadtones are randomized.',
+    },
+];
+
 export async function getAndPatchLogic(
     loader: (fileName: string) => Promise<string>,
 ) {
@@ -181,22 +255,53 @@ export async function getAndPatchLogic(
         parseJson<RawPresets>('gui/presets/default_presets.json'),
     ]);
 
-    // We need to patch the "excluded locations" option with the actual checks from logic.
-    const excludedLocsIndex = options.findIndex(
-        (x) => x.command === 'excluded-locations' && x.type === 'multichoice',
-    );
-    const excludedLocsOption = options[excludedLocsIndex] as MultiChoiceOption;
-
-    const choices = Object.values(logic.checks).map((c) => c.short_name);
+    patchRawLogicForSSHD(logic);
 
     const patchedOptions = options.slice();
-    patchedOptions[excludedLocsIndex] = {
-        ...excludedLocsOption,
-        choices,
-        default: [...excludedLocsOption.default].sort(
-            compareBy((entry) => choices.indexOf(entry)),
-        ),
-    };
+
+    for (const sshdOpt of sshdOptionDefs) {
+        const idx = patchedOptions.findIndex(
+            (x) => x.command === sshdOpt.command,
+        );
+        if (idx >= 0) {
+            patchedOptions[idx] = sshdOpt;
+        } else {
+            patchedOptions.push(sshdOpt);
+        }
+    }
+
+    const eudIndex = patchedOptions.findIndex(
+        (x) => x.command === 'empty-unrequired-dungeons',
+    );
+    if (eudIndex >= 0) {
+        const eudOpt = patchedOptions[eudIndex];
+        if (eudOpt.type === 'boolean') {
+            patchedOptions[eudIndex] = {
+                ...eudOpt,
+                default: false,
+            };
+        }
+    }
+
+    // We need to patch the "excluded locations" option with the actual checks from logic.
+    const excludedLocsIndex = patchedOptions.findIndex(
+        (x) => x.command === 'excluded-locations' && x.type === 'multichoice',
+    );
+    if (excludedLocsIndex >= 0) {
+        const excludedLocsOption = patchedOptions[
+            excludedLocsIndex
+        ] as MultiChoiceOption;
+
+        const choices = Object.values(logic.checks).map((c) => c.short_name);
+
+        patchedOptions[excludedLocsIndex] = {
+            ...excludedLocsOption,
+            choices,
+            default: [...excludedLocsOption.default].sort(
+                compareBy((entry) => choices.indexOf(entry)),
+            ),
+        };
+    }
 
     return [logic, patchedOptions, presets] as const;
 }

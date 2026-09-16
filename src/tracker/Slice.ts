@@ -158,7 +158,9 @@ const trackerSlice = createSlice({
             state.hasBeenModified = true;
         },
         setRequiredDungeons: (state, action: PayloadAction<string[]>) => {
-            state.requiredDungeons = action.payload;
+            state.requiredDungeons = action.payload.map((name) =>
+                name === 'Skyview Temple' ? 'Skyview' : name,
+            );
             state.hasBeenModified = true;
         },
         bulkEditChecks: (

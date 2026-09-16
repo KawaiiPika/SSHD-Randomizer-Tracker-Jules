@@ -8,6 +8,7 @@ import { type InventoryItem, isItem, itemMaxes, itemName } from './Inventory';
 import type { DungeonName } from './Locations';
 import type { Logic } from './Logic';
 import { swordsToAdd } from './ThingsThatWouldBeNiceToHaveInTheDump';
+import type { RawArea, RawLogic } from './UpstreamTypes';
 
 const collectedCubeSuffix = '_TR_Cube_Collected';
 
@@ -198,4 +199,194 @@ export function getTooltipOpaqueBits(
     }
 
     return items;
+}
+
+export interface ExtraClosetCheck {
+    areaId: string;
+    locationKey: string;
+    fullId: string;
+    shortName: string;
+    originalItem: string;
+    requirement: string;
+}
+
+export const extraClosetChecks: ExtraClosetCheck[] = [
+    {
+        areaId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Link's Room",
+        locationKey: "Link's Closet",
+        fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Link's Room\\Link's Closet",
+        shortName: "Upper Skyloft - Link's Closet",
+        originalItem: 'Blue Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
+        locationKey: "Fledge's Closet",
+        fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Fledge's Closet",
+        shortName: "Upper Skyloft - Fledge's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
+        locationKey: "Groose's Closet",
+        fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Groose's Closet",
+        shortName: "Upper Skyloft - Groose's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
+        locationKey: "Owlan's Closet",
+        fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Owlan's Closet",
+        shortName: "Upper Skyloft - Owlan's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
+        locationKey: "Horwell's Closet",
+        fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Horwell's Closet",
+        shortName: "Upper Skyloft - Horwell's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
+        locationKey: "Karane's Closet",
+        fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Karane's Closet",
+        shortName: "Upper Skyloft - Karane's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Central Skyloft\\Orielle and Parrow's House",
+        locationKey: "Orielle and Parrow's Closet",
+        fullId: "\\Skyloft\\Central Skyloft\\Orielle and Parrow's House\\Orielle and Parrow's Closet",
+        shortName: "Central Skyloft - Orielle and Parrow's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Central Skyloft\\Peatrice's House",
+        locationKey: "Peater's Closet",
+        fullId: "\\Skyloft\\Central Skyloft\\Peatrice's House\\Peater's Closet",
+        shortName: "Central Skyloft - Peater's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Central Skyloft\\Peatrice's House",
+        locationKey: "Peatrice's Closet",
+        fullId: "\\Skyloft\\Central Skyloft\\Peatrice's House\\Peatrice's Closet",
+        shortName: "Central Skyloft - Peatrice's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Central Skyloft\\Wryna's House",
+        locationKey: "Kukiel's Family Closet",
+        fullId: "\\Skyloft\\Central Skyloft\\Wryna's House\\Kukiel's Family Closet",
+        shortName: "Central Skyloft - Kukiel's Family Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Skyloft Village\\Bertie's House",
+        locationKey: "Bertie and Luv's Closet",
+        fullId: "\\Skyloft\\Skyloft Village\\Bertie's House\\Bertie and Luv's Closet",
+        shortName: "Skyloft Village - Bertie and Luv's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Skyloft Village\\Sparrot's House",
+        locationKey: "Sparrot's Closet",
+        fullId: "\\Skyloft\\Skyloft Village\\Sparrot's House\\Sparrot's Closet",
+        shortName: "Skyloft Village - Sparrot's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Skyloft Village\\Mallara's House",
+        locationKey: "Pipit and Mallara's Closet",
+        fullId: "\\Skyloft\\Skyloft Village\\Mallara's House\\Pipit and Mallara's Closet",
+        shortName: "Skyloft Village - Pipit and Mallara's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Skyloft Village\\Gondo's House",
+        locationKey: "Gondo and Greba's Closet",
+        fullId: "\\Skyloft\\Skyloft Village\\Gondo's House\\Gondo and Greba's Closet",
+        shortName: "Skyloft Village - Gondo and Greba's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Skyloft\\Skyloft Village\\Rupin's House",
+        locationKey: "Rupin and Goselle's Closet",
+        fullId: "\\Skyloft\\Skyloft Village\\Rupin's House\\Rupin and Goselle's Closet",
+        shortName: "Skyloft Village - Rupin and Goselle's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Sky\\South East\\Lumpy Pumpkin\\Lumpy Pumpkin Building',
+        locationKey: "Pumm and Kina's Closet",
+        fullId: "\\Sky\\South East\\Lumpy Pumpkin\\Lumpy Pumpkin Building\\Pumm and Kina's Closet",
+        shortName: "Sky - Pumm and Kina's Closet",
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Lanayru\\Lanayru Sand Sea\\Skipper's Retreat\\Shack",
+        locationKey: "Skipper's Closet",
+        fullId: "\\Lanayru\\Lanayru Sand Sea\\Skipper's Retreat\\Shack\\Skipper's Closet",
+        shortName: "Lanayru Sand Sea - Skipper's Closet",
+        originalItem: 'Gust Bellows',
+        requirement: 'Gust Bellows',
+    },
+];
+
+function findRawArea(root: RawArea, targetName: string): RawArea | undefined {
+    if (root.name === targetName) return root;
+    if (root.sub_areas) {
+        for (const sub of Object.values(root.sub_areas)) {
+            const found = findRawArea(sub, targetName);
+            if (found) return found;
+        }
+    }
+    return undefined;
+}
+
+export function patchRawLogicForSSHD(raw: RawLogic): RawLogic {
+    for (const closet of extraClosetChecks) {
+        if (!raw.checks[closet.fullId]) {
+            raw.checks[closet.fullId] = {
+                type: 'Closets',
+                short_name: closet.shortName,
+                'original item': closet.originalItem,
+            };
+        }
+        if (!raw.items.includes(closet.fullId)) {
+            raw.items.push(closet.fullId);
+        }
+        const area = findRawArea(raw.areas, closet.areaId);
+        if (area) {
+            if (
+                !area.locations ||
+                !Object.prototype.hasOwnProperty.call(
+                    area.locations,
+                    closet.locationKey,
+                )
+            ) {
+                area.locations = {
+                    ...area.locations,
+                    [closet.locationKey]: closet.requirement,
+                };
+            }
+        }
+    }
+    return raw;
 }

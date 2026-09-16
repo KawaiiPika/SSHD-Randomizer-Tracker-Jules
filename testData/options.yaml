@@ -147,7 +147,7 @@
 - name: Empty unrequired Dungeons
   command: empty-unrequired-dungeons
   type: boolean
-  default: true
+  default: false
   help: "If enabled, only the required dungeons will contain progression items.
         If not enabled, all dungeons and Sky Keep can potentially contain progression items."
   ui: option_empty_unrequired_dungeons
@@ -259,7 +259,7 @@
   choices:
     - vanilla
     - randomized
-  default: vanilla
+  default: randomized
   help: "Determines if NPC closets contain randomized items."
 - name: Stamina Fruit Shuffle
   command: stamina-fruit-shuffle

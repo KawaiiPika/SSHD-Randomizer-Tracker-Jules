@@ -161,7 +161,8 @@ function semiLogicStep(
                 isRegularItemCheck(logic.checks[checkId].type) &&
                 hintedItem !== undefined &&
                 isItem(hintedItem) &&
-                !state.assumedChecks.has(checkId)
+                !state.assumedChecks.has(checkId) &&
+                !isCheckBanned(checkId)
             ) {
                 state.assumedChecks.add(checkId);
                 state.assumedInventory[hintedItem] = Math.min(

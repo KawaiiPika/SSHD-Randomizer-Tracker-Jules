@@ -1140,6 +1140,13 @@ function getCheckType(
     checkName: string,
     checkType: string | null,
 ): LogicalCheck['type'] {
+    if (
+        checkName.includes('Closet') ||
+        (checkType &&
+            (checkType.includes('Closet') || checkType.includes('closet')))
+    ) {
+        return 'closet';
+    }
     if (!checkType) {
         return 'regular';
     }

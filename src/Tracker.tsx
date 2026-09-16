@@ -111,11 +111,24 @@ function TrackerContents() {
         const shortToFull: Record<string, string> = {};
         for (const [fullName, checkInfo] of Object.entries(logic.checks)) {
             shortToFull[checkInfo.name] = fullName;
+            const suffix = checkInfo.name.split(' - ').slice(1).join(' - ');
+            if (suffix) {
+                shortToFull[suffix] = fullName;
+            }
         }
         const clientLocationCallback = (locs: string[]) => {
             dispatch(
                 bulkEditChecks({
-                    checks: locs.map((loc) => shortToFull[loc]),
+                    checks: locs
+                        .map(
+                            (loc) =>
+                                shortToFull[loc] ??
+                                shortToFull[
+                                    loc.split(' - ').slice(1).join(' - ')
+                                ] ??
+                                shortToFull[loc.replace(/^.* - /, '')],
+                        )
+                        .filter((c): c is string => Boolean(c)),
                     markChecked: true,
                 }),
             );
