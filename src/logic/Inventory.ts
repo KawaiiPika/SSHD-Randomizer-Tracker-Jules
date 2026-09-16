@@ -76,3 +76,72 @@ export function isItem(id: string): id is InventoryItem {
 export function itemName(item: string, amount: number) {
     return amount > 1 ? `${item} x ${amount}` : item;
 }
+
+export const itemAliases: Record<
+    string,
+    InventoryItem | { item: InventoryItem; count: number }[]
+> = {
+    // Skyview Temple
+    'Skyview Temple Small Key': 'Skyview Small Key',
+    'Skyview Temple Boss Key': 'Skyview Boss Key',
+
+    // Sidequests / Misc items
+    Rattle: 'Baby Rattle',
+    "Beedle's Insect Cage": 'Horned Colossus Beetle',
+
+    // Key Rings
+    'Skyview Temple Key Ring': [{ item: 'Skyview Small Key', count: 2 }],
+    'Skyview Key Ring': [{ item: 'Skyview Small Key', count: 2 }],
+    'Lanayru Mining Facility Key Ring': [
+        { item: 'Lanayru Mining Facility Small Key', count: 1 },
+    ],
+    'LMF Key Ring': [{ item: 'Lanayru Mining Facility Small Key', count: 1 }],
+    'Ancient Cistern Key Ring': [
+        { item: 'Ancient Cistern Small Key', count: 2 },
+    ],
+    'AC Key Ring': [{ item: 'Ancient Cistern Small Key', count: 2 }],
+    'Fire Sanctuary Key Ring': [{ item: 'Fire Sanctuary Small Key', count: 3 }],
+    'FS Key Ring': [{ item: 'Fire Sanctuary Small Key', count: 3 }],
+    'Sandship Key Ring': [{ item: 'Sandship Small Key', count: 2 }],
+    'SSH Key Ring': [{ item: 'Sandship Small Key', count: 2 }],
+    'Sky Keep Key Ring': [{ item: 'Sky Keep Small Key', count: 1 }],
+    'SK Key Ring': [{ item: 'Sky Keep Small Key', count: 1 }],
+    'Lanayru Caves Key Ring': [{ item: 'Lanayru Caves Small Key', count: 1 }],
+    'LC Key Ring': [{ item: 'Lanayru Caves Small Key', count: 1 }],
+
+    // Skeleton Key
+    'Skeleton Key': [
+        { item: 'Skyview Small Key', count: 2 },
+        { item: 'Lanayru Mining Facility Small Key', count: 1 },
+        { item: 'Ancient Cistern Small Key', count: 2 },
+        { item: 'Fire Sanctuary Small Key', count: 3 },
+        { item: 'Sandship Small Key', count: 2 },
+        { item: 'Sky Keep Small Key', count: 1 },
+        { item: 'Lanayru Caves Small Key', count: 1 },
+    ],
+
+    // Triforce complete
+    'Completed Triforce': [{ item: 'Triforce', count: 3 }],
+};
+
+export function resolveItem(
+    rawItemName: string,
+): { item: InventoryItem; count: number }[] {
+    if (rawItemName.includes('Song of the Hero')) {
+        return [{ item: 'Song of the Hero', count: 1 }];
+    }
+    if (rawItemName in itemAliases) {
+        const mapped = itemAliases[rawItemName];
+        if (typeof mapped === 'string') {
+            return [{ item: mapped, count: 1 }];
+        }
+        return mapped;
+    }
+    if (rawItemName.includes('Triforce')) {
+        return [{ item: 'Triforce', count: 1 }];
+    }
+    if (isItem(rawItemName)) {
+        return [{ item: rawItemName, count: 1 }];
+    }
+    return [];
+}

@@ -200,6 +200,18 @@ describe('tooltips', () => {
                 expect(formatted).toContain('5 Gratitude Crystals');
             },
         );
+
+        it.concurrent(
+            'shows Mogma Mitts requirement for Double Magmanos underground rupee without impossible',
+            async ({ expect }) => {
+                const checkId =
+                    '\\Fire Sanctuary\\Main\\Magmanos Fight Room\\Lower Part\\Underground Rupee beneath Double Magmanos Room 1';
+                const result = await getTooltipExpression(computer, checkId);
+                const formatted = formatExpr(result);
+                expect(formatted).not.toContain('Impossible');
+                expect(formatted).toContain('Mogma Mitts');
+            },
+        );
     });
 
     describe('trick logic', () => {

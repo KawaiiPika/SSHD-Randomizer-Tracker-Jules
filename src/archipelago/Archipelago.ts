@@ -10,11 +10,7 @@ import type { ReactNode } from 'react';
 import React from 'react';
 import type { ColorScheme } from '../customization/ColorScheme';
 import { setStoredArchipelagoServer } from '../LocalStorage';
-import { isItem, type InventoryItem } from '../logic/Inventory';
-import {
-    sothItemReplacement,
-    triforceItemReplacement,
-} from '../logic/TrackerModifications';
+import { itemMaxes, resolveItem, type InventoryItem } from '../logic/Inventory';
 import { defaultSettings } from '../permalink/Settings';
 import type {
     AllTypedOptions,
@@ -168,21 +164,16 @@ export class APClientManager {
         if (!this.idToItem) return;
         const item = this.idToItem[netItemId];
         if (!item) return;
-        if (item.includes(sothItemReplacement)) {
-            this.add(sothItemReplacement);
-        } else if (item.includes(triforceItemReplacement)) {
-            this.add(triforceItemReplacement);
-        } else if (
-            isItem(item) &&
-            (!item.includes('Pouch') || !this.inventory['Progressive Pouch'])
-        ) {
-            this.add(item);
+        const resolved = resolveItem(item);
+        for (const { item: invItem, count } of resolved) {
+            this.add(invItem, count);
         }
     }
 
     add(item: InventoryItem, count: number = 1) {
         this.inventory[item] ??= 0;
-        this.inventory[item] += count;
+        const max = itemMaxes[item] ?? 1;
+        this.inventory[item] = Math.min(max, this.inventory[item] + count);
     }
 
     isHooked(): boolean {
@@ -583,6 +574,10 @@ export class APClientManager {
         });
 
         client.socket.on('receivedItems', (content) => {
+            if (content.index === 0) {
+                this.inventory = {};
+                this.pendingItemIds = [];
+            }
             if (!this.idToItem) {
                 this.pendingItemIds.push(...content.items.map((i) => i.item));
                 return;

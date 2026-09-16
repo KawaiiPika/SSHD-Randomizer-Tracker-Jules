@@ -1009,4 +1009,28 @@ describe('full logic tests', () => {
         );
         expect(checkState(checkId)).toBe('outLogic');
     });
+
+    it('correctly places and evaluates Underground Rupee beneath Double Magmanos Room', () => {
+        updateSettings('underground-rupee-shuffle', 'on');
+        const checkId = tester.findCheckId(
+            'Fire Sanctuary',
+            'Underground Rupee beneath Double Magmanos Room 1',
+        );
+        expect(checkId).toBe(
+            '\\Fire Sanctuary\\Main\\Magmanos Fight Room\\Lower Part\\Underground Rupee beneath Double Magmanos Room 1',
+        );
+        const logic = readSelector(logicSelector);
+        const check = logic.checks[checkId];
+        expect(check).toBeDefined();
+        expect(check?.name).toBe(
+            'Fire Sanctuary - Underground Rupee beneath Double Magmanos Room 1',
+        );
+
+        // Initially out of logic
+        expect(checkState(checkId)).toBe('outLogic');
+
+        // With full inventory, it is in logic (Mogma Mitts, sword, dungeon keys, etc.)
+        updateSettingsWithFullInventory();
+        expect(checkState(checkId)).toBe('inLogic');
+    });
 });

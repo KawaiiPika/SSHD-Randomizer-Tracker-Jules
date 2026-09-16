@@ -1,6 +1,6 @@
 import dungeonData from '../data/dungeons.json';
 import type { SubmarkerData } from '../locationTracker/mapTracker/Marker';
-import { itemMaxes } from '../logic/Inventory';
+import { itemAliases, itemMaxes } from '../logic/Inventory';
 import { dungeonNames, isDungeon } from '../logic/Locations';
 import { decodeHint, type Hint } from './Hints';
 
@@ -71,6 +71,16 @@ export function parseHintsText(
 
     const identifyItem = (userText_: string) => {
         const userText = userText_.trim();
+        for (const [alias, resolved] of Object.entries(itemAliases)) {
+            if (alias.toLowerCase() === userText) {
+                if (typeof resolved === 'string') {
+                    return resolved;
+                }
+                if (Array.isArray(resolved) && resolved.length === 1) {
+                    return resolved[0].item;
+                }
+            }
+        }
         const exactMatch = itemNames.find((item) => item.lower === userText);
         if (exactMatch) {
             return exactMatch.original;

@@ -5,7 +5,12 @@ import type { OptionDefs, TypedOptions } from '../permalink/SettingsTypes';
 import type { TrackerState } from '../tracker/Slice';
 import { appError } from '../utils/Debug';
 import { BitVector } from './bitlogic/BitVector';
-import { type InventoryItem, isItem, itemMaxes, itemName } from './Inventory';
+import {
+    type InventoryItem,
+    itemMaxes,
+    itemName,
+    resolveItem,
+} from './Inventory';
 import type { DungeonName } from './Locations';
 import type { Logic } from './Logic';
 import { swordsToAdd } from './ThingsThatWouldBeNiceToHaveInTheDump';
@@ -72,7 +77,8 @@ export function getInitialItems(
     const items: TrackerState['inventory'] = {};
     const add = (item: InventoryItem, count: number = 1) => {
         items[item] ??= 0;
-        items[item] += count;
+        const max = itemMaxes[item] ?? 1;
+        items[item] = Math.min(max, items[item] + count);
     };
     add('Sailcloth');
     if (settings['starting-tablet-count'] === 3) {
@@ -90,15 +96,9 @@ export function getInitialItems(
     );
     const startingItems = settings['starting-items'] ?? [];
     for (const item of startingItems) {
-        if (item.includes(sothItemReplacement)) {
-            add(sothItemReplacement);
-        } else if (item.includes(triforceItemReplacement)) {
-            add(triforceItemReplacement);
-        } else if (
-            isItem(item) &&
-            (!item.includes('Pouch') || !items['Progressive Pouch'])
-        ) {
-            add(item);
+        const resolved = resolveItem(item);
+        for (const { item: invItem, count } of resolved) {
+            add(invItem, count);
         }
     }
 
@@ -543,9 +543,9 @@ extraSSHDChecks.push({
 
 for (let i = 1; i <= 5; i++) {
     extraSSHDChecks.push({
-        areaId: '\\Fire Sanctuary\\Main\\Magmanos Fight Room',
+        areaId: '\\Fire Sanctuary\\Main\\Magmanos Fight Room\\Lower Part',
         locationKey: `Underground Rupee beneath Double Magmanos Room ${i}`,
-        fullId: `\\Fire Sanctuary\\Main\\Magmanos Fight Room\\Underground Rupee beneath Double Magmanos Room ${i}`,
+        fullId: `\\Fire Sanctuary\\Main\\Magmanos Fight Room\\Lower Part\\Underground Rupee beneath Double Magmanos Room ${i}`,
         shortName: `Fire Sanctuary - Underground Rupee beneath Double Magmanos Room ${i}`,
         type: 'underground_rupee',
         originalItem: 'Silver Rupee',
