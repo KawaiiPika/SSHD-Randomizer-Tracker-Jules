@@ -930,14 +930,19 @@ describe('full logic tests', () => {
     });
 
     it("retains Batreaux's House checks with raw AP locations", () => {
-        const fs = require('fs');
-        const content = fs.readFileSync(
-            'Logs/Locations (Archipelago).txt',
-            'utf8',
-        );
-        const locsRaw = content.split(/\r?\n/).filter(Boolean);
+        const rawLocationsWithWhitespace = [
+            "Batreaux's House - 5 Gratitude Crystals Reward\t ",
+            "Batreaux's House - 10 Gratitude Crystals Reward\t ",
+            "Batreaux's House - 30 Gratitude Crystals Reward\t ",
+            "Batreaux's House - 30 Gratitude Crystals Reward Chest\t ",
+            "Batreaux's House - 40 Gratitude Crystals Reward\t",
+            "Batreaux's House - 50 Gratitude Crystals Reward\t",
+            "Batreaux's House - 70 Gratitude Crystals First Reward\t",
+            "Batreaux's House - 70 Gratitude Crystals Second Reward\t",
+            "Batreaux's House - 80 Gratitude Crystals Reward\t",
+        ];
 
-        dispatch(setAvailableLocations(locsRaw));
+        dispatch(setAvailableLocations(rawLocationsWithWhitespace));
         const batreauxArea = readSelector(areasSelector).find(
             (a) => a.name === "Batreaux's House",
         );
