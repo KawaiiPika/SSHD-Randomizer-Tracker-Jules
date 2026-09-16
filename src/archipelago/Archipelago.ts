@@ -313,7 +313,9 @@ export class APClientManager {
 
             if (this.idToLocation && this.connectedData.checked_locations) {
                 this.checkedLocations = this.connectedData.checked_locations
-                    .map((location_id) => this.idToLocation![location_id])
+                    .map((location_id) =>
+                        this.idToLocation![location_id]?.trim(),
+                    )
                     .filter((loc): loc is string => Boolean(loc));
                 this.resolveLocations?.(this.checkedLocations);
             } else if (this.connectedData.checked_locations) {
@@ -326,9 +328,8 @@ export class APClientManager {
                 this.availableLocations = Array.from(
                     new Set(
                         allLocIds
-                            .map(
-                                (location_id) =>
-                                    this.idToLocation![location_id],
+                            .map((location_id) =>
+                                this.idToLocation![location_id]?.trim(),
                             )
                             .filter((loc): loc is string => Boolean(loc)),
                     ),
@@ -371,7 +372,9 @@ export class APClientManager {
 
                 if (this.pendingLocationIds.length > 0) {
                     const resolved = this.pendingLocationIds
-                        .map((location_id) => this.idToLocation![location_id])
+                        .map((location_id) =>
+                            this.idToLocation![location_id]?.trim(),
+                        )
                         .filter((loc): loc is string => Boolean(loc));
                     this.checkedLocations = Array.from(
                         new Set([...this.checkedLocations, ...resolved]),
@@ -381,7 +384,9 @@ export class APClientManager {
                 }
                 if (this.allLocationIds.length > 0) {
                     const resolvedAvail = this.allLocationIds
-                        .map((location_id) => this.idToLocation![location_id])
+                        .map((location_id) =>
+                            this.idToLocation![location_id]?.trim(),
+                        )
                         .filter((loc): loc is string => Boolean(loc));
                     this.availableLocations = Array.from(
                         new Set([...this.availableLocations, ...resolvedAvail]),
@@ -495,7 +500,9 @@ export class APClientManager {
             if (content.checked_locations) {
                 if (this.idToLocation) {
                     const newLocs = content.checked_locations
-                        .map((location_id) => this.idToLocation![location_id])
+                        .map((location_id) =>
+                            this.idToLocation![location_id]?.trim(),
+                        )
                         .filter((loc): loc is string => Boolean(loc));
                     this.checkedLocations = Array.from(
                         new Set([...this.checkedLocations, ...newLocs]),

@@ -878,4 +878,72 @@ describe('full logic tests', () => {
             ),
         ).toBe(false);
     });
+
+    it('hides gossip stones when Archipelago is connected without gossip stones randomized', () => {
+        const stoneId = tester.findCheckId(
+            'Faron Woods',
+            'Gossip Stone in Deep Woods',
+        );
+
+        // When AP is connected with a list of checks not containing gossip stones
+        dispatch(setAvailableLocations(["Knight Academy - Fledge's Gift"]));
+        expect(readSelector(isCheckBannedSelector)(stoneId)).toBe(true);
+
+        // If a gossip stone is randomized into AP locations, it is visible
+        dispatch(
+            setAvailableLocations(['Faron Woods - Gossip Stone in Deep Woods']),
+        );
+        expect(readSelector(isCheckBannedSelector)(stoneId)).toBe(false);
+    });
+
+    it('marks connected goddess cube when clicking goddess chest', () => {
+        const chest =
+            '\\Sky\\North East\\Bamboo Island\\Bamboo Island Goddess Chest';
+        const cube =
+            '\\Eldin\\Volcano\\Near Temple Entrance\\Goddess Cube West of Earth Temple Entrance';
+
+        // Initially neither is checked
+        expect(
+            readSelector((s) => s.tracker.checkedChecks.includes(chest)),
+        ).toBe(false);
+        expect(
+            readSelector((s) => s.tracker.checkedChecks.includes(cube)),
+        ).toBe(false);
+
+        // Clicking the chest marks both the chest and the connected cube
+        dispatch(clickCheck({ checkId: chest, markChecked: true }));
+        expect(
+            readSelector((s) => s.tracker.checkedChecks.includes(chest)),
+        ).toBe(true);
+        expect(
+            readSelector((s) => s.tracker.checkedChecks.includes(cube)),
+        ).toBe(true);
+
+        // Unclicking the chest unmarks both
+        dispatch(clickCheck({ checkId: chest, markChecked: false }));
+        expect(
+            readSelector((s) => s.tracker.checkedChecks.includes(chest)),
+        ).toBe(false);
+        expect(
+            readSelector((s) => s.tracker.checkedChecks.includes(cube)),
+        ).toBe(false);
+    });
+
+    it("retains Batreaux's House checks with raw AP locations", () => {
+        const fs = require('fs');
+        const content = fs.readFileSync(
+            'Logs/Locations (Archipelago).txt',
+            'utf8',
+        );
+        const locsRaw = content.split(/\r?\n/).filter(Boolean);
+
+        dispatch(setAvailableLocations(locsRaw));
+        const batreauxArea = readSelector(areasSelector).find(
+            (a) => a.name === "Batreaux's House",
+        );
+        expect(batreauxArea?.checks.numTotal).toBe(9);
+        expect(batreauxArea?.checks.numRemaining).toBe(9);
+        expect(batreauxArea?.checks.list.length).toBe(9);
+        expect(batreauxArea?.hidden).toBe(false);
+    });
 });

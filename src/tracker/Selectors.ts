@@ -347,7 +347,29 @@ export const availableLocationsSelector = (state: RootState) =>
 
 export const availableLocationsSetSelector = createSelector(
     [availableLocationsSelector],
-    (locs) => (locs && locs.length > 0 ? new Set(locs) : null),
+    (locs) => {
+        if (!locs || locs.length === 0) return null;
+        const set = new Set<string>();
+        for (const loc of locs) {
+            const trimmed = loc.trim();
+            set.add(loc);
+            set.add(trimmed);
+            const mapped =
+                dumpCheckToSSHDName[trimmed] ?? dumpCheckToSSHDName[loc];
+            if (mapped) {
+                set.add(mapped);
+                set.add(mapped.trim());
+            }
+            const mappedShort =
+                oldDumpShortNameToSSHDName[trimmed] ??
+                oldDumpShortNameToSSHDName[loc];
+            if (mappedShort) {
+                set.add(mappedShort);
+                set.add(mappedShort.trim());
+            }
+        }
+        return set;
+    },
 );
 
 export const areaHasApLocationsSelector = createSelector(
@@ -356,11 +378,15 @@ export const areaHasApLocationsSelector = createSelector(
         if (!apLocationsSet) return null;
         const areasWithLocations = new Set<string>();
         for (const [checkId, check] of Object.entries(logic.checks)) {
+            const checkSshdName = dumpCheckToSSHDName[checkId];
             if (
                 apLocationsSet.has(check.name) ||
+                apLocationsSet.has(check.name.trim()) ||
                 apLocationsSet.has(checkId) ||
-                (dumpCheckToSSHDName[checkId] &&
-                    apLocationsSet.has(dumpCheckToSSHDName[checkId]))
+                apLocationsSet.has(checkId.trim()) ||
+                (checkSshdName &&
+                    (apLocationsSet.has(checkSshdName) ||
+                        apLocationsSet.has(checkSshdName.trim())))
             ) {
                 if (check.area) {
                     areasWithLocations.add(check.area);
@@ -452,6 +478,7 @@ export const isCheckBannedSelector = createSelector(
         settingSelector('npc-closet-shuffle'),
         settingSelector('stamina-fruit-shuffle'),
         settingSelector('underground-rupee-shuffle'),
+        settingSelector('gossip-stone-treasure-shuffle'),
     ],
     (
         logic,
@@ -472,17 +499,25 @@ export const isCheckBannedSelector = createSelector(
         npcClosetShuffle,
         staminaFruitShuffle,
         undergroundRupeeShuffle,
+        gossipStoneShuffle,
     ) => {
         const bannedChecks = new Set<string>();
         for (const loc of bannedLocations) {
+            const trimmed = loc.trim();
             bannedChecks.add(loc);
-            const mappedShort = oldDumpShortNameToSSHDName[loc];
+            bannedChecks.add(trimmed);
+            const mappedShort =
+                oldDumpShortNameToSSHDName[trimmed] ??
+                oldDumpShortNameToSSHDName[loc];
             if (mappedShort) {
                 bannedChecks.add(mappedShort);
+                bannedChecks.add(mappedShort.trim());
             }
-            const mappedId = dumpCheckToSSHDName[loc];
+            const mappedId =
+                dumpCheckToSSHDName[trimmed] ?? dumpCheckToSSHDName[loc];
             if (mappedId) {
                 bannedChecks.add(mappedId);
+                bannedChecks.add(mappedId.trim());
             }
         }
         const rupeesExcluded =
@@ -513,6 +548,9 @@ export const isCheckBannedSelector = createSelector(
             tadtoneSanity !== undefined
                 ? !tadtoneSanity
                 : tadtoneShuffle === undefined || isOff(tadtoneShuffle);
+
+        const banGossipStoneTreasure =
+            gossipStoneShuffle !== undefined && isOff(gossipStoneShuffle);
 
         const trialTreasurePattern = /Relic (\d+)/;
         const isExcessRelic = (check: LogicalCheck) => {
@@ -559,13 +597,15 @@ export const isCheckBannedSelector = createSelector(
                 checkType === 'closet' || checkType === 'Closets';
 
             if (availableLocationsSet) {
+                const checkSshdName = dumpCheckToSSHDName[checkId];
                 const isCheckInAp =
                     availableLocationsSet.has(check.name) ||
+                    availableLocationsSet.has(check.name.trim()) ||
                     availableLocationsSet.has(checkId) ||
-                    (dumpCheckToSSHDName[checkId] &&
-                        availableLocationsSet.has(
-                            dumpCheckToSSHDName[checkId],
-                        ));
+                    availableLocationsSet.has(checkId.trim()) ||
+                    (checkSshdName &&
+                        (availableLocationsSet.has(checkSshdName) ||
+                            availableLocationsSet.has(checkSshdName.trim())));
 
                 if (isCheckInAp) {
                     return false;
@@ -576,23 +616,26 @@ export const isCheckBannedSelector = createSelector(
                     const chestCheckId = cubeCheckToGoddessChestCheck[checkId];
                     if (chestCheckId) {
                         const chestCheck = logic.checks[chestCheckId];
+                        const chestSshdName = dumpCheckToSSHDName[chestCheckId];
                         if (
                             chestCheck &&
                             (availableLocationsSet.has(chestCheck.name) ||
+                                availableLocationsSet.has(
+                                    chestCheck.name.trim(),
+                                ) ||
                                 availableLocationsSet.has(chestCheckId) ||
-                                (dumpCheckToSSHDName[chestCheckId] &&
-                                    availableLocationsSet.has(
-                                        dumpCheckToSSHDName[chestCheckId],
-                                    )))
+                                availableLocationsSet.has(
+                                    chestCheckId.trim(),
+                                ) ||
+                                (chestSshdName &&
+                                    (availableLocationsSet.has(chestSshdName) ||
+                                        availableLocationsSet.has(
+                                            chestSshdName.trim(),
+                                        ))))
                         ) {
                             return false;
                         }
                     }
-                }
-
-                // Gossip stones used for hints
-                if (check.type === 'gossip_stone') {
-                    return !gossipStoneUsed(checkId);
                 }
 
                 return true;
@@ -613,7 +656,8 @@ export const isCheckBannedSelector = createSelector(
                 (banClosets && isClosetCheck) ||
                 (banStaminaFruit && checkType === 'stamina_fruit') ||
                 (banUndergroundRupee && checkType === 'underground_rupee') ||
-                (check.type === 'gossip_stone' && !gossipStoneUsed(checkId))
+                (check.type === 'gossip_stone' &&
+                    (banGossipStoneTreasure || !gossipStoneUsed(checkId)))
             );
         };
     },

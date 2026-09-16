@@ -207,6 +207,7 @@ export interface ExtraClosetCheck {
     locationKey: string;
     fullId: string;
     shortName: string;
+    type?: string;
     originalItem: string;
     requirement: string;
 }
@@ -350,6 +351,207 @@ export const extraClosetChecks: ExtraClosetCheck[] = [
     },
 ];
 
+export const extraSSHDChecks: {
+    areaId: string;
+    locationKey: string;
+    fullId: string;
+    shortName: string;
+    type?: string;
+    originalItem: string;
+    requirement: string;
+}[] = [
+    {
+        areaId: '\\Sky\\North East',
+        locationKey: 'Form a Swirrell Ring above Bamboo Island',
+        fullId: '\\Sky\\North East\\Form a Swirrell Ring above Bamboo Island',
+        shortName: 'The Sky - Form a Swirrell Ring above Bamboo Island',
+        type: 'regular',
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Sky\\South East',
+        locationKey: 'Form a Swirrell Ring above Lumpy Pumpkin',
+        fullId: '\\Sky\\South East\\Form a Swirrell Ring above Lumpy Pumpkin',
+        shortName: 'The Sky - Form a Swirrell Ring above Lumpy Pumpkin',
+        type: 'regular',
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Sky\\South West',
+        locationKey: 'Form a Swirrell Ring above Volcanic Island',
+        fullId: '\\Sky\\South West\\Form a Swirrell Ring above Volcanic Island',
+        shortName: 'The Sky - Form a Swirrell Ring above Volcanic Island',
+        type: 'regular',
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Eldin\\Bokoblin Base\\Bokoblin Base Summit',
+        locationKey: 'Raise Sword',
+        fullId: '\\Eldin\\Bokoblin Base\\Bokoblin Base Summit\\Raise Sword',
+        shortName: 'Bokoblin Base - Raise Sword',
+        type: 'chest',
+        originalItem: 'True Master Sword',
+        requirement: 'Fireshield Earrings',
+    },
+    {
+        areaId: '\\Fire Sanctuary\\Main\\Boss Key Room',
+        locationKey: 'Chest after Winged Torches',
+        fullId: '\\Fire Sanctuary\\Main\\Boss Key Room\\Chest after Winged Torches',
+        shortName: 'Fire Sanctuary - Chest after Winged Torches',
+        type: 'chest',
+        originalItem: 'Red Rupee',
+        requirement: '\\Mogma Mitts',
+    },
+    {
+        areaId: '\\Skyview\\Main\\Last Room\\Near Boss Key Chest',
+        locationKey: 'Chest after Vines',
+        fullId: '\\Skyview\\Main\\Last Room\\Near Boss Key Chest\\Chest after Vines',
+        shortName: 'Skyview Temple - Chest after Vines',
+        type: 'chest',
+        originalItem: 'Red Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
+        locationKey: 'Deliver Barrel to Henya the Lunch Lady',
+        fullId: '\\Skyloft\\Upper Skyloft\\Knight Academy\\Deliver Barrel to Henya the Lunch Lady',
+        shortName: 'Knight Academy - Deliver Barrel to Henya the Lunch Lady',
+        type: 'item',
+        originalItem: 'Red Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Skyloft\\Upper Skyloft',
+        locationKey: 'Rescue Remlit above Knight Academy',
+        fullId: '\\Skyloft\\Upper Skyloft\\Rescue Remlit above Knight Academy',
+        shortName: 'Upper Skyloft - Rescue Remlit above Knight Academy',
+        type: 'item',
+        originalItem: 'Green Rupee',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Faron\\Sealed Grounds\\Sealed Temple',
+        locationKey: 'Collect Fruit from the Tree of Life',
+        fullId: '\\Faron\\Sealed Grounds\\Sealed Temple\\Collect Fruit from the Tree of Life',
+        shortName: 'Sealed Temple - Collect Fruit from the Tree of Life',
+        type: 'item',
+        originalItem: 'Life Tree Fruit',
+        requirement: 'True',
+    },
+    {
+        areaId: "\\Faron\\Sealed Grounds\\Hylia's Temple",
+        locationKey: 'Defeat Demise',
+        fullId: "\\Faron\\Sealed Grounds\\Hylia's Temple\\Defeat Demise",
+        shortName: "Hylia's Realm - Defeat Demise",
+        type: 'item',
+        originalItem: 'Defeat Demise',
+        requirement: 'True',
+    },
+    {
+        areaId: '\\Lanayru\\Lanayru Sand Sea\\Gorge',
+        locationKey: 'Boss Rush -- 4 Bosses',
+        fullId: '\\Lanayru\\Lanayru Sand Sea\\Gorge\\Boss Rush -- 4 Bosses',
+        shortName: 'Lanayru Gorge - Boss Rush 4 Bosses',
+        type: 'item',
+        originalItem: 'Heart Piece',
+        requirement: 'Gust Bellows & Whip & \\Bow',
+    },
+    {
+        areaId: '\\Lanayru\\Lanayru Sand Sea\\Gorge',
+        locationKey: 'Boss Rush -- 8 Bosses',
+        fullId: '\\Lanayru\\Lanayru Sand Sea\\Gorge\\Boss Rush -- 8 Bosses',
+        shortName: 'Lanayru Gorge - Boss Rush 8 Bosses',
+        type: 'item',
+        originalItem: 'Hylian Shield',
+        requirement: 'Gust Bellows & Whip & \\Bow',
+    },
+];
+
+for (let i = 1; i <= 9; i++) {
+    extraSSHDChecks.push({
+        areaId: '\\Eldin\\Volcano\\First Room',
+        locationKey: `Underground Rupee in First Room ${i}`,
+        fullId: `\\Eldin\\Volcano\\First Room\\Underground Rupee in First Room ${i}`,
+        shortName: `Eldin Volcano - Underground Rupee in First Room ${i}`,
+        type: 'underground_rupee',
+        originalItem: 'Silver Rupee',
+        requirement: '\\Mogma Mitts',
+    });
+}
+
+for (let i = 1; i <= 2; i++) {
+    extraSSHDChecks.push({
+        areaId: '\\Eldin\\Volcano\\East',
+        locationKey: `Underground Rupee before Bone Bridge ${i}`,
+        fullId: `\\Eldin\\Volcano\\East\\Underground Rupee before Bone Bridge ${i}`,
+        shortName: `Eldin Volcano - Underground Rupee before Bone Bridge ${i}`,
+        type: 'underground_rupee',
+        originalItem: 'Silver Rupee',
+        requirement: '\\Mogma Mitts',
+    });
+}
+
+for (let i = 1; i <= 15; i++) {
+    extraSSHDChecks.push({
+        areaId: '\\Eldin\\Volcano\\East',
+        locationKey: `Underground Rupee in Cliff ${i}`,
+        fullId: `\\Eldin\\Volcano\\East\\Underground Rupee in Cliff ${i}`,
+        shortName: `Eldin Volcano - Underground Rupee in Cliff ${i}`,
+        type: 'underground_rupee',
+        originalItem: 'Silver Rupee',
+        requirement: '\\Mogma Mitts',
+    });
+}
+
+for (let i = 1; i <= 10; i++) {
+    extraSSHDChecks.push({
+        areaId: '\\Eldin\\Volcano\\Near Temple Entrance',
+        locationKey: `Underground Rupee West of Temple ${i}`,
+        fullId: `\\Eldin\\Volcano\\Near Temple Entrance\\Underground Rupee West of Temple ${i}`,
+        shortName: `Eldin Volcano - Underground Rupee West of Temple ${i}`,
+        type: 'underground_rupee',
+        originalItem: 'Silver Rupee',
+        requirement: '\\Mogma Mitts',
+    });
+}
+
+for (let i = 1; i <= 2; i++) {
+    extraSSHDChecks.push({
+        areaId: '\\Eldin\\Volcano Summit',
+        locationKey: `Underground Rupee ${i}`,
+        fullId: `\\Eldin\\Volcano Summit\\Underground Rupee ${i}`,
+        shortName: `Volcano Summit - Underground Rupee ${i}`,
+        type: 'underground_rupee',
+        originalItem: 'Silver Rupee',
+        requirement: '\\Mogma Mitts',
+    });
+}
+
+extraSSHDChecks.push({
+    areaId: '\\Fire Sanctuary\\Main\\Second Trapped Mogma Room',
+    locationKey: 'Underground Rupee behind Bombable Wall',
+    fullId: '\\Fire Sanctuary\\Main\\Second Trapped Mogma Room\\Underground Rupee behind Bombable Wall',
+    shortName: 'Fire Sanctuary - Underground Rupee behind Bombable Wall',
+    type: 'underground_rupee',
+    originalItem: 'Silver Rupee',
+    requirement: '\\Mogma Mitts & Bomb Bag & \\Goddess Sword',
+});
+
+for (let i = 1; i <= 5; i++) {
+    extraSSHDChecks.push({
+        areaId: '\\Fire Sanctuary\\Main\\Magmanos Fight Room',
+        locationKey: `Underground Rupee beneath Double Magmanos Room ${i}`,
+        fullId: `\\Fire Sanctuary\\Main\\Magmanos Fight Room\\Underground Rupee beneath Double Magmanos Room ${i}`,
+        shortName: `Fire Sanctuary - Underground Rupee beneath Double Magmanos Room ${i}`,
+        type: 'underground_rupee',
+        originalItem: 'Silver Rupee',
+        requirement: '\\Mogma Mitts',
+    });
+}
+
 function findRawArea(root: RawArea, targetName: string): RawArea | undefined {
     if (root.name === targetName) return root;
     if (root.sub_areas) {
@@ -362,29 +564,29 @@ function findRawArea(root: RawArea, targetName: string): RawArea | undefined {
 }
 
 export function patchRawLogicForSSHD(raw: RawLogic): RawLogic {
-    for (const closet of extraClosetChecks) {
-        if (!raw.checks[closet.fullId]) {
-            raw.checks[closet.fullId] = {
-                type: 'Closets',
-                short_name: closet.shortName,
-                'original item': closet.originalItem,
+    for (const check of [...extraClosetChecks, ...extraSSHDChecks]) {
+        if (!raw.checks[check.fullId]) {
+            raw.checks[check.fullId] = {
+                type: check.type ?? 'regular',
+                short_name: check.shortName,
+                'original item': check.originalItem,
             };
         }
-        if (!raw.items.includes(closet.fullId)) {
-            raw.items.push(closet.fullId);
+        if (!raw.items.includes(check.fullId)) {
+            raw.items.push(check.fullId);
         }
-        const area = findRawArea(raw.areas, closet.areaId);
+        const area = findRawArea(raw.areas, check.areaId);
         if (area) {
             if (
                 !area.locations ||
                 !Object.prototype.hasOwnProperty.call(
                     area.locations,
-                    closet.locationKey,
+                    check.locationKey,
                 )
             ) {
                 area.locations = {
                     ...area.locations,
-                    [closet.locationKey]: closet.requirement,
+                    [check.locationKey]: check.requirement,
                 };
             }
         }

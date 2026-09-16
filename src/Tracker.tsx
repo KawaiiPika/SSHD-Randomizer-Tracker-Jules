@@ -22,6 +22,7 @@ import LocationContextMenu from './locationTracker/LocationContextMenu';
 import LocationGroupContextMenu from './locationTracker/LocationGroupContextMenu';
 import type { InventoryItem } from './logic/Inventory';
 import { isLogicLoadedSelector, logicSelector } from './logic/Selectors';
+import { goddessChestCheckToCubeCheck } from './logic/TrackerModifications';
 import { MakeTooltipsAvailable } from './tooltips/TooltipHooks';
 import {
     bulkEditChecks,
@@ -118,18 +119,27 @@ function TrackerContents() {
             }
         }
         const clientLocationCallback = (locs: string[]) => {
+            const mappedChecks = locs
+                .map((l) => l.trim())
+                .map(
+                    (loc) =>
+                        shortToFull[loc] ??
+                        shortToFull[loc.split(' - ').slice(1).join(' - ')] ??
+                        shortToFull[loc.replace(/^.* - /, '')],
+                )
+                .filter((c): c is string => Boolean(c));
+
+            const extraCubes: string[] = [];
+            for (const c of mappedChecks) {
+                const cube = goddessChestCheckToCubeCheck[c];
+                if (cube) {
+                    extraCubes.push(cube);
+                }
+            }
+
             dispatch(
                 bulkEditChecks({
-                    checks: locs
-                        .map(
-                            (loc) =>
-                                shortToFull[loc] ??
-                                shortToFull[
-                                    loc.split(' - ').slice(1).join(' - ')
-                                ] ??
-                                shortToFull[loc.replace(/^.* - /, '')],
-                        )
-                        .filter((c): c is string => Boolean(c)),
+                    checks: [...mappedChecks, ...extraCubes],
                     markChecked: true,
                 }),
             );
@@ -170,7 +180,10 @@ function TrackerContents() {
         };
 
         const clientAvailableLocationsCallback = (locs: string[]) => {
-            dispatch(setAvailableLocations(locs.length > 0 ? locs : undefined));
+            const trimmed = locs.map((l) => l.trim()).filter(Boolean);
+            dispatch(
+                setAvailableLocations(trimmed.length > 0 ? trimmed : undefined),
+            );
         };
 
         clientManager?.setLocationCallback(clientLocationCallback);

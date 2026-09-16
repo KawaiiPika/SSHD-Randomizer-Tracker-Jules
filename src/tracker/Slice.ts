@@ -226,7 +226,7 @@ const trackerSlice = createSlice({
             state,
             action: PayloadAction<string[] | undefined>,
         ) => {
-            state.availableLocations = action.payload;
+            state.availableLocations = action.payload?.map((l) => l.trim());
             state.hasBeenModified = true;
         },
         cancelItemAssignment: (state) => {
