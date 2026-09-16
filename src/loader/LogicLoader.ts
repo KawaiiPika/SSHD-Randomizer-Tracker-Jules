@@ -1,5 +1,6 @@
 import { isEqual } from 'es-toolkit';
 import { load } from 'js-yaml';
+import { oldDumpShortNameToSSHDName } from '../data/SSHDLocationMapping';
 import { patchRawLogicForSSHD } from '../logic/TrackerModifications';
 import type { RawLogic, RawPresets } from '../logic/UpstreamTypes';
 import type { MultiChoiceOption, OptionDefs } from '../permalink/SettingsTypes';
@@ -234,6 +235,16 @@ export const sshdOptionDefs: OptionDefs = [
         default: 'off',
         help: 'Determines if Tadtones are randomized.',
     },
+    {
+        name: "Open Batreaux's Shed",
+        command: 'open-batreaux-shed',
+        type: 'singlechoice',
+        permalink: false,
+        choices: ['off', 'on'],
+        bits: 1,
+        default: 'on',
+        help: "Determines if the shed to Batreaux's House is open from the start of the game.",
+    },
 ];
 
 export async function getAndPatchLogic(
@@ -294,10 +305,14 @@ export async function getAndPatchLogic(
 
         const choices = Object.values(logic.checks).map((c) => c.short_name);
 
+        const mappedDefault = excludedLocsOption.default.map(
+            (entry) => oldDumpShortNameToSSHDName[entry] ?? entry,
+        );
+
         patchedOptions[excludedLocsIndex] = {
             ...excludedLocsOption,
             choices,
-            default: [...excludedLocsOption.default].sort(
+            default: mappedDefault.sort(
                 compareBy((entry) => choices.indexOf(entry)),
             ),
         };

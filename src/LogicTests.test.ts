@@ -6,6 +6,7 @@ import {
 } from './customization/Slice';
 import { type InventoryItem, itemMaxes } from './logic/Inventory';
 import type { LogicalState } from './logic/Locations';
+import { logicSelector } from './logic/Selectors';
 import type { TypedOptions } from './permalink/SettingsTypes';
 import type { AppAction, RootState, SyncThunkResult } from './store/Store';
 import { createTestLogic } from './testing/TestingUtils';
@@ -21,6 +22,7 @@ import {
     totalCountersSelector,
     totalGratitudeCrystalsSelector,
 } from './tracker/Selectors';
+
 import {
     acceptSettings,
     cancelItemAssignment,
@@ -28,6 +30,7 @@ import {
     clickItem,
     mapEntrance,
     reset,
+    setAvailableLocations,
     setCheckHint,
     setItemCounts,
     setRequiredDungeons,
@@ -758,5 +761,121 @@ describe('full logic tests', () => {
 
         updateSettingsWithReset('npc-closet-shuffle', 'randomized');
         expect(readSelector(isCheckBannedSelector)(linksCloset)).toBe(false);
+    });
+
+    it("makes Batreaux's House accessible with default open-batreaux-shed setting", () => {
+        const batreauxExit =
+            "\\Skyloft\\Skyloft Village\\Batreaux's House Exit";
+        // With open-batreaux-shed on (default), the exit should be inLogic
+        expect(checkState(batreauxExit)).toBe('inLogic');
+
+        // Batreaux's House checks are in the "Batreaux's House" hint region
+        // Check IDs still use dump paths, so search by dump path substring
+        const reward5 = tester.findCheckId("Batreaux's House", '5 Crystals');
+        // Out of logic without crystals
+        expect(checkState(reward5)).toBe('outLogic');
+
+        // With 5 gratitude crystals (1 pack = 5) in inventory, it becomes inLogic
+        dispatch(setItemCounts([{ item: 'Gratitude Crystal Pack', count: 1 }]));
+        expect(checkState(reward5)).toBe('inLogic');
+    });
+
+    it('hides Sky Keep when its checks are in excluded-locations', () => {
+        const skyKeepArea = () =>
+            readSelector(areasSelector).find((a) => a.name === 'Sky Keep')!;
+        expect(skyKeepArea().hidden).toBe(false);
+
+        const skyKeepChecks = skyKeepArea().checks.list;
+        expect(skyKeepChecks.length).toBeGreaterThan(0);
+
+        // Exclude all checks in Sky Keep
+        updateSettings('excluded-locations', skyKeepChecks);
+        expect(skyKeepArea().hidden).toBe(true);
+    });
+
+    it('uses official SSHD names for checks via check names in logic', () => {
+        // After SSHD renaming, check.name should be the official SSHD / Archipelago name
+        const fledgesGiftId = tester.findCheckId(
+            'Upper Skyloft',
+            "Fledge's Gift", // search by dump path substring
+        );
+        const logic = readSelector(logicSelector);
+        const fledgesGiftCheck = logic.checks[fledgesGiftId];
+        // The check name should now be the official SSHD name
+        expect(fledgesGiftCheck?.name).toBe("Knight Academy - Fledge's Gift");
+
+        const bossSVId = tester.findCheckId('Skyview', 'Heart Container');
+        const bossSVCheck = logic.checks[bossSVId];
+        expect(bossSVCheck?.name).toBe('Skyview Temple - Defeat Boss');
+    });
+
+    it('trusts Archipelago available locations over settings (reveals Sky Keep checks)', () => {
+        // Under settings, Sky Keep is empty/nonprogress and hidden
+        updateSettings('empty-unrequired-dungeons', true);
+        updateSettings('triforce-shuffle', 'Anywhere');
+        updateSettings('randomize-entrances', 'None');
+        updateSettings('randomize-dungeon-entrances', 'None');
+
+        const skyKeepArea = () =>
+            readSelector(areasSelector).find((a) => a.name === 'Sky Keep')!;
+        expect(skyKeepArea().hidden).toBe(true);
+        expect(skyKeepArea().nonProgress).toBe(true);
+
+        // Now Archipelago reports that Sky Keep checks are available in this seed
+        dispatch(
+            setAvailableLocations([
+                'Sky Keep - Chest in First Room',
+                'Sky Keep - Chest after Dreadfuse Fight',
+            ]),
+        );
+
+        // Sky Keep should now be visible and not nonprogress
+        expect(skyKeepArea().hidden).toBe(false);
+        expect(skyKeepArea().nonProgress).toBe(false);
+        expect(skyKeepArea().checks.numTotal).toBe(2);
+
+        // The checks in availableLocations are NOT banned
+        expect(
+            readSelector(isCheckBannedSelector)(
+                'Sky Keep - Chest in First Room',
+            ),
+        ).toBe(false);
+        expect(
+            readSelector(isCheckBannedSelector)(
+                'Sky Keep - Chest after Dreadfuse Fight',
+            ),
+        ).toBe(false);
+
+        // A check not in availableLocations is banned
+        expect(
+            readSelector(isCheckBannedSelector)(
+                'Sky Keep - Sacred Power of Farore',
+            ),
+        ).toBe(true);
+
+        // Clearing availableLocations reverts to settings-based behavior
+        dispatch(setAvailableLocations(undefined));
+        expect(skyKeepArea().hidden).toBe(true);
+        expect(skyKeepArea().nonProgress).toBe(true);
+    });
+
+    it('trusts Archipelago available locations over excluded-locations', () => {
+        // Exclude Fledge's Gift in settings
+        updateSettings('excluded-locations', [
+            "Knight Academy - Fledge's Gift",
+        ]);
+        expect(
+            readSelector(isCheckBannedSelector)(
+                "Knight Academy - Fledge's Gift",
+            ),
+        ).toBe(true);
+
+        // Archipelago reports Fledge's Gift is available
+        dispatch(setAvailableLocations(["Knight Academy - Fledge's Gift"]));
+        expect(
+            readSelector(isCheckBannedSelector)(
+                "Knight Academy - Fledge's Gift",
+            ),
+        ).toBe(false);
     });
 });

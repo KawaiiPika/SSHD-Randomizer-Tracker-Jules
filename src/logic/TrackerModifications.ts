@@ -1,5 +1,6 @@
 import { invert } from 'es-toolkit';
 import goddessCubesList_ from '../data/goddessCubes2.json';
+import { dumpCheckToSSHDName } from '../data/SSHDLocationMapping';
 import type { OptionDefs, TypedOptions } from '../permalink/SettingsTypes';
 import type { TrackerState } from '../tracker/Slice';
 import { appError } from '../utils/Debug';
@@ -239,7 +240,7 @@ export const extraClosetChecks: ExtraClosetCheck[] = [
         areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
         locationKey: "Owlan's Closet",
         fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Owlan's Closet",
-        shortName: "Upper Skyloft - Owlan's Closet",
+        shortName: "Knight Academy - Owlan's Closet",
         originalItem: 'Green Rupee',
         requirement: 'True',
     },
@@ -247,7 +248,7 @@ export const extraClosetChecks: ExtraClosetCheck[] = [
         areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
         locationKey: "Horwell's Closet",
         fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Horwell's Closet",
-        shortName: "Upper Skyloft - Horwell's Closet",
+        shortName: "Knight Academy - Horwell's Closet",
         originalItem: 'Green Rupee',
         requirement: 'True',
     },
@@ -255,7 +256,7 @@ export const extraClosetChecks: ExtraClosetCheck[] = [
         areaId: '\\Skyloft\\Upper Skyloft\\Knight Academy',
         locationKey: "Karane's Closet",
         fullId: "\\Skyloft\\Upper Skyloft\\Knight Academy\\Karane's Closet",
-        shortName: "Upper Skyloft - Karane's Closet",
+        shortName: "Knight Academy - Karane's Closet",
         originalItem: 'Green Rupee',
         requirement: 'True',
     },
@@ -335,7 +336,7 @@ export const extraClosetChecks: ExtraClosetCheck[] = [
         areaId: '\\Sky\\South East\\Lumpy Pumpkin\\Lumpy Pumpkin Building',
         locationKey: "Pumm and Kina's Closet",
         fullId: "\\Sky\\South East\\Lumpy Pumpkin\\Lumpy Pumpkin Building\\Pumm and Kina's Closet",
-        shortName: "Sky - Pumm and Kina's Closet",
+        shortName: "Lumpy Pumpkin - Pumm and Kina's Closet",
         originalItem: 'Green Rupee',
         requirement: 'True',
     },
@@ -343,7 +344,7 @@ export const extraClosetChecks: ExtraClosetCheck[] = [
         areaId: "\\Lanayru\\Lanayru Sand Sea\\Skipper's Retreat\\Shack",
         locationKey: "Skipper's Closet",
         fullId: "\\Lanayru\\Lanayru Sand Sea\\Skipper's Retreat\\Shack\\Skipper's Closet",
-        shortName: "Lanayru Sand Sea - Skipper's Closet",
+        shortName: "Skipper's Retreat Shack - Skipper's Closet",
         originalItem: 'Gust Bellows',
         requirement: 'Gust Bellows',
     },
@@ -388,5 +389,17 @@ export function patchRawLogicForSSHD(raw: RawLogic): RawLogic {
             }
         }
     }
+    if (!raw.items.includes("Open Batreaux's Shed option")) {
+        raw.items.push("Open Batreaux's Shed option");
+    }
+
+    // Rename dump checks to official SSHD / Archipelago names
+    for (const [id, check] of Object.entries(raw.checks)) {
+        const sshdName = dumpCheckToSSHDName[id];
+        if (sshdName) {
+            check.short_name = sshdName;
+        }
+    }
+
     return raw;
 }

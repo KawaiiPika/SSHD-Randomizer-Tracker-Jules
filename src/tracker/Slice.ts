@@ -50,6 +50,11 @@ export interface TrackerState {
      * The last tracked location, for auto item-at-location tracking.
      */
     lastCheckedLocation: string | undefined;
+    /**
+     * Checks known to be available from Archipelago.
+     * When present, this list overrides settings-based exclusions.
+     */
+    availableLocations?: string[];
 }
 
 const initialState: TrackerState = {
@@ -63,6 +68,7 @@ const initialState: TrackerState = {
     settings: {},
     userHintsText: '',
     lastCheckedLocation: undefined,
+    availableLocations: undefined,
 };
 
 export function preloadedTrackerState(): TrackerState {
@@ -216,6 +222,13 @@ const trackerSlice = createSlice({
             state.userHintsText = action.payload;
             state.hasBeenModified ||= action.payload !== '';
         },
+        setAvailableLocations: (
+            state,
+            action: PayloadAction<string[] | undefined>,
+        ) => {
+            state.availableLocations = action.payload;
+            state.hasBeenModified = true;
+        },
         cancelItemAssignment: (state) => {
             state.lastCheckedLocation = undefined;
         },
@@ -235,6 +248,7 @@ const trackerSlice = createSlice({
                 ...initialState,
                 settings: settings,
                 inventory: getInitialItems(settings),
+                availableLocations: undefined,
             };
         },
         loadTracker: (_state, action: PayloadAction<Partial<TrackerState>>) => {
@@ -257,6 +271,7 @@ export const {
     reset,
     setHint,
     setHintsText,
+    setAvailableLocations,
     loadTracker,
 } = trackerSlice.actions;
 

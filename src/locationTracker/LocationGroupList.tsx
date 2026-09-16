@@ -25,7 +25,8 @@ export function LocationGroupList({
                     (area) =>
                         !isDungeon(area.name) &&
                         !area.name.includes('Silent Realm') &&
-                        !area.nonProgress,
+                        !area.nonProgress &&
+                        !area.hidden,
                 )
                 .map((value) => (
                     <LocationGroupHeader

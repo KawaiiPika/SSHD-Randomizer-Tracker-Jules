@@ -171,5 +171,8 @@ export interface GeneratedOptions {
     /** Gossip Stone Treasure Shuffle */
     'gossip-stone-treasure-shuffle'?: 'off' | 'on' | boolean;
     'gossip_stone_treasure_shuffle'?: 'off' | 'on' | boolean;
+    /** Open Batreaux's Shed */
+    'open-batreaux-shed'?: 'off' | 'on' | boolean;
+    'open_batreaux_shed'?: 'off' | 'on' | boolean;
 }
 

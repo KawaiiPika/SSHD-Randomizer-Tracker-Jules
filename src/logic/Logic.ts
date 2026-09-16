@@ -589,6 +589,13 @@ export function parseLogic(raw: RawLogic): Logic {
                 ) {
                     reqExpr =
                         "Open Thunderhead option | (Ballad of the Goddess & Goddess's Harp)";
+                } else if (
+                    fullExitName ===
+                        "\\Skyloft\\Skyloft Village\\Batreaux's House Exit" ||
+                    exit === "Batreaux's House Exit"
+                ) {
+                    reqExpr =
+                        "Open Batreaux's Shed option | \\Skyloft\\Skyloft Village\\Opened Shed | Gravestone Jump Trick";
                 }
                 const expr = parseExpr(reqExpr);
                 if (allAreas[fullExitName]) {

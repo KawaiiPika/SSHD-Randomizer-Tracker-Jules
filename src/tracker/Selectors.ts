@@ -5,6 +5,10 @@ import {
     trickSemiLogicSelector,
     trickSemiLogicTrickListSelector,
 } from '../customization/Selectors';
+import {
+    dumpCheckToSSHDName,
+    oldDumpShortNameToSSHDName,
+} from '../data/SSHDLocationMapping';
 import { parseHintsText } from '../hints/HintsParser';
 import {
     getAllowedStartingEntrances,
@@ -338,6 +342,35 @@ const optimisticLogicBitsSelector = createSelector(
     bitVectorMemoizeOptions,
 );
 
+export const availableLocationsSelector = (state: RootState) =>
+    state.tracker.availableLocations;
+
+export const availableLocationsSetSelector = createSelector(
+    [availableLocationsSelector],
+    (locs) => (locs && locs.length > 0 ? new Set(locs) : null),
+);
+
+export const areaHasApLocationsSelector = createSelector(
+    [logicSelector, availableLocationsSetSelector],
+    (logic, apLocationsSet) => {
+        if (!apLocationsSet) return null;
+        const areasWithLocations = new Set<string>();
+        for (const [checkId, check] of Object.entries(logic.checks)) {
+            if (
+                apLocationsSet.has(check.name) ||
+                apLocationsSet.has(checkId) ||
+                (dumpCheckToSSHDName[checkId] &&
+                    apLocationsSet.has(dumpCheckToSSHDName[checkId]))
+            ) {
+                if (check.area) {
+                    areasWithLocations.add(check.area);
+                }
+            }
+        }
+        return areasWithLocations;
+    },
+);
+
 const isTruthyOption = (val: unknown): boolean =>
     val === true || val === 'on' || val === 'true';
 
@@ -349,20 +382,35 @@ const skyKeepNonprogressSelector = createSelector(
             settings['triforce-shuffle'] === 'Anywhere'),
 );
 
-const areaNonprogressSelector = createSelector(
+export const areaNonprogressSelector = createSelector(
     [
         skyKeepNonprogressSelector,
         settingSelector('empty-unrequired-dungeons'),
         requiredDungeonsSelector,
+        areaHasApLocationsSelector,
     ],
-    (skyKeepNonprogress, emptyUnrequiredDungeons, requiredDungeons) => {
+    (
+        skyKeepNonprogress,
+        emptyUnrequiredDungeons,
+        requiredDungeons,
+        areasWithApLocations,
+    ) => {
         const isEudOn = isTruthyOption(emptyUnrequiredDungeons);
-        return (area: string) =>
-            area === 'Sky Keep'
+        return (area: string) => {
+            if (areasWithApLocations) {
+                if (areasWithApLocations.has(area)) {
+                    return false;
+                }
+                if (isDungeon(area)) {
+                    return true;
+                }
+            }
+            return area === 'Sky Keep'
                 ? skyKeepNonprogress
                 : isEudOn && isDungeon(area)
                   ? !requiredDungeons.includes(area)
                   : false;
+        };
     },
 );
 
@@ -388,6 +436,7 @@ export const isCheckBannedSelector = createSelector(
     [
         logicSelector,
         areaNonprogressSelector,
+        availableLocationsSetSelector,
         settingSelector('excluded-locations'),
         settingSelector('rupeesanity'),
         settingSelector('shopsanity'),
@@ -407,6 +456,7 @@ export const isCheckBannedSelector = createSelector(
     (
         logic,
         areaNonprogress,
+        availableLocationsSet,
         bannedLocations,
         rupeeSanity,
         shopSanity,
@@ -423,7 +473,18 @@ export const isCheckBannedSelector = createSelector(
         staminaFruitShuffle,
         undergroundRupeeShuffle,
     ) => {
-        const bannedChecks = new Set(bannedLocations);
+        const bannedChecks = new Set<string>();
+        for (const loc of bannedLocations) {
+            bannedChecks.add(loc);
+            const mappedShort = oldDumpShortNameToSSHDName[loc];
+            if (mappedShort) {
+                bannedChecks.add(mappedShort);
+            }
+            const mappedId = dumpCheckToSSHDName[loc];
+            if (mappedId) {
+                bannedChecks.add(mappedId);
+            }
+        }
         const rupeesExcluded =
             rupeeSanity === 'Vanilla' || rupeeSanity === false;
         const maxRelics = silentRealmTreasuresanity
@@ -482,13 +543,65 @@ export const isCheckBannedSelector = createSelector(
             doesHintDistroUseGossipStone[hintDistro] ?? stubTrue;
 
         return (checkId: string) => {
-            const check = logic.checks[checkId];
+            let check = logic.checks[checkId];
+            if (!check) {
+                const found = Object.values(logic.checks).find(
+                    (c) => c.name === checkId,
+                );
+                if (found) {
+                    check = found;
+                }
+            }
+            if (!check) return true;
+
             const checkType = check.type as string;
             const isClosetCheck =
                 checkType === 'closet' || checkType === 'Closets';
+
+            if (availableLocationsSet) {
+                const isCheckInAp =
+                    availableLocationsSet.has(check.name) ||
+                    availableLocationsSet.has(checkId) ||
+                    (dumpCheckToSSHDName[checkId] &&
+                        availableLocationsSet.has(
+                            dumpCheckToSSHDName[checkId],
+                        ));
+
+                if (isCheckInAp) {
+                    return false;
+                }
+
+                // Check goddess cube via chest
+                if (check.type === 'tr_cube') {
+                    const chestCheckId = cubeCheckToGoddessChestCheck[checkId];
+                    if (chestCheckId) {
+                        const chestCheck = logic.checks[chestCheckId];
+                        if (
+                            chestCheck &&
+                            (availableLocationsSet.has(chestCheck.name) ||
+                                availableLocationsSet.has(chestCheckId) ||
+                                (dumpCheckToSSHDName[chestCheckId] &&
+                                    availableLocationsSet.has(
+                                        dumpCheckToSSHDName[chestCheckId],
+                                    )))
+                        ) {
+                            return false;
+                        }
+                    }
+                }
+
+                // Gossip stones used for hints
+                if (check.type === 'gossip_stone') {
+                    return !gossipStoneUsed(checkId);
+                }
+
+                return true;
+            }
+
             return (
                 bannedChecks.has(check.name) ||
-                areaNonprogress(logic.checks[checkId].area!) ||
+                bannedChecks.has(checkId) ||
+                areaNonprogress(logic.checks[checkId]?.area ?? check.area!) ||
                 isExcessRelic(check) ||
                 isBannedChestViaCube(checkId) ||
                 isBannedCubeCheckViaChest(checkId, check) ||
@@ -645,6 +758,8 @@ export const areasSelector = createSelector(
         areaNonprogressSelector,
         areaHiddenSelector,
         counterBasisSelector,
+        settingSelector('randomize-entrances'),
+        settingSelector('randomize-dungeon-entrances'),
     ],
     (
         logic,
@@ -655,7 +770,11 @@ export const areasSelector = createSelector(
         isAreaNonprogress,
         isAreaHidden,
         counterBasis,
+        randomEntranceSetting,
+        randomDungeonEntranceSetting,
     ): HintRegion[] => {
+        const dungeonEntranceSetting =
+            randomDungeonEntranceSetting ?? randomEntranceSetting;
         const exitsById = keyBy(allExits, (e) => e.exit.id);
         return compact(
             logic.hintRegions.map((area): HintRegion | undefined => {
@@ -677,7 +796,6 @@ export const areasSelector = createSelector(
                 );
 
                 const nonProgress = isAreaNonprogress(area);
-                const hidden = isAreaHidden(area);
                 const regularChecks = nonProgress ? [] : regularChecks_;
                 const shouldCount = (state: LogicalState) =>
                     counterBasis === 'logic'
@@ -746,6 +864,17 @@ export const areasSelector = createSelector(
                     numRemaining: remainingExits.length,
                     numTotal: relevantExits.length,
                 } satisfies CheckGroup;
+
+                const isSkyKeepEntranceRando =
+                    area === 'Sky Keep' &&
+                    dungeonEntranceSetting ===
+                        'All Surface Dungeons + Sky Keep';
+
+                const hidden =
+                    isAreaHidden(area) ||
+                    (!isSkyKeepEntranceRando &&
+                        progressChecks.length === 0 &&
+                        relevantExits.length === 0);
 
                 return {
                     checks: checkGroup(regularChecks),

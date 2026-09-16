@@ -41,6 +41,11 @@ const m = <K extends keyof TypedOptions>(
 
 export const runtimeOptions: OptionMapping[] = [
     m('Open Thunderhead option', 'open-thunderhead', 'Open'),
+    m(
+        "Open Batreaux's Shed option",
+        'open-batreaux-shed',
+        (val) => val === 'on' || val === true,
+    ),
     m('Open ET option', 'open-et', true),
     m('Open LMF option', 'open-lmf', 'Open'),
     m('LMF Nodes On option', 'open-lmf', 'Main Node'),

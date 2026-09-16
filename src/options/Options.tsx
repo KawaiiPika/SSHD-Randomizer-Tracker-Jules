@@ -45,7 +45,12 @@ import type {
     OptionsCommand,
 } from '../permalink/SettingsTypes';
 import { useAppDispatch } from '../store/Store';
-import { acceptSettings, reset, setRequiredDungeons } from '../tracker/Slice';
+import {
+    acceptSettings,
+    reset,
+    setAvailableLocations,
+    setRequiredDungeons,
+} from '../tracker/Slice';
 import Acknowledgement from './Acknowledgment';
 import styles from './Options.module.css';
 import { OptionsPresets } from './OptionsPresets';
@@ -109,6 +114,7 @@ const optionCategorization_ = {
         'open-et',
         'open-lmf',
         'open-thunderhead',
+        'open-batreaux-shed',
         'fs-lava-flow',
         'open-shortcuts',
     ],
@@ -547,12 +553,20 @@ function PermalinkChooser({
                             setRequiredDungeons(clientManager.requiredDungeons),
                         );
                     }
+                    if (clientManager.availableLocations.length > 0) {
+                        appDispatch(
+                            setAvailableLocations(
+                                clientManager.availableLocations,
+                            ),
+                        );
+                    }
                 }
             });
     };
 
     const disconnectFromArchipelago = () => {
         clientManager?.resetClient();
+        appDispatch(setAvailableLocations(undefined));
     };
 
     /*

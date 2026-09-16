@@ -139,11 +139,13 @@ export class APClientManager {
     connectedData?: ConnectedPacket;
     inventory: TrackerState['inventory'] = {};
     checkedLocations: string[] = [];
+    availableLocations: string[] = [];
     checkedCubes: number = 0;
     messages: ClientMessage[] = [];
     requiredDungeons: string[] = [];
     cubeDataKey?: string;
     resolveLocations?: (locs: string[]) => void;
+    resolveAvailableLocations?: (locs: string[]) => void;
     resolveItems?: (items: TrackerState['inventory']) => void;
     changeStage?: (stage: string) => void;
     resolveCubes?: (cubeflags: number) => void;
@@ -154,6 +156,7 @@ export class APClientManager {
 
     pendingLocationIds: number[] = [];
     pendingItemIds: number[] = [];
+    allLocationIds: number[] = [];
 
     processNetItem(netItemId: number) {
         if (!this.idToItem) return;
@@ -189,6 +192,11 @@ export class APClientManager {
         this.resolveLocations(this.checkedLocations);
     }
 
+    setAvailableLocationsCallback(func: (locs: string[]) => void) {
+        this.resolveAvailableLocations = func;
+        this.resolveAvailableLocations(this.availableLocations);
+    }
+
     setItemCallback(func: (items: TrackerState['inventory']) => void) {
         this.resolveItems = func;
         this.resolveItems(this.inventory);
@@ -222,15 +230,18 @@ export class APClientManager {
             this.connectedData = undefined;
             this.inventory = {};
             this.checkedLocations = [];
+            this.availableLocations = [];
             this.checkedCubes = 0;
             this.messages = [];
             this.cubeDataKey = undefined;
             this.resolveLocations = undefined;
+            this.resolveAvailableLocations = undefined;
             this.resolveItems = undefined;
             this.changeStage = undefined;
             this.resolveCubes = undefined;
             this.pendingItemIds = [];
             this.pendingLocationIds = [];
+            this.allLocationIds = [];
 
             this.status = { state: 'loggedOut' };
             this.notifyStatusSubscribers();
@@ -295,6 +306,11 @@ export class APClientManager {
                 name === 'Skyview Temple' ? 'Skyview' : name,
             );
 
+            const allLocIds = [
+                ...(content.missing_locations ?? []),
+                ...(content.checked_locations ?? []),
+            ];
+
             if (this.idToLocation && this.connectedData.checked_locations) {
                 this.checkedLocations = this.connectedData.checked_locations
                     .map((location_id) => this.idToLocation![location_id])
@@ -304,6 +320,22 @@ export class APClientManager {
                 this.pendingLocationIds.push(
                     ...this.connectedData.checked_locations,
                 );
+            }
+
+            if (this.idToLocation && allLocIds.length > 0) {
+                this.availableLocations = Array.from(
+                    new Set(
+                        allLocIds
+                            .map(
+                                (location_id) =>
+                                    this.idToLocation![location_id],
+                            )
+                            .filter((loc): loc is string => Boolean(loc)),
+                    ),
+                );
+                this.resolveAvailableLocations?.(this.availableLocations);
+            } else if (allLocIds.length > 0) {
+                this.allLocationIds = allLocIds;
             }
 
             client.socket.send({
@@ -346,6 +378,16 @@ export class APClientManager {
                     );
                     this.pendingLocationIds = [];
                     this.resolveLocations?.(this.checkedLocations);
+                }
+                if (this.allLocationIds.length > 0) {
+                    const resolvedAvail = this.allLocationIds
+                        .map((location_id) => this.idToLocation![location_id])
+                        .filter((loc): loc is string => Boolean(loc));
+                    this.availableLocations = Array.from(
+                        new Set([...this.availableLocations, ...resolvedAvail]),
+                    );
+                    this.allLocationIds = [];
+                    this.resolveAvailableLocations?.(this.availableLocations);
                 }
                 if (this.pendingItemIds.length > 0) {
                     for (const netItemId of this.pendingItemIds) {

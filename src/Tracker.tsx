@@ -26,6 +26,7 @@ import { MakeTooltipsAvailable } from './tooltips/TooltipHooks';
 import {
     bulkEditChecks,
     // clickDungeonName,
+    setAvailableLocations,
     setItemCounts,
     type TrackerState,
 } from './tracker/Slice';
@@ -168,7 +169,14 @@ function TrackerContents() {
             }
         };
 
+        const clientAvailableLocationsCallback = (locs: string[]) => {
+            dispatch(setAvailableLocations(locs.length > 0 ? locs : undefined));
+        };
+
         clientManager?.setLocationCallback(clientLocationCallback);
+        clientManager?.setAvailableLocationsCallback(
+            clientAvailableLocationsCallback,
+        );
         clientManager?.setItemCallback(clientItemCallback);
         clientManager?.setNewStageCallback(stageCallback);
         clientManager?.setCubeCallback(clientCubeCallback);
