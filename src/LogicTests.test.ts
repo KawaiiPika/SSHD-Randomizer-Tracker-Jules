@@ -1033,4 +1033,70 @@ describe('full logic tests', () => {
         updateSettingsWithFullInventory();
         expect(checkState(checkId)).toBe('inLogic');
     });
+
+    it('has no duplicate check names in logic and maps legacy checks correctly', () => {
+        const logic = readSelector(logicSelector);
+        const nameToIds: Record<string, string[]> = {};
+        for (const [id, check] of Object.entries(logic.checks)) {
+            nameToIds[check.name] ??= [];
+            nameToIds[check.name].push(id);
+        }
+        const duplicates: Record<string, string[]> = {};
+        for (const [name, ids] of Object.entries(nameToIds)) {
+            if (ids.length > 1) {
+                duplicates[name] = ids;
+            }
+        }
+        expect(duplicates).toEqual({});
+
+        const findCheckByName = (name: string) =>
+            Object.entries(logic.checks).find(([, c]) => c.name === name);
+
+        // Verify Fire Sanctuary Plats' Chest vs Chest after Winged Torches
+        const platsCheck = findCheckByName("Fire Sanctuary - Plats' Chest");
+        expect(platsCheck).toBeDefined();
+        expect(platsCheck![0]).toBe(
+            "\\Fire Sanctuary\\Main\\West of Boss Door\\Plats' Chest",
+        );
+
+        const wingedTorchesCheck = findCheckByName(
+            'Fire Sanctuary - Chest after Winged Torches',
+        );
+        expect(wingedTorchesCheck).toBeDefined();
+        expect(wingedTorchesCheck![0]).toBe(
+            '\\Fire Sanctuary\\Main\\Boss Key Room\\Boss Key Chest',
+        );
+
+        // Verify Bokoblin Base First Chest vs Raise Sword
+        const firstChestCheck = findCheckByName(
+            'Bokoblin Base - First Chest in Volcano Summit',
+        );
+        expect(firstChestCheck).toBeDefined();
+        expect(firstChestCheck![0]).toBe(
+            '\\Eldin\\Bokoblin Base\\Bokoblin Base Summit\\First Chest in Volcano Summit',
+        );
+
+        const raiseSwordCheck = findCheckByName('Bokoblin Base - Raise Sword');
+        expect(raiseSwordCheck).toBeDefined();
+        expect(raiseSwordCheck![0]).toBe(
+            '\\Eldin\\Bokoblin Base\\Bokoblin Base Summit\\Raised Chest in Volcano Summit',
+        );
+
+        // Verify Skyview Temple Chest near Boss Door vs Chest after Vines
+        const nearBossDoorCheck = findCheckByName(
+            'Skyview Temple - Chest near Boss Door',
+        );
+        expect(nearBossDoorCheck).toBeDefined();
+        expect(nearBossDoorCheck![0]).toBe(
+            '\\Skyview\\Main\\Last Room\\After Rope\\Chest near Boss Door',
+        );
+
+        const afterVinesCheck = findCheckByName(
+            'Skyview Temple - Chest after Vines',
+        );
+        expect(afterVinesCheck).toBeDefined();
+        expect(afterVinesCheck![0]).toBe(
+            '\\Skyview\\Main\\Last Room\\Near Boss Key Chest\\Boss Key Chest',
+        );
+    });
 });
